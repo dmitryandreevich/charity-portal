@@ -20,3 +20,6 @@ Route::get('/', 'HomeController@index')->name('home.index');
 Route::get('/catalog', function (){
     return view('catalog');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

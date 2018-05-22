@@ -1,3 +1,7 @@
+@php
+    use App\Classes\TypeOfUser;
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
@@ -44,7 +48,14 @@
     </header><!-- Navigation -->
     <button type="button" class="js-menu menu-hamburger"><span class="bar"></span></button>
     <nav id="slide-menu">
-        <ul><a href="/" class="menu_item">Каталог потребителей</a><a href="/" class="menu_item">О проекте</a><a href="/" class="menu_item">Вопросы и ответы</a><a href="/" class="menu_item">Условия</a><a href="/" class="menu_item">Статьи</a><a href="/" class="menu_item">Контакты</a></ul>
+        <ul>
+            <a href="/" class="menu_item">Каталог потребителей</a>
+            <a href="/" class="menu_item">О проекте</a>
+            <a href="/" class="menu_item">Вопросы и ответы</a>
+            <a href="/" class="menu_item">Условия</a>
+            <a href="/" class="menu_item">Статьи</a>
+            <a href="/" class="menu_item">Контакты</a>
+        </ul>
     </nav>
 
     @yield('main-block')
@@ -54,39 +65,50 @@
             <h2 class="title">Регистрация</h2>
             <form class="new-org__form">
                 <select placeholder="Благотворитель" name="city" class="headroom_city sources custom-select">
-                    <option>Благотворитель</option>
-                    <option>Потребитель</option>
-                    <option>Волонтёр</option>
+                    <option value="{{ TypeOfUser::DONOR }}">Благотворитель</option>
+                    <option value="{{ TypeOfUser::CONSUMER }}">Потребитель</option>
+                    <option value="{{ TypeOfUser::VOLUNTEER }}">Волонтёр</option>
                 </select>
             </form>
-            <div class="bind-account"><a href="" class="fb btn">Регистрация через Вконтакте</a><a href="" class="vk btn">Регистрация через Facebook</a><a href="#" data-modal="#modal2" class="mail btn open-modal">Регистрация через почту</a></div>
+            <div class="bind-account">
+                <a href="" class="fb btn">Регистрация через Вконтакте</a>
+                <a href="" class="vk btn">Регистрация через Facebook</a>
+                <a href="#" data-modal="#modal2" class="mail btn open-modal">Регистрация через почту</a>
+            </div>
         </div>
     </div>
     <div id="modal2" class="modal">
-        <div class="content"><a href="#" data-id="popup_default" data-animation="scale" class="close-popup">&times;</a>
+        <div class="content">
+            <a href="#" data-id="popup_default" data-animation="scale" class="close-popup">&times;</a>
             <h2 class="title">Регистрация через почту</h2>
-            <form class="new-org__form">
-                <select placeholder="Благотворитель" name="city" class="headroom_city sources custom-select">
-                    <option>Благотворитель</option>
-                    <option>Потребитель</option>
-                    <option>Волонтёр</option>
+            <form class="new-org__form" method="POST" action="{{ route('register') }}">
+                {{ csrf_field() }}
+                <select placeholder="Благотворитель" name="typeOfUser" class="headroom_city sources custom-select">
+                    <option value="{{ TypeOfUser::DONOR }}">Благотворитель</option>
+                    <option value="{{ TypeOfUser::CONSUMER }}">Потребитель</option>
+                    <option value="{{ TypeOfUser::VOLUNTEER }}">Волонтёр</option>
                 </select>
+                <div class="right item">
+
+                    <div class="list">
+                        <input type="email" placeholder="E-mail адрес" name="email">
+                    </div>
+                    <div class="list">
+                        <input type="password" placeholder="Пароль" name="password">
+                    </div>
+                    <div class="list">
+                        <input type="password" placeholder="Повторите пароль" name="password_confirmation">
+                    </div>
+                    <div class="btn-block">
+                        <input type="submit" value="Регистрация">
+                    </div>
+                </div>
             </form>
-            <div class="bind-account-small"><a href="" class="vk btn"></a><a href="" class="fb btn"></a></div>
-            <div class="right item">
-                <div class="list">
-                    <input type="password" placeholder="Текущий пароль">
-                </div>
-                <div class="list">
-                    <input type="password" placeholder="Новый пароль">
-                </div>
-                <div class="list">
-                    <input type="password" placeholder="Повторите пароль">
-                </div>
-                <div class="btn-block">
-                    <input type="button" value="Сменить пароль">
-                </div>
+            <div class="bind-account-small">
+                <a href="" class="vk btn"></a>
+                <a href="" class="fb btn"></a>
             </div>
+
         </div>
     </div>
     <div id="modal3" class="modal">
