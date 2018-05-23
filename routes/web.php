@@ -14,12 +14,16 @@
 
 
 Auth::routes();
-
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::group(['namespace' => 'Auth', 'prefix' => 'social'], function (){
+    Route::get('/vk', 'RegisterController@RegisterByVk')->name('register.vk');
+});
 Route::get('/', 'HomeController@index')->name('home.index');
 
 Route::get('/catalog', function (){
     return view('catalog');
 });
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

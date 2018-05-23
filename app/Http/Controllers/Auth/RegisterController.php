@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Classes\VkApiHelper;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -27,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -67,5 +69,13 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'type' => $data['typeOfUser'],
         ]);
+    }
+    public function RegisterByVk(Request $request){
+        $vkApiHelper = new VkApiHelper();
+        $at = $vkApiHelper->getAccessData( $request->input('code') );
+        $data = $vkApiHelper->getInfoUser($at['access_token']);
+
+        dd($data);
+
     }
 }

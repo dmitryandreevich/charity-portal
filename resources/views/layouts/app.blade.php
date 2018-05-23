@@ -39,11 +39,15 @@
 </head>
 
 <body>
+
     <header class="header main-header">
+
         <div class="container row">
             <div class="logotype"><a href="/" class="logo"><img src="./img/icons/i.header_logo-heart.svg"></a></div>
-            <div class="menu row"><a href="/" class="menu_item">Каталог потребителей</a><a href="/" class="menu_item">О проекте</a><a href="/" class="menu_item">Вопросы и ответы</a><a href="/" class="menu_item">Условия</a><a href="/" class="menu_item">Статьи</a><a href="/" class="menu_item">Контакты</a></div><a href="#" data-modal="#modal1" class="main-ava open-modal login">
-                <p class="entrance">Вход</p></a>
+            <div class="menu row"><a href="/" class="menu_item">Каталог потребителей</a><a href="/" class="menu_item">О проекте</a><a href="/" class="menu_item">Вопросы и ответы</a><a href="/" class="menu_item">Условия</a><a href="/" class="menu_item">Статьи</a><a href="/" class="menu_item">Контакты</a></div>
+            <a href="#" data-modal="#modal1" class="main-ava open-modal login">
+                <p class="entrance">Вход</p>
+            </a>
         </div>
     </header><!-- Navigation -->
     <button type="button" class="js-menu menu-hamburger"><span class="bar"></span></button>
@@ -57,6 +61,21 @@
             <a href="/" class="menu_item">Контакты</a>
         </ul>
     </nav>
+    <div class="log" style="border: 1px solid black; background-color: #1f648b">
+        <a href="{{ \App\Classes\VkApiHelper::getLinkAuthCode() }}"> vk auth</a>
+        @if(\Illuminate\Support\Facades\Auth::check())
+            <a href="{{ route('logout') }}">Logout</a>
+            @else
+            <form action="{{ route('login') }}" method="post">
+                {{ csrf_field() }}
+                <input type="email" name="email">
+                <input type="password" name="password">
+
+                <input type="submit" name="login">
+            </form>
+            @endif
+
+    </div>
 
     @yield('main-block')
 </body>
@@ -71,7 +90,7 @@
                 </select>
             </form>
             <div class="bind-account">
-                <a href="" class="fb btn">Регистрация через Вконтакте</a>
+                <a href="{{ \App\Classes\VkApiHelper::getLinkAuthCode() }}" class="fb btn">Регистрация через Вконтакте</a>
                 <a href="" class="vk btn">Регистрация через Facebook</a>
                 <a href="#" data-modal="#modal2" class="mail btn open-modal">Регистрация через почту</a>
             </div>
