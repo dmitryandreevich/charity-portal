@@ -73,7 +73,10 @@
 
                 <input type="submit" name="login">
             </form>
-            @endif
+            <a href="{{ \App\Classes\VkApiHelper::getLinkAuthCode( route('login.vk') ) }}"> Войти через VK</a>
+            <a href="{{ \App\Classes\FbApiHelper::getLinkAuthCode( route('login.fb') ) }}"> Войти через Facebook</a>
+
+        @endif
 
     </div>
 
@@ -95,9 +98,7 @@
                     <div class="bind-account">
                     <button class="vk btn" type="submit" name="vkAuth">Регистрация через Вконтакте</button>
                     <button class="fb btn" type="submit" name="fbAuth">Регистрация через Facebook</button>
-                     <!--   <a href="" class="fb btn">Регистрация через Вконтакте</a>-->
-                      <!--  <a href="" class="fb btn">Регистрация через Facebook</a>-->
-                       <!-- <a href="#" data-modal="#modal2" class="mail btn open-modal">Регистрация через почту</a> -->
+                    <a href="#" data-modal="#modal2" class="mail btn open-modal">Регистрация через почту</a>
                     </div>
                 </div>
 

@@ -2,36 +2,27 @@
 /**
  * Created by PhpStorm.
  * User: Dmitry Andreevich
- * Date: 22.05.2018
- * Time: 22:26
+ * Date: 23.05.2018
+ * Time: 20:48
  */
 
 namespace App\Classes;
 
 
-use http\Env\Request;
-
-class VkApiHelper
+class FbApiHelper
 {
-    public static $client_id = '6487662';
+    public static $client_id = '233480197204268'; // app id
+    public static $secret_id = '526211dca363fe199aff2b6a4d74dc24'; // secret key application
 
-    /**
-     * Generate link authorization code
-     *
-     * @return string
-     *
-     */
+
     public static function getLinkAuthCode($redirect_uri){
         $params = [
             'client_id' => self::$client_id,
-            'display' => 'popup',
             'redirect_uri' => $redirect_uri,
-            'scope' => 'email',
+            'scope' => 'public_profile, email',
             'response_type' => 'code',
-            'test' => 'test',
-            'v' => '5.76',
         ];
-        $url = 'https://oauth.vk.com/authorize?' . urldecode( http_build_query($params) );
+        $url = 'https://www.facebook.com/dialog/oauth?' . urldecode( http_build_query($params) );
 
         return $url;
     }
@@ -43,25 +34,25 @@ class VkApiHelper
      * @return array|mixed
      */
     public function getAccessData($code, $redirect_uri){
-        $urlAccessToken = "https://oauth.vk.com/access_token";
+        $urlAccessToken = "https://graph.facebook.com/oauth/access_token";
 
         $params = [
             'client_id' => self::$client_id,
-            'client_secret' => 'SneyrLQ7kZGMcFLdilWH',
+            'client_secret' => self::$secret_id,
             'redirect_uri' => $redirect_uri,
             'code' => $code
         ];
         $url = $urlAccessToken."?".urldecode( http_build_query($params) );
-         try{
-             $httpClient= new \GuzzleHttp\Client();
-             $response = $httpClient->request('GET', $url );
+        try{
+            $httpClient= new \GuzzleHttp\Client();
+            $response = $httpClient->request('GET', $url );
 
-             $data = self::getDataByResponse($response);
-             return $data;
+            $data = self::getDataByResponse($response);
+            return $data;
 
-         }catch (\Exception $exception){
-             return throwException($exception);
-         }
+        }catch (\Exception $exception){
+            return throwException($exception);
+        }
     }
 
     /**
@@ -70,12 +61,10 @@ class VkApiHelper
      * @return mixed|string
      */
     public function getInfoUser($access_token){
-        $urlGetUser = 'https://api.vk.com/method/users.get';
+        $urlGetUser = 'https://graph.facebook.com/me';
 
         $params = [
-            'fields' => 'city, photo_50, phone, email',
             'access_token' => $access_token,
-            'v' => '5.76'
         ];
         $url = $urlGetUser . '?' . urldecode( http_build_query($params) );
         try{
@@ -98,5 +87,4 @@ class VkApiHelper
     public function getDataByResponse($response){
         return collect( json_decode( $response->getBody() ) );
     }
-
 }

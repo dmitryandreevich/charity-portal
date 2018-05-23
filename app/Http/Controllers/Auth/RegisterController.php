@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Classes\FbApiHelper;
 use App\Classes\VkApiHelper;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -71,11 +72,14 @@ class RegisterController extends Controller
             'type' => $data['typeOfUser'],
         ]);
     }
-    public function getVKAccess(Request $request){
+    // Узнаём какая кнопка была нажата, какой тип пользователя был выбран
+    public function getSocialAccess(Request $request){
+        $request->session()->put('typeOfUser', $request->input('typeOfUser'));
         if($request->has('vkAuth')){
-            $request->session()->put('typeOfUser', $request->input('typeOfUser'));
-
-            return redirect( VkApiHelper::getLinkAuthCode() );
+            // ложим в сессию тип выбранного пользователя
+            return redirect( VkApiHelper::getLinkAuthCode( route('register.vk') ) );
+        } elseif ($request->has('fbAuth')){
+            return redirect( FbApiHelper::getLinkAuthCode( route('register.fb') ) );
         }
     }
 
@@ -84,16 +88,40 @@ class RegisterController extends Controller
      *
      * @param Request $request
      */
-    public function registerByVk(Request $request){
+    public function registerByVk(Request $request)
+    {
         $typeOfUser = $request->session()->get('typeOfUser');
         $vkApiHelper = new VkApiHelper();
-        $at = $vkApiHelper->getAccessData( $request->input('code') );
+        $at = $vkApiHelper->getAccessData($request->input('code'), route('register.vk'));
 
         $data = $vkApiHelper->getInfoUser($at['access_token']);
+        try {
+            User::create([
+                'email' => isset($at['email']) ? $at['email'] : "",
+                'vkId' => $at['user_id'],
+                'type' => $typeOfUser
+            ]);
+            $request->session()->remove('typeOfUser');
+
+            return redirect('/catalog');
+        } catch (QueryException $exception) {
+            $request->session()->remove('typeOfUser');
+
+            return redirect('/');
+            // not unique email address or vkid
+        }
+    }
+    public function registerByFb(Request $request){
+
+        $typeOfUser = $request->session()->get('typeOfUser');
+        $fbApiHelper = new FbApiHelper();
+        $at = $fbApiHelper->getAccessData( $request->input('code'), route('register.fb') );
+
+        $data = $fbApiHelper->getInfoUser($at['access_token']);
         try{
             User::create([
-                'email' => $at['email'],
-                'vkId' => $at['user_id'],
+                'email' => isset($data['email']) ? $data['email'] : '',
+                'fbId' => $data['id'],
                 'type' => $typeOfUser
             ]);
             $request->session()->remove('typeOfUser');
@@ -102,10 +130,9 @@ class RegisterController extends Controller
         }catch (QueryException $exception){
             $request->session()->remove('typeOfUser');
 
-            return redirect('/');
-            // not unique email address or vkid
+            return $exception->getMessage();
+            // not unique email address or fbid
         }
-
 
     }
 }

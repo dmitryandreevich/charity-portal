@@ -16,8 +16,11 @@
 Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::group(['namespace' => 'Auth', 'prefix' => 'social'], function (){
-    Route::get('/', 'RegisterController@getVKAccess')->name('register.getAccess');
-    Route::get('/vk', 'RegisterController@registerByVk')->name('register.vk');
+    Route::get('/', 'RegisterController@getSocialAccess')->name('register.getAccess');
+    Route::get('/vk/reg', 'RegisterController@registerByVk')->name('register.vk');
+    Route::get('/fb/reg', 'RegisterController@registerByFb')->name('register.fb');
+    Route::get('/vk/login', 'LoginController@loginByVk')->name('login.vk');
+    Route::get('/fb/login', 'LoginController@loginByFb')->name('login.fb');
 });
 Route::get('/', 'HomeController@index')->name('home.index');
 
