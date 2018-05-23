@@ -16,7 +16,8 @@
 Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::group(['namespace' => 'Auth', 'prefix' => 'social'], function (){
-    Route::get('/vk', 'RegisterController@RegisterByVk')->name('register.vk');
+    Route::get('/', 'RegisterController@getVKAccess')->name('register.getAccess');
+    Route::get('/vk', 'RegisterController@registerByVk')->name('register.vk');
 });
 Route::get('/', 'HomeController@index')->name('home.index');
 

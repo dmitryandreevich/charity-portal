@@ -24,11 +24,12 @@ class VkApiHelper
     public static function getLinkAuthCode(){
         $params = [
             'client_id' => self::$client_id,
-            'display' => 'page',
-            'redirect_uri' => route('register.vk'),
+            'display' => 'popup',
+            'redirect_uri' => 'http://charity/social/vk',
             'scope' => 'email',
             'response_type' => 'code',
-            'v' => '5.76'
+            'test' => 'test',
+            'v' => '5.76',
         ];
         $url = 'https://oauth.vk.com/authorize?' . urldecode( http_build_query($params) );
 

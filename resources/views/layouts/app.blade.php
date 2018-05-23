@@ -62,7 +62,7 @@
         </ul>
     </nav>
     <div class="log" style="border: 1px solid black; background-color: #1f648b">
-        <a href="{{ \App\Classes\VkApiHelper::getLinkAuthCode() }}"> vk auth</a>
+
         @if(\Illuminate\Support\Facades\Auth::check())
             <a href="{{ route('logout') }}">Logout</a>
             @else
@@ -82,18 +82,27 @@
     <div id="modal1" class="modal">
         <div class="content"><a href="#" data-id="popup_default" data-animation="scale" class="close-popup">&times;</a>
             <h2 class="title">Регистрация</h2>
-            <form class="new-org__form">
-                <select placeholder="Благотворитель" name="city" class="headroom_city sources custom-select">
-                    <option value="{{ TypeOfUser::DONOR }}">Благотворитель</option>
-                    <option value="{{ TypeOfUser::CONSUMER }}">Потребитель</option>
-                    <option value="{{ TypeOfUser::VOLUNTEER }}">Волонтёр</option>
-                </select>
+            <form class="new-org__form" id="form-action-register" action="{{ route('register.getAccess') }}">
+                {{ csrf_field() }}
+                <div class="new-org__form">
+                    <select placeholder="Благотворитель" name="typeOfUser" class="headroom_city sources custom-select">
+                        <option value="{{ TypeOfUser::DONOR }}">Благотворитель</option>
+                        <option value="{{ TypeOfUser::CONSUMER }}">Потребитель</option>
+                        <option value="{{ TypeOfUser::VOLUNTEER }}">Волонтёр</option>
+                    </select>
+                </div>
+                <div class="new-org__form">
+                    <div class="bind-account">
+                    <button class="vk btn" type="submit" name="vkAuth">Регистрация через Вконтакте</button>
+                    <button class="fb btn" type="submit" name="fbAuth">Регистрация через Facebook</button>
+                     <!--   <a href="" class="fb btn">Регистрация через Вконтакте</a>-->
+                      <!--  <a href="" class="fb btn">Регистрация через Facebook</a>-->
+                       <!-- <a href="#" data-modal="#modal2" class="mail btn open-modal">Регистрация через почту</a> -->
+                    </div>
+                </div>
+
             </form>
-            <div class="bind-account">
-                <a href="{{ \App\Classes\VkApiHelper::getLinkAuthCode() }}" class="fb btn">Регистрация через Вконтакте</a>
-                <a href="" class="vk btn">Регистрация через Facebook</a>
-                <a href="#" data-modal="#modal2" class="mail btn open-modal">Регистрация через почту</a>
-            </div>
+
         </div>
     </div>
     <div id="modal2" class="modal">
