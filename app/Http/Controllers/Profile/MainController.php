@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Profile;
 
 use App\Classes\TypeOfUser;
 use App\Classes\Utils;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,7 @@ class MainController extends Controller
                 return (new DonorController())->index();
             }
             case TypeOfUser::CONSUMER:{
-                return 'consumer';
+                return (new ConsumerController())->index();
                 break;
             }
             case TypeOfUser::VOLUNTEER:{
@@ -61,16 +62,25 @@ class MainController extends Controller
         // фильтруем ключи по белому списку
         $data = $request->only($this->whiteListKeys);
         // шаблон json строки
-        $dataTemplate = Utils::getUserDataJsonTemplate();
+        //$dataTemplate = Utils::getUserDataJsonTemplate();
+        // существующие json данные
+        $userData = json_decode(Auth::user()->data);
+        // заполняем старыми данными массив, который потом преобразуется в json строку
+        //$dataTemplate['organization'] = $userData->organization;
+        //$dataTemplate['individual'] = $userData->individual;
+
+
+        // если равен NULL, значит только зарегистрировался и нету никакой информации
         // если выбран тип аккаунта - организация
         if(array_key_exists('organization', $request->input())){
-            $dataTemplate['organization']['data'] = $data;
-
+            //$dataTemplate['organization']['data'] = $data;
+            $userData->organization->data = $data;
         } elseif(array_key_exists('individual', $request->input())){
-            $dataTemplate['individual']['data'] = $data;
+            //    $dataTemplate['individual']['data'] = $data;
+            $userData->individual->data = $data;
         }
         Auth::user()->update([
-            'data' => json_encode($dataTemplate),
+            'data' => json_encode($userData),
             'email' => $request->input('email'),
             'phone' => $request->input('phone'),
             'city' => $request->input('city')
@@ -80,6 +90,19 @@ class MainController extends Controller
         return redirect()->back()->with('success','Изменения были успешно сохранены!');
     }
     public function toggle(Request $request){
+        $radioChecked = $request->get('radio');
 
+        $user = Auth::user();
+        $data = User::getData($user);
+        if($radioChecked === 'individual'){
+            $data->individual->active = true;
+            $data->organization->active = false;
+        }elseif($radioChecked === 'organization'){
+            $data->individual->active = false;
+            $data->organization->active = true;
+        }
+        $user->data = json_encode($data);
+        $user->save();
+        return redirect()->back();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Classes\FbApiHelper;
+use App\Classes\Utils;
 use App\Classes\VkApiHelper;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -66,10 +67,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $dataTemplate = Utils::getUserDataJsonTemplate();
+        $dataTemplate['individual']['active'] = true;
         return User::create([
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'type' => $data['typeOfUser'],
+            'data' => json_encode($dataTemplate)
         ]);
     }
     // Узнаём какая кнопка была нажата, какой тип пользователя был выбран
@@ -95,11 +99,16 @@ class RegisterController extends Controller
         $at = $vkApiHelper->getAccessData($request->input('code'), route('register.vk'));
 
         $data = $vkApiHelper->getInfoUser($at['access_token']);
+
+        // шаблон json объекта, для хранения всех второстепенных данных пользователя
+        $dataTemplate = Utils::getUserDataJsonTemplate();
+        $dataTemplate['individual']['active'] = true;
         try {
             User::create([
                 'email' => isset($at['email']) ? $at['email'] : "",
                 'vkId' => $at['user_id'],
-                'type' => $typeOfUser
+                'type' => $typeOfUser,
+                'data' => json_encode($dataTemplate)
             ]);
             $request->session()->remove('typeOfUser');
 
@@ -118,11 +127,16 @@ class RegisterController extends Controller
         $at = $fbApiHelper->getAccessData( $request->input('code'), route('register.fb') );
 
         $data = $fbApiHelper->getInfoUser($at['access_token']);
+
+        // шаблон json объекта, для хранения всех второстепенных данных пользователя
+        $dataTemplate = Utils::getUserDataJsonTemplate();
+        $dataTemplate['individual']['active'] = true;
         try{
             User::create([
                 'email' => isset($data['email']) ? $data['email'] : '',
                 'fbId' => $data['id'],
-                'type' => $typeOfUser
+                'type' => $typeOfUser,
+                'data' => json_encode($dataTemplate)
             ]);
             $request->session()->remove('typeOfUser');
 

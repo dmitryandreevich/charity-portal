@@ -46,9 +46,22 @@
         <div class="container row">
             <div class="logotype"><a href="/" class="logo"><img src="{{ asset('img/icons/i.header_logo-heart.svg') }}"></a></div>
             <div class="menu row"><a href="/" class="menu_item">Каталог потребителей</a><a href="/" class="menu_item">О проекте</a><a href="/" class="menu_item">Вопросы и ответы</a><a href="/" class="menu_item">Условия</a><a href="/" class="menu_item">Статьи</a><a href="/" class="menu_item">Контакты</a></div>
-            <a href="#" data-modal="#modal1" class="main-ava open-modal login">
-                <p class="entrance">Вход</p>
-            </a>
+            @if(\Illuminate\Support\Facades\Auth::check())
+
+                <a href="{{ route('logout') }}" class="main-ava login">
+                    <p class="entrance">Выйти</p>
+                </a>
+            @else
+                <a href="#" data-modal="#modal1" class="main-ava open-modal login">
+                    <p class="entrance">Регистрация</p>
+                </a>
+                <a href="#" data-modal="#modal6" class="main-ava open-modal login">
+                    <p class="entrance">Вход</p>
+                </a>
+            @endif
+
+
+
         </div>
     </header><!-- Navigation -->
     <button type="button" class="js-menu menu-hamburger"><span class="bar"></span></button>
@@ -63,21 +76,6 @@
         </ul>
     </nav>
     <div class="log" style="border: 1px solid black; background-color: #1f648b">
-
-        @if(\Illuminate\Support\Facades\Auth::check())
-            <a href="{{ route('logout') }}">Logout</a>
-            @else
-            <form action="{{ route('login') }}" method="post">
-                {{ csrf_field() }}
-                <input type="email" name="email">
-                <input type="password" name="password">
-
-                <input type="submit" name="login">
-            </form>
-            <a href="{{ \App\Classes\VkApiHelper::getLinkAuthCode( route('login.vk') ) }}"> Войти через VK</a>
-            <a href="{{ \App\Classes\FbApiHelper::getLinkAuthCode( route('login.fb') ) }}"> Войти через Facebook</a>
-
-        @endif
         @include('layouts.messages')
     </div>
 
@@ -119,6 +117,13 @@
                     <option value="{{ TypeOfUser::VOLUNTEER }}">Волонтёр</option>
                 </select>
                 <div class="right item">
+                    <div class="bind-account-small">
+                        <a href="" class="vk btn"></a>
+                        <a href="" class="fb btn"></a>
+                    </div>
+                </div>
+
+                <div class="right item">
 
                     <div class="list">
                         <input type="email" placeholder="E-mail адрес" name="email">
@@ -134,11 +139,35 @@
                     </div>
                 </div>
             </form>
-            <div class="bind-account-small">
-                <a href="" class="vk btn"></a>
-                <a href="" class="fb btn"></a>
-            </div>
 
+
+        </div>
+    </div>
+    <div id="modal6" class="modal">
+        <div class="content">
+            <a href="#" data-id="popup_default" data-animation="scale" class="close-popup">&times;</a>
+            <h2 class="title">Авторизуйтесь в системе</h2>
+            <form class="new-org__form" method="POST" action="{{ route('login') }}">
+                {{ csrf_field() }}
+                <div class="right item">
+                    <div class="list">
+                        <input type="email" placeholder="E-mail адрес" name="email">
+                    </div>
+                    <div class="list">
+                        <input type="password" placeholder="Пароль" name="password">
+                    </div>
+                    <div class="btn-block">
+                        <input type="submit" value="Авторизация">
+                    </div>
+                </div>
+            </form>
+            <!-- I`m not a robot -->
+            <div class="right item">
+                <div class="bind-account-small">
+                    <a href="{{ \App\Classes\VkApiHelper::getLinkAuthCode( route('login.vk') ) }}" class="btn vk"></a>
+                    <a href="{{ \App\Classes\FbApiHelper::getLinkAuthCode( route('login.fb') ) }}" class="btn fb"></a>
+                </div>
+            </div>
         </div>
     </div>
     <div id="modal3" class="modal">

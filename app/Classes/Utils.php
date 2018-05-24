@@ -15,7 +15,7 @@ class Utils
 {
     public static function getUserDataJsonTemplate(){
         return [
-            'individual' => ['active' => true, 'data' => [ ]],
+            'individual' => ['active' => false, 'data' => [ ]],
            'organization' => ['active' => false, 'data' => [ ]]
         ];
     }
