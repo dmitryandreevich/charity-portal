@@ -58,9 +58,6 @@ class MainController extends Controller
                 return redirect()->back()->withErrors($validator);
         }
 
-        //$request->validate([
-        //    'email' => 'email|unique:users'
-        //]);
         // фильтруем ключи по белому списку
         $data = $request->only($this->whiteListKeys);
         // шаблон json строки

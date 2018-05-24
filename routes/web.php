@@ -27,6 +27,7 @@ Route::group(['namespace' => 'Profile', 'prefix' => 'pr', 'middleware' => 'auth'
    Route::post('/update','MainController@update')->name('profile.update');
    Route::get('/vk-attach', 'SocialController@vkAttach')->name('profile.vkAttach');
    Route::get('/fb-attach', 'SocialController@fbAttach')->name('profile.fbAttach');
+   Route::post('/change-password','ChangePasswordController@update')->name('profile.changePassword');
    //Route::get('/{user}', 'ShowController@show')->name('profile.show');
 });
 Route::get('/', 'HomeController@index')->name('home.index');
