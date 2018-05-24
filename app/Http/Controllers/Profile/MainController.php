@@ -19,7 +19,7 @@ class MainController extends Controller
     protected $whiteListKeys = ['organization', 'individual', 'name','sec_name'
         ,'th_name','name_org', 'address_org',
         'inn', 'ogrn', 'bank', 'bik', 'ch_account', 'corp_account',
-        'kpp', 'ceo'];
+        'kpp', 'ceo', 'vol_count'];
     /**
      * Choose controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -36,7 +36,7 @@ class MainController extends Controller
                 break;
             }
             case TypeOfUser::VOLUNTEER:{
-                return 'volunteer;';
+                return (new VolunteerController())->index();
                 break;
             }
         }
