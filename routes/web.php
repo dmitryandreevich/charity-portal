@@ -22,9 +22,17 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'social'], function (){
     Route::get('/vk/login', 'LoginController@loginByVk')->name('login.vk');
     Route::get('/fb/login', 'LoginController@loginByFb')->name('login.fb');
 });
+Route::group(['namespace' => 'Profile', 'prefix' => 'pr', 'middleware' => 'auth'],function (){
+   Route::get('/my', 'MainController@index')->name('profile.index');
+   Route::post('/update','MainController@update')->name('profile.update');
+   Route::get('/vk-attach', 'SocialController@vkAttach')->name('profile.vkAttach');
+   Route::get('/fb-attach', 'SocialController@fbAttach')->name('profile.fbAttach');
+   //Route::get('/{user}', 'ShowController@show')->name('profile.show');
+});
 Route::get('/', 'HomeController@index')->name('home.index');
 
 Route::get('/catalog', function (){
+   // $json_template = file_get_contents('test.json');
     return view('catalog');
 });
 

@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('city')->default("");
             $table->string('phone')->default("");
             $table->tinyInteger('type'); // Type of account
-            $table->string('data')->default("");
+            $table->text('data');
             $table->string('vkId')->unique();
             $table->string('fbId')->unique();
             $table->rememberToken();

@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','type', 'vkId', 'fbId'
+        'name', 'email', 'password','type', 'vkId', 'fbId','data','phone', 'city'
     ];
 
     /**
@@ -26,4 +26,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public static function getData(User $user){
+        return json_decode($user->data);
+    }
 }

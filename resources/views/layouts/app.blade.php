@@ -33,6 +33,7 @@
     <link href="{{ asset('styles/defaults.css') }}" rel="stylesheet">
     <link href="{{ asset('styles/pages.css') }}" rel="stylesheet">
     <link href="{{ asset('styles/vendors.css') }}" rel="stylesheet"><!-- HTML5 supporting -->
+
     <!--[if lt IE 9]>
     <![endif]-->
     <title>{{ config('app.name', 'Laravel') }}</title>
@@ -43,7 +44,7 @@
     <header class="header main-header">
 
         <div class="container row">
-            <div class="logotype"><a href="/" class="logo"><img src="./img/icons/i.header_logo-heart.svg"></a></div>
+            <div class="logotype"><a href="/" class="logo"><img src="{{ asset('img/icons/i.header_logo-heart.svg') }}"></a></div>
             <div class="menu row"><a href="/" class="menu_item">Каталог потребителей</a><a href="/" class="menu_item">О проекте</a><a href="/" class="menu_item">Вопросы и ответы</a><a href="/" class="menu_item">Условия</a><a href="/" class="menu_item">Статьи</a><a href="/" class="menu_item">Контакты</a></div>
             <a href="#" data-modal="#modal1" class="main-ava open-modal login">
                 <p class="entrance">Вход</p>
@@ -77,7 +78,7 @@
             <a href="{{ \App\Classes\FbApiHelper::getLinkAuthCode( route('login.fb') ) }}"> Войти через Facebook</a>
 
         @endif
-
+        @include('layouts.messages')
     </div>
 
     @yield('main-block')
