@@ -19,7 +19,7 @@ class MainController extends Controller
     protected $whiteListKeys = ['organization', 'individual', 'name','sec_name'
         ,'th_name','name_org', 'address_org',
         'inn', 'ogrn', 'bank', 'bik', 'ch_account', 'corp_account',
-        'kpp', 'ceo', 'vol_count'];
+        'kpp', 'ceo', 'vol_count', 'vol_type_org'];
     /**
      * Choose controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -40,7 +40,7 @@ class MainController extends Controller
                 break;
             }
         }
-        return view('profile.donor');
+        return redirect()->back()->with('error', 'Произошла ошибка!');
     }
     /**
      * Update profile data
@@ -61,29 +61,19 @@ class MainController extends Controller
 
         // фильтруем ключи по белому списку
         $data = $request->only($this->whiteListKeys);
-        // шаблон json строки
-        //$dataTemplate = Utils::getUserDataJsonTemplate();
         // существующие json данные
         $userData = json_decode(Auth::user()->data);
-        // заполняем старыми данными массив, который потом преобразуется в json строку
-        //$dataTemplate['organization'] = $userData->organization;
-        //$dataTemplate['individual'] = $userData->individual;
-
-
-        // если равен NULL, значит только зарегистрировался и нету никакой информации
-        // если выбран тип аккаунта - организация
         if(array_key_exists('organization', $request->input())){
-            //$dataTemplate['organization']['data'] = $data;
             $userData->organization->data = $data;
         } elseif(array_key_exists('individual', $request->input())){
-            //    $dataTemplate['individual']['data'] = $data;
             $userData->individual->data = $data;
         }
         Auth::user()->update([
             'data' => json_encode($userData),
             'email' => $request->input('email'),
             'phone' => $request->input('phone'),
-            'city' => $request->input('city')
+            'city' => $request->input('city'),
+            'vol_type_org' => $request->input('vol_type_org')
         ]);
 
         // validate

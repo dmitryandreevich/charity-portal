@@ -10,18 +10,7 @@
 
 @section('main-block')
     <div class="main-block donor-setting">
-        <div class="top-menu">
-            <div class="container row">
-                <div class="top-menu__left"><a href="/" class="add">Добавить организацию</a><a href="/" class="add">Добавить потребность</a></div>
-                <div class="top-menu__right">
-                    <ul class="list">
-                        <li class="item"><a href="/">Организации</a></li>
-                        <li class="item"><a href="/">Потребности</a></li>
-                        <li class="item"><a href="/" class="active">Настройки</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        @include('profile.consumer.topMenu')
         <div class="donor-setting_content">
             <div class="container">
                 <h2 class="title">Настройки</h2>

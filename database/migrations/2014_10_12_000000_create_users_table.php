@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->text('data');
             $table->string('vkId')->unique();
             $table->string('fbId')->unique();
+            $table->string('vol_type_org')->nullable();
             $table->rememberToken();
             $table->timestamps();
             /*

@@ -41,8 +41,15 @@
                                 <input type="text" placeholder="Название организации" name="name_org" value="{{ $data->organization->data->name_org or old('name_org') }}">
                             </div>
                             <div class="list">
-                                <input type="text" placeholder="Тип организации">
+                                <div class="headroom_item">
+                                    <select placeholder="Тип организации" name="vol_type_org" class="sources custom-select small-text">
+                                        <option value="Учебные учреждения" >Учебные учреждения</option>
+                                        <option value="Некоммерческие организации">Некоммерческие организации</option>
+                                        <option value="Волонтёрские группы без юрлица">Волонтёрские группы без юрлица</option>
+                                    </select>
+                                </div>
                             </div>
+
                             <div class="list">
                                 <input type="text" placeholder="Город" name="city" value="{{ $user->city or old('city')}}">
                             </div>
@@ -56,7 +63,7 @@
                                 <input type="email" placeholder="Email" name="email" value="{{ $user->email or old('email')}}">
                             </div>
                             <div class="btn-block">
-                                <input type="button" value="Сохранить">
+                                <input type="submit" value="Сохранить">
                             </div>
                         </form>
                     </div>
