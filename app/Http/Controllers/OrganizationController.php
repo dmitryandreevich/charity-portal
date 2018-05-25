@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Organization;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -11,7 +12,7 @@ class OrganizationController extends Controller
 {
     function __construct()
     {
-        $this->middleware('consumer');
+        $this->middleware(['consumer','auth']);
     }
 
     /**
@@ -22,6 +23,8 @@ class OrganizationController extends Controller
     public function index()
     {
         // вывод всех своих организаций
+        $organizations = Organization::where('creator', Auth::id())->get();
+        return view('organization.index',['organizations' => $organizations]);
     }
 
     /**
@@ -80,25 +83,31 @@ class OrganizationController extends Controller
          */
         $latestOrg = Organization::all()->last();
         $nextOrgId = (isset($latestOrg) ? $latestOrg->id + 1 : 1);
-        $orgPath = "public/organizationFiles/$nextOrgId/";
+        $orgPath = "public/organizations/$nextOrgId/";
         foreach ($photos as $photo) {
             $fileContent = file_get_contents( $photo->getRealPath() );
             $fileName =  $photo->getClientOriginalName();
             Storage::put("$orgPath/photos/$fileName", $fileContent);
         }
         // сохраняем документ
-        $coverContent = file_get_contents( $cover->getRealPath() );
-        Storage::put("$orgPath/cover/cover.". $cover->getClientOriginalExtension(), $coverContent);
-        $docsContent = file_get_contents( $docs->getRealPath() );
-        Storage::put("$orgPath/docs/document." . $docs->getClientOriginalExtension(), $docsContent);
+        $coverName = 'cover.' . $cover->getClientOriginalExtension();
+        $docName = 'document.' . $docs->getClientOriginalExtension();
 
+        $coverContent = file_get_contents( $cover->getRealPath() );
+        Storage::put("$orgPath/$coverName", $coverContent);
+        $docsContent = file_get_contents( $docs->getRealPath() );
+        Storage::put("$orgPath/$docName", $docsContent);
+
+        $creator = Auth::id();
         Organization::create([
+            'creator' => $creator,
            'name' => $name,
            'description' => $description,
            'address' => $address,
-            'files_path' => $orgPath,
             'city' => $city,
-            'type_consumer' => $typeConsumer
+            'type_consumer' => $typeConsumer,
+            'cover_path' => "organizations/$nextOrgId/$coverName",
+            'doc_path' => "organizations/$nextOrgId/$docName"
         ]);
         return redirect()->back();
         //return redirect( route('organizations.index') )->with('success', 'Организация была успешно создана!');
