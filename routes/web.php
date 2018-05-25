@@ -31,7 +31,10 @@ Route::group(['namespace' => 'Profile', 'prefix' => 'pr', 'middleware' => 'auth'
    Route::post('/toggleStatus', 'MainController@toggle')->name('profile.toggleStatus');
    //Route::get('/{user}', 'ShowController@show')->name('profile.show');
 });
-Route::resource('/organizations', 'OrganizationController');
+Route::resource('/organizations', 'OrganizationController', ['except' => 'show']);
+
+Route::get('/organizations/{organization}', 'OrganizationController@show')->name('organizations.show');
+
 Route::get('/', 'HomeController@index')->name('home.index');
 
 Route::get('/catalog', function (){

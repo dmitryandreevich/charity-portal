@@ -122,6 +122,16 @@ class OrganizationController extends Controller
     public function show(Organization $organization)
     {
         // показ определённой организации
+        // вернуть массив путей фотографий
+        $id = $organization->id;
+        $photos = Storage::allFiles("/public/organizations/$id/photos/");
+        foreach ($photos as $key => $photo)
+            $photos[$key] = str_replace('public', 'storage', $photo);
+
+        return view('organization.show',
+            ['organization' => $organization,
+                'photos' => $photos]
+        );
     }
 
     /**
