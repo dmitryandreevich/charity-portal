@@ -23,8 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('phone')->default("");
             $table->tinyInteger('type'); // Type of account
             $table->text('data');
-            $table->string('vkId')->unique();
-            $table->string('fbId')->unique();
+            $table->string('vkId');
+            $table->string('fbId');
             $table->string('vol_type_org')->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -55,7 +55,9 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'typeOfUser' => 'required|max:2'
+            'typeOfUser' => 'required|max:2',
+            'vkId' => 'unique:users',
+            'fbId' => 'unique:users'
         ]);
     }
 
@@ -94,9 +96,14 @@ class RegisterController extends Controller
      */
     public function registerByVk(Request $request)
     {
-        $typeOfUser = $request->session()->get('typeOfUser');
-        $vkApiHelper = new VkApiHelper();
-        $at = $vkApiHelper->getAccessData($request->input('code'), route('register.vk'));
+        try{
+            $typeOfUser = $request->session()->get('typeOfUser');
+            $vkApiHelper = new VkApiHelper();
+            $at = $vkApiHelper->getAccessData($request->input('code'), route('register.vk'));
+        }catch (\Exception $exception){
+            return redirect('/')->with('error', 'Произошла ошибка при получении данных VK API!');
+        }
+
 
         $data = $vkApiHelper->getInfoUser($at['access_token']);
 
@@ -112,22 +119,30 @@ class RegisterController extends Controller
             ]);
             $request->session()->remove('typeOfUser');
 
-            return redirect('/catalog');
+            return redirect('/')->with('success', ' Вы успешно зарегистрировались. Можете войти!');
         } catch (QueryException $exception) {
             $request->session()->remove('typeOfUser');
 
-            return redirect('/');
+            return redirect('/')->with('error', 'Данный email или VK уже привязан. Можете войти!');
             // not unique email address or vkid
         }
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|string
+     */
     public function registerByFb(Request $request){
 
         $typeOfUser = $request->session()->get('typeOfUser');
-        $fbApiHelper = new FbApiHelper();
-        $at = $fbApiHelper->getAccessData( $request->input('code'), route('register.fb') );
+        try{
+            $fbApiHelper = new FbApiHelper();
+            $at = $fbApiHelper->getAccessData( $request->input('code'), route('register.fb') );
 
-        $data = $fbApiHelper->getInfoUser($at['access_token']);
-
+            $data = $fbApiHelper->getInfoUser($at['access_token']);
+        }catch (\Exception $exception){
+            return redirect('/')->with('error', 'Произошла ошибка при получении данных Facebook API!');
+        }
         // шаблон json объекта, для хранения всех второстепенных данных пользователя
         $dataTemplate = Utils::getUserDataJsonTemplate();
         $dataTemplate['individual']['active'] = true;
@@ -140,7 +155,7 @@ class RegisterController extends Controller
             ]);
             $request->session()->remove('typeOfUser');
 
-            return redirect('/catalog');
+            return redirect('/')->with('success', ' Вы успешно зарегистрировались. Можете войти!');
         }catch (QueryException $exception){
             $request->session()->remove('typeOfUser');
 

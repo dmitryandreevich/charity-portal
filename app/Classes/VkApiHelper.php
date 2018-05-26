@@ -85,7 +85,7 @@ class VkApiHelper
             $data = $this->getDataByResponse($response);
             return $data;
         }catch (\Exception $exception){
-            return $exception->getMessage();
+            return throwException($exception);
         }
     }
     /**

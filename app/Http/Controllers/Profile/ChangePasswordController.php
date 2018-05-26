@@ -23,12 +23,13 @@ class ChangePasswordController extends Controller
             return redirect()->back()->withErrors($validator);
 
 
-        $hash = Hash::make($request->get('oldPassword'));
+        $oldPassword = $request->get('oldPassword');
+
         $user = Auth::user();
         $currentPassword = $user->password;
         // Если текущий пароль пуст, пропускаем проверки
         if($currentPassword !== "") {
-            if (!Hash::check($hash, Auth::user()->password))
+            if (!Hash::check($oldPassword, Auth::user()->password))
                 return redirect()->back()->with('error', 'Вы ввели неверный пароль!');
         }
         $user->password = Hash::make($request->get('newPassword'));
