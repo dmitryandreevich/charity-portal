@@ -23,7 +23,7 @@
                                     <a href="{{ route('organizations.show',['organization' => $organization->id]) }}"><h3 class="name">{{ $organization->name }}</h3></a>
                                     <div class="location">{{ $organization->address }}</div>
                                 </div>
-                                <div class="btn-block"><a href="" class="btn blue">Редактировать</a></div>
+                                <div class="btn-block"><a href="{{ route('organizations.edit', ['organization' => $organization->id]) }}" class="btn blue">Редактировать</a></div>
                                 @php $st = $organization->status; @endphp
                                 <div class="circle {{ $st === 0 ? "red" : ($st === 1 ? 'yellow' : 'green') }}"></div>
                             </div>

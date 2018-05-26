@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Organization;
+use Faker\Provider\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -54,7 +55,7 @@ class OrganizationController extends Controller
             'docs' => 'file|required|max:5120',
             'photos' => 'required',
             'address' => 'required',
-            'name' => 'required',
+            'name' => 'required|max:50',
             'description' => 'required|min:30|max:1500'
         ]);
         if($validator->fails())
@@ -76,41 +77,47 @@ class OrganizationController extends Controller
         // max count photos 20
         if(count($photos) > 20)
             return redirect()->back()->with('error', 'Максимальное количество файлов - 20.');
-        /*
-         * Получаем последнюю организацию
-         * Получаем её id
-         * и формируем ссылку до файлов с этим идентификатором в качестве имени папки
-         */
-        $latestOrg = Organization::all()->last();
-        $nextOrgId = (isset($latestOrg) ? $latestOrg->id + 1 : 1);
-        $orgPath = "public/organizations/$nextOrgId/";
-        foreach ($photos as $photo) {
-            $fileContent = file_get_contents( $photo->getRealPath() );
-            $fileName =  $photo->getClientOriginalName();
-            Storage::put("$orgPath/photos/$fileName", $fileContent);
+
+        if( $request->has('send') ){
+            /*
+             * Получаем последнюю организацию
+             * Получаем её id
+             * и формируем ссылку до файлов с этим идентификатором в качестве имени папки
+             */
+            $latestOrg = Organization::all()->last();
+            $nextOrgId = (isset($latestOrg) ? $latestOrg->id + 1 : 1);
+            $orgPath = "public/organizations/$nextOrgId/";
+            foreach ($photos as $photo) {
+                $fileContent = file_get_contents( $photo->getRealPath() );
+                $fileName =  $photo->getClientOriginalName();
+
+                Storage::put("$orgPath/photos/$fileName", $fileContent);
+            }
+            // сохраняем документ
+            $coverName = 'cover.' . $cover->getClientOriginalExtension();
+            $docName = 'document.' . $docs->getClientOriginalExtension();
+
+            $coverContent = file_get_contents( $cover->getRealPath() );
+            Storage::put("$orgPath/$coverName", $coverContent);
+            $docsContent = file_get_contents( $docs->getRealPath() );
+            Storage::put("$orgPath/$docName", $docsContent);
+
+            $creator = Auth::id();
+            Organization::create([
+                'creator' => $creator,
+                'name' => $name,
+                'description' => $description,
+                'address' => $address,
+                'city' => $city,
+                'type_consumer' => $typeConsumer,
+                'cover_path' => "organizations/$nextOrgId/$coverName",
+                'doc_path' => "organizations/$nextOrgId/$docName"
+            ]);
+            return redirect( route('organizations.index') )->with('success', 'Организация была успешно создана!');
+        }elseif( $request->has('preview') ){
+            return view('organization.preview',['request' => $request]);
         }
-        // сохраняем документ
-        $coverName = 'cover.' . $cover->getClientOriginalExtension();
-        $docName = 'document.' . $docs->getClientOriginalExtension();
-
-        $coverContent = file_get_contents( $cover->getRealPath() );
-        Storage::put("$orgPath/$coverName", $coverContent);
-        $docsContent = file_get_contents( $docs->getRealPath() );
-        Storage::put("$orgPath/$docName", $docsContent);
-
-        $creator = Auth::id();
-        Organization::create([
-            'creator' => $creator,
-           'name' => $name,
-           'description' => $description,
-           'address' => $address,
-            'city' => $city,
-            'type_consumer' => $typeConsumer,
-            'cover_path' => "organizations/$nextOrgId/$coverName",
-            'doc_path' => "organizations/$nextOrgId/$docName"
-        ]);
-        return redirect()->back();
-        //return redirect( route('organizations.index') )->with('success', 'Организация была успешно создана!');
+        return redirect()->back()->with('error', 'Произошла ошибка при создании организации. Попробуйте снова!');
     }
 
     /**
@@ -143,6 +150,8 @@ class OrganizationController extends Controller
     public function edit(Organization $organization)
     {
         // показ формы для изменения организации
+
+        return view('organization.edit', ['organization' => $organization]);
     }
 
     /**
@@ -155,6 +164,43 @@ class OrganizationController extends Controller
     public function update(Request $request, Organization $organization)
     {
         // обработка изменения организации
+        // обработка создания новой организации
+        $validator = Validator::make($request->all(), [
+            'city' => 'required',
+            'type_consumer' => 'required',
+            'cover' => 'image|max:5120',
+            'docs' => 'file|max:5120',
+            'address' => 'required',
+            'name' => 'required|max:50',
+            'description' => 'required|min:30|max:1500'
+        ]);
+        if($validator->fails())
+            return redirect()->back()->withErrors($validator);
+        $orgPath = "/public/organizations/$organization->id";
+        if($request->hasFile('cover')){
+            $cover = $request->file('cover');
+            $coverName = 'cover.' . $cover->getClientOriginalExtension();
+            $coverContent = file_get_contents( $cover->getRealPath() );
+            Storage::put("$orgPath/$coverName", $coverContent);
+
+            $organization->cover_path = "organizations/$organization->id/$coverName";
+        }
+        if($request->hasFile('docs')) {
+            $docs = $request->file('docs');
+            $docName = 'document.' . $docs->getClientOriginalExtension();
+            $docsContent = file_get_contents($docs->getRealPath());
+            Storage::put("$orgPath/$docName", $docsContent);
+
+            $organization->doc_path = "organizations/$organization->id/$docName";
+        }
+
+        $organization->update([
+           'city' => $request->get('city'),
+           'address' => $request->get('address'),
+           'name' => $request->get('name'),
+           'description' => $request->get('description')
+        ]);
+        return redirect( route('organizations.index') )->with('success', 'Организация была успешно обновлена!');
     }
 
     /**
