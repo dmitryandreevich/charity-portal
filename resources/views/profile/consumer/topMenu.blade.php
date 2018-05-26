@@ -10,7 +10,7 @@
     <div class="container row">
         <div class="top-menu__left">
             <a href="{{ route('organizations.create') }}" class="add">Добавить организацию</a>
-            <a href="/" class="add">Добавить потребность</a>
+            <a href="{{ route('needs.create') }}" class="add">Добавить потребность</a>
         </div>
         <div class="top-menu__right">
             <ul class="list">

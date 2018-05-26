@@ -32,8 +32,11 @@ Route::group(['namespace' => 'Profile', 'prefix' => 'pr', 'middleware' => 'auth'
    //Route::get('/{user}', 'ShowController@show')->name('profile.show');
 });
 Route::resource('/organizations', 'OrganizationController', ['except' => 'show']);
-
 Route::get('/organizations/{organization}', 'OrganizationController@show')->name('organizations.show');
+
+Route::resource('/needs', 'NeedController');
+
+
 
 Route::get('/', 'HomeController@index')->name('home.index');
 

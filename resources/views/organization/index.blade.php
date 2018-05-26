@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="btn-block"><a href="{{ route('organizations.edit', ['organization' => $organization->id]) }}" class="btn blue">Редактировать</a></div>
                                 @php $st = $organization->status; @endphp
-                                <div class="circle {{ $st === 0 ? "red" : ($st === 1 ? 'yellow' : 'green') }}"></div>
+                                <div class="circle {{ $st === \App\Classes\StatusOfOrganization::DISABLED ? "red" : ($st === \App\Classes\StatusOfOrganization::DISABLED_BY_MODERATOR ? 'yellow' : 'green') }}"></div>
                             </div>
                         </div>
                     @endforeach

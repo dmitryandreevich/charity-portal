@@ -90,7 +90,7 @@ $(document).ready(function () {
         template += '<span class="custom-select-trigger">' + $(this).attr("placeholder") + '</span>';
         template += '<div class="custom-options">';
         $(this).find("option").each(function() {
-            template += '<span class="custom-option ' + $(this).attr("class") + '" data-value="' + $(this).attr("value") + '">' + $(this).html() + '</span>';
+            template += '<span class="custom-option ' + $(this).attr("class") + '" data-value="' + $(this).attr("value") + '" tab-name="'+ $(this).attr("tab-name") +'">' + $(this).html() + '</span>';
         });
         template += '</div></div>';
 
@@ -116,6 +116,17 @@ $(document).ready(function () {
         $(this).addClass("selection");
         $(this).parents(".custom-select").removeClass("opened");
         $(this).parents(".custom-select").find(".custom-select-trigger").text($(this).text());
+    });
+
+    $(".select-need_type .custom-option").on("click", function() {
+        var tabName = $(this).attr('tab-name');
+        if(tabName === "tab-new_money"){
+            $(".tab-new_money").css('display', 'block');
+            $('.tab-new_vols').css('display', 'none');
+        }else if(tabName === "tab-new_vols"){
+            $('.tab-new_vols').css('display', 'block');
+            $('.tab-new_money').css('display', 'none');
+        }
     });
 
     /*Popup*/

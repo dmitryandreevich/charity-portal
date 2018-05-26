@@ -47,7 +47,9 @@
             <div class="logotype"><a href="/" class="logo"><img src="{{ asset('img/icons/i.header_logo-heart.svg') }}"></a></div>
             <div class="menu row"><a href="/" class="menu_item">Каталог потребителей</a><a href="/" class="menu_item">О проекте</a><a href="/" class="menu_item">Вопросы и ответы</a><a href="/" class="menu_item">Условия</a><a href="/" class="menu_item">Статьи</a><a href="/" class="menu_item">Контакты</a></div>
             @if(\Illuminate\Support\Facades\Auth::check())
-
+                <a href="{{ route('profile.index') }}" class="main-ava login">
+                    <p class="entrance">Профиль</p>
+                </a>
                 <a href="{{ route('logout') }}" class="main-ava login">
                     <p class="entrance">Выйти</p>
                 </a>

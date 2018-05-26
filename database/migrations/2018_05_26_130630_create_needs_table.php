@@ -15,6 +15,20 @@ class CreateNeedsTable extends Migration
     {
         Schema::create('needs', function (Blueprint $table) {
             $table->increments('id');
+            $table->tinyInteger('status')->default(\App\Classes\StatusOfNeed::STATUS_ACTUAL);
+            $table->integer('id_org');
+            $table->string('type_need');
+            $table->string('title');
+
+            $table->text('date_time');
+            $table->text('description');
+            $table->text('link');
+            $table->float('amount');
+            $table->integer('count_vols');
+
+            $table->string('cover_path');
+            $table->string('doc_path');
+            // json donaters/volunteers
             $table->timestamps();
         });
     }
