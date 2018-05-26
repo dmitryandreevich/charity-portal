@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Profile;
 use App\Classes\FbApiHelper;
 use App\Classes\VkApiHelper;
 use App\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -22,17 +23,18 @@ class SocialController extends Controller
         $vkApiHelper = new VkApiHelper();
         $at = $vkApiHelper->getAccessData($request->input('code'), route('profile.vkAttach'));
         // not isset in table
-        if(User::where('vkId', $at['user_id'])->first() == null){
+        try{
             $user = Auth::user();
             $user->vkId = $at['user_id'];
             $user->save();
-            // Attach signal
+
             return redirect()->back()->with('success', 'Аккаунт Вконтакте был успешно привязан!');
+        }catch (QueryException $exception){
+            return redirect()->back()->with('error', 'Этот аккаунт Вконтакте уже привязан!');
         }
 
-        return redirect()->back()->with('error', 'Данный аккаунт Вконтакте уже привязан к системе!');
-    }
 
+    }
     /**
      * Attach facebook
      * @param Request $request
@@ -43,13 +45,14 @@ class SocialController extends Controller
         $at = $fbApiHelper->getAccessData($request->input('code'), route('profile.fbAttach'));
 
         $data = $fbApiHelper->getInfoUser($at['access_token']);
-        if(User::where('fbId', $data['id'])->first() == null) {
+        try{
             $user = Auth::user();
             $user->fbId = $data['id'];
             $user->save();
-            // Attach signal
-            return redirect()->back()->with('success', 'Аккаунт Facebook был успешно привязан!');
+        }catch (QueryException $exception){
+            return redirect()->back()->with('error', 'Этот аккаунт Facebook уже привязан!');
         }
-        return redirect()->back()->with('error', 'Данный аккаунт Facebook уже привязан к системе!');
+
+        return redirect()->back()->with('success', 'Аккаунт Facebook был успешно привязан!');
     }
 }

@@ -53,11 +53,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
             'typeOfUser' => 'required|max:2',
-            'vkId' => 'unique:users',
-            'fbId' => 'unique:users'
         ]);
     }
 
@@ -103,8 +101,6 @@ class RegisterController extends Controller
         }catch (\Exception $exception){
             return redirect('/')->with('error', 'Произошла ошибка при получении данных VK API!');
         }
-
-
         $data = $vkApiHelper->getInfoUser($at['access_token']);
 
         // шаблон json объекта, для хранения всех второстепенных данных пользователя
@@ -123,8 +119,7 @@ class RegisterController extends Controller
         } catch (QueryException $exception) {
             $request->session()->remove('typeOfUser');
 
-            return redirect('/')->with('error', 'Данный email или VK уже привязан. Можете войти!');
-            // not unique email address or vkid
+            return redirect('/')->with('error', 'Произошла ошибка. Данный Email или VK уже привязаны!');
         }
     }
 
@@ -133,7 +128,6 @@ class RegisterController extends Controller
      * @return \Illuminate\Http\RedirectResponse|string
      */
     public function registerByFb(Request $request){
-
         $typeOfUser = $request->session()->get('typeOfUser');
         try{
             $fbApiHelper = new FbApiHelper();
@@ -159,8 +153,7 @@ class RegisterController extends Controller
         }catch (QueryException $exception){
             $request->session()->remove('typeOfUser');
 
-            return $exception->getMessage();
-            // not unique email address or fbid
+            return redirect('/')->with('error', 'Произошла ошибка. Данный Email или Facebook уже привязаны!');
         }
 
     }

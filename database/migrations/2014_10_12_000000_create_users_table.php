@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->string('password')->default("");
             $table->string('avatar')->default("");
             $table->float('balance')->default(0);
@@ -23,8 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('phone')->default("");
             $table->tinyInteger('type'); // Type of account
             $table->text('data');
-            $table->string('vkId');
-            $table->string('fbId');
+            $table->string('vkId')->unique()->nullable();
+            $table->string('fbId')->unique()->nullable();
             $table->string('vol_type_org')->nullable();
             $table->rememberToken();
             $table->timestamps();

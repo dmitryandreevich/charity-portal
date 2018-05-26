@@ -29,4 +29,25 @@ class User extends Authenticatable
     public static function getData(User $user){
         return json_decode($user->data);
     }
+    public function setEmailAttribute($value) {
+        if ( empty($value) ) {
+            $this->attributes['email'] = NULL;
+        } else {
+            $this->attributes['email'] = $value;
+        }
+    }
+    public function setVkIdAttribute($value) {
+        if ( empty($value) ) {
+            $this->attributes['vkId'] = NULL;
+        } else {
+            $this->attributes['vkId'] = $value;
+        }
+    }
+    public function setFbIdAttribute($value) {
+        if ( empty($value) ) {
+            $this->attributes['fbId'] = NULL;
+        } else {
+            $this->attributes['fbId'] = $value;
+        }
+    }
 }
