@@ -15,24 +15,23 @@
                 <h2 class="title">Каталог организаций</h2>
                 <ul class="headroom_list row">
                     <li class="headroom_item big">
-                        <select placeholder="Город" name="city" class="headroom_city sources custom-select big">
+                        <select placeholder="Город" name="city" class="headroom_city sources custom-select big sort-select sort_city">
                             <option>Омск</option>
                             <option>Москва</option>
                             <option>Питер</option>
                         </select>
                     </li>
                     <li class="headroom_item big">
-                        <select placeholder="Тип организации" name="type" class="type sources custom-select big">
-                            <option>Тип организации</option>
-                            <option>Тип организации</option>
-                            <option>Тип организации</option>
+                        <select placeholder="Тип организации" name="type_consumer" class="type sources custom-select big sort-select sort-type_org">
+                            @foreach(\App\Classes\TypesOfOrganizations::typesOrganizations as $key => $type)
+                                <option value="{{ $key }}">{{ $type }}</option>
+                            @endforeach
                         </select>
                     </li>
                     <li class="headroom_item big">
-                        <select placeholder="Вид потребностей" name="view" class="view sources custom-select big">
-                            <option>Вид потребностей</option>
-                            <option>Вид потребностей</option>
-                            <option>Вид потребностей</option>
+                        <select placeholder="Вид потребностей" name="view" class="view sources custom-select big sort-select sort-type_need">
+                            <option value="{{ \App\Classes\TypeOfNeed::COLLECT_MONEY }}">Сбор денег</option>
+                            <option value="{{ \App\Classes\TypeOfNeed::VOLUNTEERS }}">Помощь волонтёров</option>
                         </select>
                     </li>
                     <li class="headroom_item select-small">

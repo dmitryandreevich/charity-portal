@@ -17,7 +17,7 @@ class CreateOrganizationsTable extends Migration
             $table->increments('id');
             $table->integer('creator');
             $table->tinyInteger('status');
-            $table->string('type_consumer');
+            $table->integer('type_consumer');
             $table->string('city');
             $table->string('address');
             $table->string('name');

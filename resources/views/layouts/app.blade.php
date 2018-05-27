@@ -45,7 +45,7 @@
 
         <div class="container row">
             <div class="logotype"><a href="/" class="logo"><img src="{{ asset('img/icons/i.header_logo-heart.svg') }}"></a></div>
-            <div class="menu row"><a href="/" class="menu_item">Каталог потребителей</a><a href="/" class="menu_item">О проекте</a><a href="/" class="menu_item">Вопросы и ответы</a><a href="/" class="menu_item">Условия</a><a href="/" class="menu_item">Статьи</a><a href="/" class="menu_item">Контакты</a></div>
+            <div class="menu row"><a href="{{ route('catalog.index') }}" class="menu_item">Каталог потребителей</a><a href="/" class="menu_item">О проекте</a><a href="/" class="menu_item">Вопросы и ответы</a><a href="/" class="menu_item">Условия</a><a href="/" class="menu_item">Статьи</a><a href="/" class="menu_item">Контакты</a></div>
             @if(\Illuminate\Support\Facades\Auth::check())
                 <a href="{{ route('profile.index') }}" class="main-ava login">
                     <p class="entrance">Профиль</p>
@@ -246,4 +246,5 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="//cdn.jsdelivr.net/jquery.magnific-popup/1.0.0/jquery.magnific-popup.min.js"></script><script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT3OjHXWTK-51yNe1jWDa67cF73QEGwHc&amp;amp;amp;sensor=false"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.min.js"></script>
+    <script type="text/javascript" src="{{ asset('scripts/ajax.functions.js') }}"></script>
 </html>

@@ -203,7 +203,8 @@ class OrganizationController extends Controller
            'city' => $request->get('city'),
            'address' => $request->get('address'),
            'name' => $request->get('name'),
-           'description' => $request->get('description')
+           'description' => $request->get('description'),
+            'type_consumer' => $request->get('type_consumer')
         ]);
         return redirect( route('organizations.index') )->with('success', 'Организация была успешно обновлена!');
     }

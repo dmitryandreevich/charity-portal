@@ -31,6 +31,11 @@ Route::group(['namespace' => 'Profile', 'prefix' => 'pr', 'middleware' => 'auth'
    Route::post('/toggleStatus', 'MainController@toggle')->name('profile.toggleStatus');
    //Route::get('/{user}', 'ShowController@show')->name('profile.show');
 });
+Route::group(['prefix' => 'catalog'], function (){
+   Route::get('/', 'CatalogController@index')->name('catalog.index');
+   Route::put('/sort', 'CatalogController@sort')->name('catalog.sort');
+
+});
 Route::resource('/organizations', 'OrganizationController', ['except' => 'show']);
 Route::get('/organizations/{organization}', 'OrganizationController@show')->name('organizations.show');
 
@@ -39,11 +44,6 @@ Route::resource('/needs', 'NeedController');
 
 
 Route::get('/', 'HomeController@index')->name('home.index');
-
-Route::get('/catalog', function (){
-   // $json_template = file_get_contents('test.json');
-    return view('catalog');
-});
 
 Auth::routes();
 

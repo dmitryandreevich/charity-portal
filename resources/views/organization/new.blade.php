@@ -11,20 +11,9 @@
                     {{ csrf_field() }}
                     <div class="list w50">
                         <select placeholder="Тип потребителя" name="type_consumer" class="headroom_city sources custom-select">
-                            <option value="Детский дом">Детский дом</option>
-                            <option value="Социальный приют">Социальный приют</option>
-                            <option value="Интернат для детей-инвалидов">Интернат для детей-инвалидов</option>
-                            <option value="Дом престарелых">Дом престарелых</option>
-                            <option value="Реабилитационный центр">Реабилитационный центр</option>
-                            <option value="Психоневрологический интернат">Психоневрологический интернат</option>
-                            <option value="Хоспис">Хоспис</option>
-                            <option value="Больница">Больница</option>
-                            <option value="Роддом">Роддом</option>
-                            <option value="Детский сад">Детский сад</option>
-                            <option value="Школа">Школа</option>
-                            <option value="ВУЗ">ВУЗ</option>
-                            <option value="Дом ребёнка">Дом ребёнка</option>
-                            <option value="Приют для животных">Приют для животных</option>
+                            @foreach(\App\Classes\TypesOfOrganizations::typesOrganizations as $key => $type)
+                                <option value="{{ $key }}">{{ $type }}</option>
+                            @endforeach
                         </select>
                         <select placeholder="Выберите город" name="city" class="headroom_city sources custom-select">
                             <option value="Омск">Омск</option>

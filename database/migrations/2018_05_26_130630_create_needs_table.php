@@ -17,7 +17,7 @@ class CreateNeedsTable extends Migration
             $table->increments('id');
             $table->tinyInteger('status')->default(\App\Classes\StatusOfNeed::STATUS_ACTUAL);
             $table->integer('id_org');
-            $table->string('type_need');
+            $table->tinyInteger('type_need');
             $table->string('title');
 
             $table->text('date_time');
