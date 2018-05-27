@@ -55,39 +55,38 @@
                             <input type="submit" value="Разместить">
                         </div>
                     </div>
-
+                    <!--<div class="tab-new_vols" style="">
+                        <div class="list">
+                            <input type="text" placeholder="Заголовок" name="title">
+                        </div>
+                        <div class="list">
+                            <input type="text" placeholder="Дата, время" name="date_time">
+                        </div>
+                        <div class="list row">
+                            <input type="number" placeholder="Количество волонтёров" name="count_vols">
+                        </div>
+                        <div class="list">
+                            <textarea placeholder="Описание потребности" name="description"></textarea>
+                        </div>
+                        <div class="add-file">
+                            <div class="file-upload">
+                                <label>
+                                    <input type="file" name="cover"><span>Загрузить обложку.</span>
+                                </label>
+                            </div>
+                            <div class="file-upload">
+                                <label>
+                                    <input type="file" name="doc"><span>Загрузить документ.Файл для сбора денег. Например, смета по ремонту.</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="btn-block">
+                            <input type="submit" value="Разместить">
+                        </div>
+                    </div>-->
 
                 </form>
-                <div class="tab-new_vols" style="display: none;">
-                    <div class="list">
-                        <input type="text" placeholder="Заголовок" name="title">
-                    </div>
-                    <div class="list">
-                        <input type="text" placeholder="Дата, время" name="date_time">
-                    </div>
-                    <div class="list row">
-                        <input type="text" placeholder="Ссылка на товар" name="link">
-                        <input type="number" placeholder="Количество волонтёров" name="count_vols">
-                    </div>
-                    <div class="list">
-                        <textarea placeholder="Описание потребности" name="description"></textarea>
-                    </div>
-                    <div class="add-file">
-                        <div class="file-upload">
-                            <label>
-                                <input type="file" name="cover"><span>Загрузить обложку.</span>
-                            </label>
-                        </div>
-                        <div class="file-upload">
-                            <label>
-                                <input type="file" name="doc"><span>Загрузить документ.Файл для сбора денег. Например, смета по ремонту.</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="btn-block">
-                        <input type="submit" value="Разместить">
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>

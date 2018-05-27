@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\StatusOfOrganization;
+use App\Need;
 use App\Organization;
 use Faker\Provider\Image;
 use Illuminate\Http\Request;
@@ -111,7 +113,8 @@ class OrganizationController extends Controller
                 'city' => $city,
                 'type_consumer' => $typeConsumer,
                 'cover_path' => "organizations/$nextOrgId/$coverName",
-                'doc_path' => "organizations/$nextOrgId/$docName"
+                'doc_path' => "organizations/$nextOrgId/$docName",
+                'status' => StatusOfOrganization::DISABLED
             ]);
             return redirect( route('organizations.index') )->with('success', 'Организация была успешно создана!');
         }elseif( $request->has('preview') ){
@@ -134,10 +137,12 @@ class OrganizationController extends Controller
         $photos = Storage::allFiles("/public/organizations/$id/photos/");
         foreach ($photos as $key => $photo)
             $photos[$key] = str_replace('public', 'storage', $photo);
+        $needs = Need::where('id_org', $organization->id)->get();
 
         return view('organization.show',
             ['organization' => $organization,
-                'photos' => $photos]
+                'photos' => $photos,
+                'needs' => $needs]
         );
     }
 

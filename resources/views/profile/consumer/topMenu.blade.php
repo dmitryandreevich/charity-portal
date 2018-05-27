@@ -15,7 +15,7 @@
         <div class="top-menu__right">
             <ul class="list">
                 <li class="item"><a href="{{ route('organizations.index') }}">Организации</a></li>
-                <li class="item"><a href="/">Потребности</a></li>
+                <li class="item"><a href="{{ route('needs.index') }}">Потребности</a></li>
                 <li class="item"><a href="/" class="active">Настройки</a></li>
             </ul>
         </div>

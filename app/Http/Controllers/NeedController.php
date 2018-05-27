@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classes\StatusOfNeed;
 use App\Classes\StatusOfOrganization;
 use App\Classes\TypeOfNeed;
+use App\Classes\TypeOfUser;
 use App\Need;
 use App\Organization;
 use Illuminate\Http\Request;
@@ -19,9 +20,27 @@ class NeedController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(){
+        $user = Auth::user();
+
+        $org_ids = Organization::where('creator', Auth::id())->pluck('id')->toArray();
+        $needs = Need::whereIn('id_org', $org_ids)->get();
+
+        switch ($user->type){
+            case TypeOfUser::DONOR:{
+
+            }
+            case TypeOfUser::CONSUMER:{
+                //eturn (new \App\Http\Controllers\Need\ConsumerController())->index();
+                return view('need.consumer.index', ['needs' => $needs]);
+
+                break;
+            }
+            case TypeOfUser::VOLUNTEER:{
+                break;
+            }
+        }
+        return redirect()->back()->with('error', 'Произошла ошибка!');
     }
 
     /**
@@ -54,7 +73,6 @@ class NeedController extends Controller
                 'description' => 'required|min:20|max:500',
                 'cover' => 'required|image|max:5120',
                 'doc' => 'required|file|max:5120',
-                'link' => 'required|string|max:189'
             ]);
             if($validator->fails())
                 return redirect()->back()->withErrors($validator);

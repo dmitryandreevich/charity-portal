@@ -24,6 +24,7 @@ class CreateNeedsTable extends Migration
             $table->text('description');
             $table->text('link');
             $table->float('amount');
+            $table->float('collected');
             $table->integer('count_vols');
 
             $table->string('cover_path');

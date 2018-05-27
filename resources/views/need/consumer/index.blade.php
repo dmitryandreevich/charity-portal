@@ -2,54 +2,26 @@
 /**
  * Created by PhpStorm.
  * User: Dmitry Andreevich
- * Date: 25.05.2018
- * Time: 19:30
+ * Date: 27.05.2018
+ * Time: 13:54
  */
 ?>
 @extends('layouts.app')
 
 @section('main-block')
-    <div class="main-block sp needs">
-        <div class="main-banner"></div>
-        <div class="main-content">
-            <div class="container">
-                <div class="top">
-                    <h2 class="title">{{ $organization->name }}</h2>
-                    <div class="location">{{ $organization->address }}</div>
-                </div>
-                <p class="descr">{{ $organization->description }}.</p>
-                <div class="main-slider">
-                    <div class="container">
-                        <div class="main-slider_header row"></div>
-                        <div class="main-slider_content">
-                            @foreach($photos as $photo)
-                                <div class="main-slider_item"><img src="{{ asset($photo) }}"></div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-                <div class="block-needs--help">
-                    <div class="container">
-                        <div class="slider_content">
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item1.png"></div>
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item2.png"></div>
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item3.png"></div>
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item1.png"></div>
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item2.png"></div>
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item3.png"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="main-block needs">
+        @include('profile.consumer.topMenu')
         <div class="catalog_organization-content">
             <div class="container">
                 <div class="top">
-                    <div class="left">
-                        <h2 class="title">Актуальные потребности</h2><a href="/">Архив</a>
-                    </div>
+                    <h2 class="title">Потребности</h2>
                     <div class="select">
-                        <select placeholder="Тип потребности" name="city" class="headroom_city sources custom-select">
+                        <select placeholder="Статус" name="city" class="headroom_city sources custom-select">
+                            <option>Омск</option>
+                            <option>Москва</option>
+                            <option>Питер</option>
+                        </select>
+                        <select placeholder="Организация" name="city" class="headroom_city sources custom-select">
                             <option>Омск</option>
                             <option>Москва</option>
                             <option>Питер</option>
@@ -67,20 +39,22 @@
                                 <div class="right">
                                     <div class="info">
                                         <h3 class="name">{{ $need->title }}</h3>
+                                        <h3 class="name">Организация</h3>
+                                        <h3 class="name">Тип</h3>
                                         <p class="html">{{ $need->description }}</p>
                                         <div class="bottom_item row">
-                                            <div class="date descr">Дата: <span class="bold">{{ $need->date_time }}</span></div>
+                                            <div class="date descr">Дата создания: <span class="bold">{{ $need->created_at }}</span></div>
+                                            <div class="author descr">Координатор: <span class="bold">Иван Викторов</span></div>
                                         </div>
                                     </div>
                                     <div class="end">
                                         <div class="info">
                                             <div class="p-small">Нужно волонтёров:<span>{{ $need->count_vols }} человек</span></div><span class="money">Осталось собрать:<span class="blue">{{ $need->count_vols - $need->collected }} человек</span></span>
                                         </div>
-                                        @if( ($need->count_vols - intval($need->collected) ) === 0 )
-                                            <div class="btn-block"><a href="#" data-modal="#modal4" class="btn blue open-modal">Закрыть</a></div>
-                                        @endif
+                                        <div class="btn-block"><a href="#" data-modal="#modal4" class="btn blue open-modal">Отменить</a></div>
                                     </div>
                                 </div>
+                                <div class="circle green"></div>
                             </div>
                         @elseif($typeOfNeed == \App\Classes\TypeOfNeed::COLLECT_MONEY)
                             <div class="content__item row">
@@ -88,8 +62,9 @@
                                 <div class="right">
                                     <div class="info">
                                         <h3 class="name">{{ $need->title }}</h3>
+                                        <h3 class="name">Организация</h3>
+                                        <h3 class="name">Тип</h3>
                                         <p class="html">{{ $need->description }}</p>
-                                        <a href="{{ $need->link }}" class="link">{{ $need->link }}</a>
                                     </div>
                                     @if( ($need->amount - $need->collected ) <= 0.00 )
                                         <div class="end">
@@ -101,16 +76,14 @@
                                             <div class="info">
                                                 <div class="p-small">Необходимая сумма:<span>{{ $need->amount }} ₽</span></div><span class="money">Осталось собрать:<span class="blue">{{ $need->amount - $need->collected }} ₽</span></span>
                                             </div>
+                                            <div class="btn-block"><a href="#" data-modal="#modal4" class="btn blue open-modal">Отменить</a></div>
                                         </div>
                                     @endif
-
                                 </div>
+                                <div class="circle green"></div>
                             </div>
                         @endif
                     @endforeach
-
-
-
                 </div>
             </div>
         </div>

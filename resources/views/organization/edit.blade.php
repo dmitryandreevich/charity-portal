@@ -14,13 +14,13 @@
         @include('profile.consumer.topMenu')
         <div class="new-org_content">
             <div class="container">
-                <h2 class="title">Новая Организация</h2>
+                <h2 class="title">Редактирование организации '{{ $organization->name }}'</h2>
                 <form class="new-org__form" method="post" action="{{ route('organizations.update', ['organization' => $organization]) }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
 
                     <div class="list w50">
-                        <select placeholder="{{ $organization->type_consumer }}" name="type_consumer" class="headroom_city sources custom-select">
+                        <select placeholder="Тип потребителя" name="type_consumer" class="headroom_city sources custom-select">
                             <option value="Детский дом" selected>Детский дом</option>
                             <option value="Социальный приют">Социальный приют</option>
                             <option value="Интернат для детей-инвалидов">Интернат для детей-инвалидов</option>
@@ -69,8 +69,7 @@
                         </div>
                     </div>
                     <div class="btn-block">
-                        <button class="btn" type="submit" name="preview" formtarget="_blank">Предварительный просмотр</button>
-                        <input type="submit" value="Отправить на модерацию" name="send">
+                        <input type="submit" value="Сохранить" name="send">
                     </div>
                 </form>
             </div>
