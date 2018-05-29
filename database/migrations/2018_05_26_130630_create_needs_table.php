@@ -23,12 +23,13 @@ class CreateNeedsTable extends Migration
             $table->text('date_time');
             $table->text('description');
             $table->text('link');
-            $table->float('amount');
-            $table->float('collected');
+            $table->integer('amount', false, true);
+            $table->integer('collected', false, true);
             $table->integer('count_vols');
 
             $table->string('cover_path');
             $table->string('doc_path');
+            $table->text('members'); // json members
             // json donaters/volunteers
             $table->timestamps();
         });

@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('password')->default("");
             $table->string('avatar')->default("");
-            $table->float('balance')->default(0);
+            $table->integer('balance', false, true)->default(0);
             $table->string('city')->default("");
             $table->string('phone')->default("");
             $table->tinyInteger('type'); // Type of account

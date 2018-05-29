@@ -175,21 +175,25 @@
     <div id="modal3" class="modal">
         <div class="content"><a href="#" data-id="popup_default" data-animation="scale" class="close-popup">&times;</a>
             <h2 class="title">Выбирете способ помочь</h2>
-            <form class="new-org__form">
-                <select placeholder="Помочь финансово" name="city" class="headroom_city sources custom-select">
+            <form class="new-org__form" action="{{ route('donation.store') }}" method="post">
+                {{ csrf_field() }}
+
+                <select placeholder="Помочь финансово" name="donate_type" class="headroom_city sources custom-select">
                     <option>Помочь финансово</option>
                     <option>Помочь материально</option>
                 </select>
+
+                <div class="right item">
+                    <div class="name">Введите желаемую сумму:</div>
+                    <div class="list">
+                        <input type="number" class="i-value" name="amount"><span class="value">₽</span>
+                    </div>
+                    <div class="btn-block">
+                        <input type="submit" value="Пожертвовать">
+                    </div>
+                </div>
+
             </form>
-            <div class="right item">
-                <div class="name">Введите желаемую сумму:</div>
-                <div class="list">
-                    <input type="type" class="i-value"><span class="value">₽</span>
-                </div>
-                <div class="btn-block">
-                    <input type="button" value="Пожертвовать">
-                </div>
-            </div>
         </div>
     </div>
     <div id="modal4" class="modal">

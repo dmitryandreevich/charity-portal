@@ -198,7 +198,7 @@ class OrganizationController extends Controller
 
             $organization->doc_path = "organizations/$organization->id/$docName";
         }
-
+        $rules = ['id' => 1,'creator' => 1];
         $organization->update([
            'city' => $request->get('city'),
            'address' => $request->get('address'),

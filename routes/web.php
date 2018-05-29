@@ -31,6 +31,8 @@ Route::group(['namespace' => 'Profile', 'prefix' => 'pr', 'middleware' => 'auth'
    Route::post('/toggleStatus', 'MainController@toggle')->name('profile.toggleStatus');
    //Route::get('/{user}', 'ShowController@show')->name('profile.show');
 });
+Route::post('/donation', 'Profile\DonorController@donation')->name('donation.store');
+
 Route::group(['prefix' => 'catalog'], function (){
    Route::get('/', 'CatalogController@index')->name('catalog.index');
    Route::put('/sort', 'CatalogController@sort')->name('catalog.sort');

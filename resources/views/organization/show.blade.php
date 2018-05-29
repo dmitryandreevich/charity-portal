@@ -76,8 +76,8 @@
                                         <div class="info">
                                             <div class="p-small">Нужно волонтёров:<span>{{ $need->count_vols }} человек</span></div><span class="money">Осталось собрать:<span class="blue">{{ $need->count_vols - $need->collected }} человек</span></span>
                                         </div>
-                                        @if( ($need->count_vols - intval($need->collected) ) === 0 )
-                                            <div class="btn-block"><a href="#" data-modal="#modal4" class="btn blue open-modal">Закрыть</a></div>
+                                        @if(\Illuminate\Support\Facades\Auth::user()->type == \App\Classes\TypeOfUser::VOLUNTEER)
+                                            <div class="btn-block"><a href="#" data-modal="#modal4" class="btn blue open-modal">Помочь</a></div>
                                         @endif
                                     </div>
                                 </div>
@@ -94,14 +94,19 @@
                                     @if( ($need->amount - $need->collected ) <= 0.00 )
                                         <div class="end">
                                             <span class="money">Вся сумма собрана<span class="green">{{ $need->amount }} ₽</span></span>
-                                            <div class="btn-block"><a href="#" data-modal="#modal3" class="btn blue open-modal">Получить</a></div>
+                                            <!--<div class="btn-block"><a href="#" data-modal="#modal3" class="btn blue open-modal">Получить</a></div>-->
                                         </div>
                                     @else
+
                                         <div class="end">
                                             <div class="info">
                                                 <div class="p-small">Необходимая сумма:<span>{{ $need->amount }} ₽</span></div><span class="money">Осталось собрать:<span class="blue">{{ $need->amount - $need->collected }} ₽</span></span>
                                             </div>
+                                            @if(\Illuminate\Support\Facades\Auth::user()->type == \App\Classes\TypeOfUser::DONOR)
+                                                <div class="btn-block"><a href="#" data-modal="#modal3" class="btn blue open-modal" receiver="{{ $need->id }}" >Помочь</a></div>
+                                            @endif
                                         </div>
+
                                     @endif
 
                                 </div>

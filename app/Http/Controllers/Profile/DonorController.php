@@ -11,9 +11,11 @@ namespace App\Http\Controllers\Profile;
 
 use App\Classes\Utils;
 use App\Http\Controllers\Controller;
+use App\Need;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class DonorController extends Controller
 {
@@ -30,6 +32,40 @@ class DonorController extends Controller
         else
             return view('profile.donor.org', ['user' => $user,'data' => $userData]);
     }
+    public function donation(Request $request){
 
+        $validator = Validator::make($request->all(),
+            ['need_data' => 'required|integer',
+                'amount' => 'required|integer']);
+        if($validator->fails())
+            return redirect()->back()->withErrors($validator);
 
+        $needId = $request->get('need_data');
+        $amount = $request->get('amount');
+
+        $user = Auth::user();
+
+        $need = Need::where('id', $needId)->first();
+
+        if( count($need) !== 0 ){
+            $balance = $user->balance;
+            if($balance >= $amount){
+                // высчитываем сколько можно ещё пожертвовать
+                $leftToDonate = $need->amount - $need->collected;
+
+                // если эта сумма не больше требуемой, продолжаем
+                if($amount > $leftToDonate)
+                    return redirect()->back()->with('error', 'Введённая сумма больше нужной!');
+
+                //$user->balance -= $amount;
+                $need->collected += $amount;
+
+                $user->save();
+                $need->save();
+                return redirect()->back()->with('success', 'Вы успешно пожертвовали деньг!');
+            }
+            return redirect()->back()->with('error', 'У вас недостаточно средств!');
+        }
+        return redirect()->back()->with('error', 'Произошла ошибка, попробуйте ещё раз!');
+    }
 }

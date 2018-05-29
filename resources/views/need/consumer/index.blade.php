@@ -31,7 +31,7 @@
 
                 <div class="content__list">
                     @foreach($needs as $need)
-                        @php $typeOfNeed = $need->type_need; @endphp
+                        @php $user = \Illuminate\Support\Facades\Auth::user(); $typeOfNeed = $need->type_need; @endphp
 
                         @if($typeOfNeed == \App\Classes\TypeOfNeed::VOLUNTEERS)
                             <div class="content__item row">
@@ -51,6 +51,7 @@
                                         <div class="info">
                                             <div class="p-small">Нужно волонтёров:<span>{{ $need->count_vols }} человек</span></div><span class="money">Осталось собрать:<span class="blue">{{ $need->count_vols - $need->collected }} человек</span></span>
                                         </div>
+
                                         <div class="btn-block"><a href="#" data-modal="#modal4" class="btn blue open-modal">Отменить</a></div>
                                     </div>
                                 </div>

@@ -140,11 +140,12 @@ $(document).ready(function () {
 
         var $this = $(this),
             modal = $($this).data("modal");
-
         $(modal).parents(".overlay").addClass("open");
         setTimeout( function(){
             $(modal).addClass("open");
         }, 350);
+        var needData = $this.attr('receiver');
+        $(modal).find('.new-org__form').append("<input type='hidden' name='need_data' value='" + needData +"'>")
 
         $(document).on('click', function(e){
             var target = $(e.target);
