@@ -39,7 +39,9 @@ class NeedController extends Controller
                 return view('profile.consumer.needs', ['needs' => $needs]);
             }
             case TypeOfUser::VOLUNTEER:{
-                break;
+
+                $needs = Need::all();
+                return view('profile.volunteer.needs', ['needs' => $needs]);
             }
         }
         return redirect()->back()->with('error', 'Произошла ошибка!');

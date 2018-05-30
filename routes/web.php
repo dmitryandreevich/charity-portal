@@ -11,10 +11,10 @@
 |
 */
 
-
-
 Auth::routes();
+
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+
 Route::group(['namespace' => 'Auth', 'prefix' => 'social', 'middleware' => 'guest'], function (){
     Route::get('/', 'RegisterController@getSocialAccess')->name('register.getAccess');
     Route::get('/vk/reg', 'RegisterController@registerByVk')->name('register.vk');
@@ -22,6 +22,7 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'social', 'middleware' => 'gues
     Route::get('/vk/login', 'LoginController@loginByVk')->name('login.vk');
     Route::get('/fb/login', 'LoginController@loginByFb')->name('login.fb');
 });
+// Profile group
 Route::group(['namespace' => 'Profile', 'prefix' => 'pr', 'middleware' => 'auth'],function (){
    Route::get('/', 'MainController@index')->name('profile.index');
    Route::post('/update','MainController@update')->name('profile.update');
@@ -31,8 +32,12 @@ Route::group(['namespace' => 'Profile', 'prefix' => 'pr', 'middleware' => 'auth'
    Route::post('/toggleStatus', 'MainController@toggle')->name('profile.toggleStatus');
    //Route::get('/{user}', 'ShowController@show')->name('profile.show');
 });
+// Обработка пожертвования донорами
 Route::post('/donation', 'Profile\DonorController@donation')->name('donation.store');
-
+// Добавить волонтёра к потребности
+Route::get('/add-volunteer/{need}', 'Profile\VolunteerController@addVolunteer')->name('volunteer.add');
+Route::post('/add-volunteers', 'Profile\VolunteerController@addVolunteers')->name('volunteers.add');
+// Catalog
 Route::group(['prefix' => 'catalog'], function (){
    Route::get('/', 'CatalogController@index')->name('catalog.index');
    Route::put('/sort', 'CatalogController@sort')->name('catalog.sort');
@@ -43,10 +48,6 @@ Route::get('/organizations/{organization}', 'OrganizationController@show')->name
 
 Route::resource('/needs', 'NeedController');
 
-
-
 Route::get('/', 'HomeController@index')->name('home.index');
-
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

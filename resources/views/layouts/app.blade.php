@@ -200,12 +200,15 @@
         <div class="content"><a href="#" data-id="popup_default" data-animation="scale" class="close-popup">&times;</a>
             <h2 class="title">Выбирете способ помочь</h2>
             <div class="right item">
-                <div class="list">
-                    <input type="type" class="i-value"><span class="value">чел</span>
-                </div>
-                <div class="btn-block">
-                    <input type="button" value="Помочь">
-                </div>
+                <form action="{{ route('volunteers.add') }}" class="new-org__form" method="post">
+                    <div class="list">
+                        <input type="type" class="i-value"><span class="value">чел</span>
+                    </div>
+                    <div class="btn-block">
+                        <input type="button" value="Помочь">
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>

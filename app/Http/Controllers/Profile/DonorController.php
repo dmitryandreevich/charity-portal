@@ -33,8 +33,12 @@ class DonorController extends Controller
         else
             return view('profile.donor.org', ['user' => $user,'data' => $userData]);
     }
-    public function donation(Request $request){
 
+    /**
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    public function donation(Request $request){
         $validator = Validator::make($request->all(),
             ['need_data' => 'required|integer',
                 'amount' => 'required|integer']);

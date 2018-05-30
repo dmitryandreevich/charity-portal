@@ -56,7 +56,6 @@
                         </select>
                     </div>
                 </div>
-
                 <div class="content__list">
                     @foreach($needs as $need)
                         @php $typeOfNeed = $need->type_need; @endphp
@@ -76,8 +75,27 @@
                                         <div class="info">
                                             <div class="p-small">Нужно волонтёров:<span>{{ $need->count_vols }} человек</span></div><span class="money">Осталось собрать:<span class="blue">{{ $need->count_vols - $need->collected }} человек</span></span>
                                         </div>
-                                        @if(\Illuminate\Support\Facades\Auth::user()->type == \App\Classes\TypeOfUser::VOLUNTEER)
-                                            <div class="btn-block"><a href="#" data-modal="#modal4" class="btn blue open-modal">Помочь</a></div>
+                                        @php
+                                            $user = \Illuminate\Support\Facades\Auth::user();
+                                            $userData =  \App\User::getData($user);
+                                        @endphp
+                                        @if($user->type == \App\Classes\TypeOfUser::VOLUNTEER)
+                                            @if($userData->individual->active)
+                                                @if($need->isVolunteer)
+                                                    <div class="btn-block">
+                                                        <p>Вы уже являетесь волонтёром этой потребности!</p>
+                                                    </div>
+                                                @else
+                                                    <div class="btn-block">
+                                                        <a href="{{ route('volunteer.add', ['need' => $need->id]) }}" class="btn blue">Помочь</a>
+                                                    </div>
+                                                @endif
+
+                                            @elseif($userData->organization->active)
+                                                <div class="btn-block">
+                                                    <a href="#" data-modal="#modal4" class="btn blue open-modal" receiver="{{ $need->id }}">Помочь</a>
+                                                </div>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -106,16 +124,11 @@
                                                 <div class="btn-block"><a href="#" data-modal="#modal3" class="btn blue open-modal" receiver="{{ $need->id }}" >Помочь</a></div>
                                             @endif
                                         </div>
-
                                     @endif
-
                                 </div>
                             </div>
                         @endif
                     @endforeach
-
-
-
                 </div>
             </div>
         </div>

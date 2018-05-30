@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\HistoryOfVolunteering;
+use App\Need;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,5 +18,39 @@ class VolunteerController extends Controller
             return view('profile.volunteer.individual',['user' => $user, 'data' => $userData] );
         else
             return view('profile.volunteer.org', ['user' => $user,'data' => $userData]);
+    }
+
+    /**
+     * Add one volunteer to need
+     * @param Request $request
+     */
+    public function addVolunteer(Need $need){
+
+        if(! isset($need) )
+            return redirect()->back()->with('error','Ошибка! Не найдена потребность.');
+        // осталось собрать волонтёров
+        $leftVols = $need->count_vols - $need->collected;
+
+        if($leftVols > 0){
+            $need->collected++;
+            $need->save();
+
+            HistoryOfVolunteering::create([
+                'id_vol' => Auth::id(),
+                'id_need' => $need->id
+            ]);
+
+            return redirect()->back()->with('success','Вы успешно стали волонтёром.');
+        }
+
+
+    }
+
+    /**
+     * Add some volunteers to need
+     * @param Request $request
+     */
+    public function addVolunteers(Request $request){
+
     }
 }
