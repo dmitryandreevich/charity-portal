@@ -80,21 +80,21 @@
                                             $userData =  \App\User::getData($user);
                                         @endphp
                                         @if($user->type == \App\Classes\TypeOfUser::VOLUNTEER)
-                                            @if($userData->individual->active)
-                                                @if($need->isVolunteer)
-                                                    <div class="btn-block">
-                                                        <p>Вы уже являетесь волонтёром этой потребности!</p>
-                                                    </div>
-                                                @else
+                                            @if($need->isVolunteer)
+                                                <div class="btn-block">
+                                                    <p>Вы уже являетесь волонтёром этой потребности!</p>
+                                                </div>
+                                            @else
+                                                @if($userData->individual->active)
+
                                                     <div class="btn-block">
                                                         <a href="{{ route('volunteer.add', ['need' => $need->id]) }}" class="btn blue">Помочь</a>
                                                     </div>
+                                                @elseif($userData->organization->active)
+                                                    <div class="btn-block">
+                                                        <a href="#" data-modal="#modal4" class="btn blue open-modal" receiver="{{ $need->id }}">Помочь</a>
+                                                    </div>
                                                 @endif
-
-                                            @elseif($userData->organization->active)
-                                                <div class="btn-block">
-                                                    <a href="#" data-modal="#modal4" class="btn blue open-modal" receiver="{{ $need->id }}">Помочь</a>
-                                                </div>
                                             @endif
                                         @endif
                                     </div>
