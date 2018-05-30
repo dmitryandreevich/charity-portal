@@ -29,7 +29,6 @@ class CreateNeedsTable extends Migration
 
             $table->string('cover_path');
             $table->string('doc_path');
-            $table->text('members'); // json members
             // json donaters/volunteers
             $table->timestamps();
         });

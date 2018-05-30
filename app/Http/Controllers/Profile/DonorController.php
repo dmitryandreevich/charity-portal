@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Profile;
 
 
 use App\Classes\Utils;
+use App\HistoryOfDonate;
 use App\Http\Controllers\Controller;
 use App\Need;
 use App\User;
@@ -57,8 +58,14 @@ class DonorController extends Controller
                 if($amount > $leftToDonate)
                     return redirect()->back()->with('error', 'Введённая сумма больше нужной!');
 
-                //$user->balance -= $amount;
+                $user->balance -= $amount;
                 $need->collected += $amount;
+                //save donate to history
+                HistoryOfDonate::create([
+                    'id_sender' => $user->id,
+                    'id_need' => $need->id,
+                    'amount' => $amount
+                ]);
 
                 $user->save();
                 $need->save();
