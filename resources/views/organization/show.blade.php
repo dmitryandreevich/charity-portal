@@ -81,18 +81,22 @@
                                         @endphp
                                         @if($user->type == \App\Classes\TypeOfUser::VOLUNTEER)
                                             @if($need->isVolunteer)
-                                                <div class="btn-block">
-                                                    <p>Вы уже являетесь волонтёром этой потребности!</p>
+                                                <div class="info">
+                                                    <div class="p-small">Вы уже являетесь волонтёром этой потребности!</div>
                                                 </div>
                                             @else
                                                 @if($userData->individual->active)
-
-                                                    <div class="btn-block">
-                                                        <a href="{{ route('volunteer.add', ['need' => $need->id]) }}" class="btn blue">Помочь</a>
+                                                    <div class="info">
+                                                        <div class="btn-block">
+                                                            <a href="{{ route('volunteer.add', ['need' => $need->id]) }}" class="btn blue">Помочь</a>
+                                                        </div>
                                                     </div>
+
                                                 @elseif($userData->organization->active)
-                                                    <div class="btn-block">
-                                                        <a href="#" data-modal="#modal4" class="btn blue open-modal" receiver="{{ $need->id }}">Помочь</a>
+                                                    <div class="info">
+                                                        <div class="btn-block">
+                                                            <a href="#" data-modal="#modal4" class="btn blue open-modal" receiver="{{ $need->id }}">Помочь</a>
+                                                        </div>
                                                     </div>
                                                 @endif
                                             @endif
@@ -121,7 +125,9 @@
                                                 <div class="p-small">Необходимая сумма:<span>{{ $need->amount }} ₽</span></div><span class="money">Осталось собрать:<span class="blue">{{ $need->amount - $need->collected }} ₽</span></span>
                                             </div>
                                             @if(\Illuminate\Support\Facades\Auth::user()->type == \App\Classes\TypeOfUser::DONOR)
-                                                <div class="btn-block"><a href="#" data-modal="#modal3" class="btn blue open-modal" receiver="{{ $need->id }}" >Помочь</a></div>
+                                                <div class="btn-block">
+                                                    <a href="#" data-modal="#modal3" class="btn blue open-modal" receiver="{{ $need->id }}" >Помочь</a>
+                                                </div>
                                             @endif
                                         </div>
                                     @endif

@@ -201,11 +201,12 @@
             <h2 class="title">Выбирете способ помочь</h2>
             <div class="right item">
                 <form action="{{ route('volunteers.add') }}" class="new-org__form" method="post">
+                    {{ csrf_field() }}
                     <div class="list">
-                        <input type="type" class="i-value"><span class="value">чел</span>
+                        <input type="number" class="i-value" name="count"><span class="value">чел</span>
                     </div>
                     <div class="btn-block">
-                        <input type="button" value="Помочь">
+                        <input type="submit" value="Помочь">
                     </div>
                 </form>
 
