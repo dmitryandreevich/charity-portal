@@ -6,6 +6,7 @@ use App\Classes\StatusOfNeed;
 use App\Classes\StatusOfOrganization;
 use App\Classes\TypeOfNeed;
 use App\Classes\TypeOfUser;
+use App\HistoryOfDonate;
 use App\Need;
 use App\Organization;
 use Illuminate\Http\Request;
@@ -23,18 +24,19 @@ class NeedController extends Controller
     public function index(){
         $user = Auth::user();
 
-        $org_ids = Organization::where('creator', Auth::id())->pluck('id')->toArray();
-        $needs = Need::whereIn('id_org', $org_ids)->get();
+
 
         switch ($user->type){
             case TypeOfUser::DONOR:{
+                $need_ids = HistoryOfDonate::where('id_sender', $user->id)->pluck('id_need')->toArray();
+                $needs = Need::whereIn('id', $need_ids)->get();
+                return view('profile.donor.needs', ['needs' => $needs]);
 
             }
             case TypeOfUser::CONSUMER:{
-                //eturn (new \App\Http\Controllers\Need\ConsumerController())->index();
-                return view('need.consumer.index', ['needs' => $needs]);
-
-                break;
+                $org_ids = Organization::where('creator', Auth::id())->pluck('id')->toArray();
+                $needs = Need::whereIn('id_org', $org_ids)->get();
+                return view('profile.consumer.needs', ['needs' => $needs]);
             }
             case TypeOfUser::VOLUNTEER:{
                 break;

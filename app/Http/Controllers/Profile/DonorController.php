@@ -64,7 +64,8 @@ class DonorController extends Controller
                 HistoryOfDonate::create([
                     'id_sender' => $user->id,
                     'id_need' => $need->id,
-                    'amount' => $amount
+                    'amount' => $amount,
+                    'id_org' => $need->id_org
                 ]);
 
                 $user->save();

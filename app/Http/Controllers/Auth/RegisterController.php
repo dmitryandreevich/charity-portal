@@ -9,6 +9,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -107,15 +108,18 @@ class RegisterController extends Controller
         $dataTemplate = Utils::getUserDataJsonTemplate();
         $dataTemplate['individual']['active'] = true;
         try {
-            User::create([
+            $user = User::create([
                 'email' => isset($at['email']) ? $at['email'] : "",
                 'vkId' => $at['user_id'],
                 'type' => $typeOfUser,
                 'data' => json_encode($dataTemplate)
             ]);
+
             $request->session()->remove('typeOfUser');
 
-            return redirect('/')->with('success', ' Вы успешно зарегистрировались. Можете войти!');
+            Auth::login($user);
+
+            return redirect('/')->with('success', ' Вы успешно зарегистрировались!');
         } catch (QueryException $exception) {
             $request->session()->remove('typeOfUser');
 
@@ -141,12 +145,15 @@ class RegisterController extends Controller
         $dataTemplate = Utils::getUserDataJsonTemplate();
         $dataTemplate['individual']['active'] = true;
         try{
-            User::create([
+            $user = User::create([
                 'email' => isset($data['email']) ? $data['email'] : '',
                 'fbId' => $data['id'],
                 'type' => $typeOfUser,
                 'data' => json_encode($dataTemplate)
             ]);
+
+            Auth::login($user);
+
             $request->session()->remove('typeOfUser');
 
             return redirect('/')->with('success', ' Вы успешно зарегистрировались. Можете войти!');

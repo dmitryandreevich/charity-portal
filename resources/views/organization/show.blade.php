@@ -10,7 +10,7 @@
 
 @section('main-block')
     <div class="main-block sp needs">
-        <div class="main-banner"></div>
+        <div class="main-banner" style="background:url({{ asset("storage/$organization->cover_path") }}) no-repeat"></div>
         <div class="main-content">
             <div class="container">
                 <div class="top">

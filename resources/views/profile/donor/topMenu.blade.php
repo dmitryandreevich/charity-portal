@@ -14,7 +14,7 @@
         </div>
         <div class="top-menu__right">
             <ul class="list">
-                <li class="item"><a href="/">Потребности</a></li>
+                <li class="item"><a href="{{ route('needs.index') }}">Потребности</a></li>
                 <li class="item"><a href="{{ route('profile.index') }}">Настройки</a></li>
             </ul>
         </div>
