@@ -51,10 +51,11 @@
                                         <div class="info">
                                             <div class="p-small">Нужно волонтёров:<span>{{ $need->count_vols }} человек</span></div><span class="money">Осталось собрать:<span class="blue">{{ $need->count_vols - $need->collected }} человек</span></span>
                                         </div>
-
-                                        <div class="btn-block">
-                                            <a href="#" data-modal="#modalCancelNeed" class="btn blue open-modal" receiver="{{ $need->id }}">Отменить</a>
-                                        </div>
+                                        @if($need->status == \App\Classes\StatusOfNeed::STATUS_ACTUAL)
+                                            <div class="btn-block">
+                                                <a href="#" data-modal="#modalCancelNeed" class="btn blue open-modal" receiver="{{ $need->id }}">Отменить</a>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="circle {{ \App\Classes\StatusOfNeed::getColorStatus($need->status) }}">
@@ -80,9 +81,11 @@
                                             <div class="info">
                                                 <div class="p-small">Необходимая сумма:<span>{{ $need->amount }} ₽</span></div><span class="money">Осталось собрать:<span class="blue">{{ $need->amount - $need->collected }} ₽</span></span>
                                             </div>
-                                            <div class="btn-block">
-                                                <a href="#" data-modal="#modalCancelNeed" class="btn blue open-modal" receiver="{{ $need->id }}">Отменить</a>
-                                            </div>
+                                            @if($need->status == \App\Classes\StatusOfNeed::STATUS_ACTUAL)
+                                                <div class="btn-block">
+                                                    <a href="#" data-modal="#modalCancelNeed" class="btn blue open-modal" receiver="{{ $need->id }}">Отменить</a>
+                                                </div>
+                                            @endif
                                         </div>
                                     @endif
                                 </div>

@@ -50,12 +50,13 @@
                                             <div class="info">
                                                 <div class="p-small">Необходимая сумма:<span>{{ $need->amount }} ₽</span></div><span class="money">Осталось собрать:<span class="blue">{{ $need->amount - $need->collected }} ₽</span></span>
                                             </div>
-                                            <div class="btn-block"><a href="#" data-modal="#modal3" class="btn blue open-modal" receiver="{{ $need->id }}">Помочь</a></div>
+                                            @if($need->status == \App\Classes\StatusOfNeed::STATUS_ACTUAL)
+                                                <div class="btn-block"><a href="#" data-modal="#modal3" class="btn blue open-modal" receiver="{{ $need->id }}">Помочь</a></div>
+                                            @endif
                                         </div>
                                     @endif
                                 </div>
-                                <div class="circle {{ \App\Classes\StatusOfNeed::getColorStatus($need->status) }}">
-                                </div>
+                                <div class="circle {{ \App\Classes\StatusOfNeed::getColorStatus($need->status) }}"></div>
                             </div>
                     @endforeach
                 </div>
