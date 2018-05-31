@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classes\StatusOfOrganization;
 use App\Classes\TypeOfNeed;
 use App\Classes\TypeOfUser;
+use App\HistoryOfDonate;
 use App\HistoryOfVolunteering;
 use App\Need;
 use App\Organization;
@@ -160,9 +161,13 @@ class OrganizationController extends Controller
 
 
         return view('organization.show',
-            ['organization' => $organization,
+            [
+                'organization' => $organization,
                 'photos' => $photos,
-                'needs' => $needs]
+                'needs' => $needs,
+                'totalMoney' => $this->getTotalAmountOfMoney($organization),
+                'totalVols' => $this->getTotalVolunteers($organization)
+            ]
         );
     }
 
@@ -238,5 +243,24 @@ class OrganizationController extends Controller
     public function destroy(Organization $organization)
     {
         //
+    }
+
+    protected function getTotalAmountOfMoney(Organization $organization){
+        $historyOfDonates = HistoryOfDonate::where('id_org', $organization->id)->get();
+        $total = 0;
+
+        foreach ($historyOfDonates as $history)
+            $total += $history->amount;
+
+        return $total;
+    }
+    protected function getTotalVolunteers(Organization $organization){
+        $historyOfVolunteerings = HistoryOfVolunteering::where('id_org', $organization->id)->get();
+        $total = 0;
+
+        foreach ($historyOfVolunteerings as $history)
+            $total += $history->amount;
+
+        return $total;
     }
 }

@@ -17,7 +17,14 @@
                     <h2 class="title">{{ $organization->name }}</h2>
                     <div class="location">{{ $organization->address }}</div>
                 </div>
+                <div class="top">
+                    <h4 class="title">Общая сумма собранных пожертвований <b>{{ $totalMoney }}₽</b></h4>
+                </div>
+                <div class="top">
+                    <h4 class="title">Общее количество волонтёров, помогающих нам <b>{{ $totalVols }} человек.</b></h4>
+                </div>
                 <p class="descr">{{ $organization->description }}.</p>
+                <p class="totalMoney"> </p>
                 <div class="main-slider">
                     <div class="container">
                         <div class="main-slider_header row"></div>
