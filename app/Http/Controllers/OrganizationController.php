@@ -150,8 +150,6 @@ class OrganizationController extends Controller
             $volHistory = HistoryOfVolunteering::where('id_vol', Auth::id())
                                                 ->whereIn('id_need', $needIds)->get();
 
-
-
             foreach ($needs as $i => $need) {
                 foreach($volHistory as $j => $history){
                     if($need->id == $history->id_need)

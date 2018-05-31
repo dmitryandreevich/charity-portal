@@ -45,6 +45,8 @@ Route::group(['prefix' => 'catalog'], function (){
 });
 Route::resource('/organizations', 'OrganizationController', ['except' => 'show']);
 Route::get('/organizations/{organization}', 'OrganizationController@show')->name('organizations.show');
+Route::get('/organizations/archive/{organization}', 'ArchiveController@index')->name('organizations.archive.index');
+
 Route::group(['namespace' => 'Need'], function (){
     Route::resource('/needs', 'NeedController');
     Route::post('cancel-need', 'CancelNeedController@store')->name('needs.cancel.store');
