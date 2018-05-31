@@ -13,4 +13,7 @@ class TypeOfNeed
 {
     const VOLUNTEERS = 1;
     const COLLECT_MONEY = 2;
+
+    const NAMES = ["", "Сбор волонтёров", "Сбор средств"];
+
 }

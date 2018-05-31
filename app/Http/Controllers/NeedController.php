@@ -34,8 +34,21 @@ class NeedController extends Controller
 
             }
             case TypeOfUser::CONSUMER:{
-                $org_ids = Organization::where('creator', Auth::id())->pluck('id')->toArray();
-                $needs = Need::whereIn('id_org', $org_ids)->get();
+                $orgBuilder = Organization::where('creator', Auth::id());
+                $orgIds = $orgBuilder->pluck('id')->toArray();
+
+                $needs = Need::whereIn('id_org', $orgIds)->get();
+                $orgs = $orgBuilder->get();
+
+                for($i = 0; $i < count($orgs); $i++){
+                    for($j = 0; $j < count($needs); $j++){
+                        if($needs[$j]->id_org == $orgs[$i]->id){
+                            $needs[$j]->orgName = $orgs[$i]->name;
+                            continue;
+                        }
+                    }
+                }
+
                 return view('profile.consumer.needs', ['needs' => $needs]);
             }
             case TypeOfUser::VOLUNTEER:{

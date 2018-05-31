@@ -22,4 +22,17 @@ class StatusOfNeed
         $need->status = $statusCode;
         return $need->save();
     }
+    public static function getColorStatus($needStatus){
+        switch ($needStatus){
+            case \App\Classes\StatusOfNeed::STATUS_ACTUAL:
+                return "green";
+            case \App\Classes\StatusOfNeed::STATUS_ARCHIVE:
+                return "yellow";
+            case \App\Classes\StatusOfNeed::STATUS_BLOCK:
+                return "red";
+            case \App\Classes\StatusOfNeed::STATUS_COLLECTED:
+                return "green";
+        }
+        return 'red';
+    }
 }

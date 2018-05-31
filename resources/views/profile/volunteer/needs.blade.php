@@ -36,9 +36,8 @@
                                 <div class="left"><img src="{{ asset("storage/$need->cover_path") }}"></div>
                                 <div class="right">
                                     <div class="info">
-                                        <h3 class="name">{{ $need->title }}</h3>
-                                        <h3 class="name">Организация</h3>
-                                        <h3 class="name">Тип</h3>
+                                        <a href="{{ route('organizations.show', ['id' => $need->id_org]) }}" target="_blank"><h3 class="name">{{ $need->title }}</h3></a>
+                                        <h3 class="name">{{ $need->orgName or "" }}</h3>
                                         <p class="html">{{ $need->description }}</p>
                                         <div class="bottom_item row">
                                             <div class="date descr">Дата создания: <span class="bold">{{ $need->created_at }}</span></div>
@@ -52,7 +51,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="circle green"></div>
+                                <div class="circle {{ \App\Classes\StatusOfNeed::getColorStatus($need->status) }}">
+                                </div>
                             </div>
                     @endforeach
                 </div>

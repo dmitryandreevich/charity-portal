@@ -36,9 +36,8 @@
                                 <div class="left"><img src="{{ asset("storage/$need->cover_path") }}"></div>
                                 <div class="right">
                                     <div class="info">
-                                        <a href="{{ route('organizations.show', ['id' => $need->id]) }}" target="_blank"><h3 class="name">{{ $need->title }}</h3></a>
-                                        <h3 class="name">Организация</h3>
-                                        <h3 class="name">Тип</h3>
+                                        <a href="{{ route('organizations.show', ['id' => $need->id_org]) }}" target="_blank"><h3 class="name">{{ $need->title }}</h3></a>
+                                        <h3 class="name">{{ $need->orgName or "" }}</h3>
                                         <p class="html">{{ $need->description }}</p>
                                     </div>
                                     @if( ($need->amount - $need->collected ) <= 0.00 )
@@ -55,9 +54,9 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="circle green"></div>
+                                <div class="circle {{ \App\Classes\StatusOfNeed::getColorStatus($need->status) }}">
+                                </div>
                             </div>
-
                     @endforeach
                 </div>
             </div>
