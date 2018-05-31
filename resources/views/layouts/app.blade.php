@@ -196,6 +196,19 @@
             </form>
         </div>
     </div>
+    <div id="modalCancelNeed" class="modal">
+        <div class="content">
+            <h2 class="title">Вы уверены, что хотите отменить данную потребность?</h2>
+            <div class="right item">
+                <form class="new-org__form" action="{{ route('needs.cancel.store') }}" method="post">
+                    {{ csrf_field() }}
+                    <div class="btn-block">
+                        <input type="submit" value="Отменить" class="btn blue">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div id="modal4" class="modal">
         <div class="content"><a href="#" data-id="popup_default" data-animation="scale" class="close-popup">&times;</a>
             <h2 class="title">Выбирете способ помочь</h2>

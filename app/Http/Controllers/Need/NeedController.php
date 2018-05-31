@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Need;
 
 use App\Classes\StatusOfNeed;
 use App\Classes\StatusOfOrganization;
 use App\Classes\TypeOfNeed;
 use App\Classes\TypeOfUser;
 use App\HistoryOfDonate;
+use App\Http\Controllers\Controller;
 use App\Need;
 use App\Organization;
 use Illuminate\Http\Request;
@@ -23,8 +24,6 @@ class NeedController extends Controller
      */
     public function index(){
         $user = Auth::user();
-
-
 
         switch ($user->type){
             case TypeOfUser::DONOR:{
