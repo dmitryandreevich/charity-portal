@@ -63,6 +63,12 @@ class User extends Authenticatable
         $orgs = Organization::whereIn('id', $orgIds)->get();
 
         return $orgs;
+    }
+    public static function getAllConsumerNeeds(User $user){
+        $orgIds = Organization::where('creator', $user->id)->pluck('id')->toArray();
 
+        $needs = Need::whereIn('id_org', $orgIds)->get();
+
+        return $needs;
     }
 }
