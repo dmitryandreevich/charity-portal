@@ -17,6 +17,7 @@
                     <h2 class="title">Потребности</h2>
                     <div class="select">
                         @include('profile.blocks.filters')
+
                     </div>
                 </div>
 

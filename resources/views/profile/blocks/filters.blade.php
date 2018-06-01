@@ -19,4 +19,11 @@
             <option value="{{ $organization->id }}">{{ $organization->name }}</option>
         @endforeach
     </select>
+    @if(\Illuminate\Support\Facades\Auth::user()->type == \App\Classes\TypeOfUser::CONSUMER)
+        <select placeholder="тип" name="city" class="headroom_city sources custom-select sort-select-needs filter_type-need">
+            @for($i = 1; $i < count(\App\Classes\TypeOfNeed::NAMES); $i++)
+                <option value="{{ $i }}">{{ \App\Classes\TypeOfNeed::NAMES[$i] }}</option>
+            @endfor
+        </select>
+    @endif
 </div>

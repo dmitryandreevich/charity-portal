@@ -15,12 +15,14 @@ class SortingController extends Controller
     public function show(Request $request){
         $v = Validator::make($request->all(),
             ['status' => 'integer',
-                'organizationId' => 'integer']);
+                'organizationId' => 'integer',
+                'typeOfNeed' => 'integer']);
         if($v->fails())
             return 'errors';
 
         $orgId = $request->get('organizationId');
         $status = $request->get('status');
+        $typeOfNeed = $request->get('typeOfNeed');
 
         switch (Auth::user()->type){
             case TypeOfUser::DONOR: {
@@ -31,7 +33,7 @@ class SortingController extends Controller
             }
             case TypeOfUser::CONSUMER:{
                 $needs = User::getAllConsumerNeeds( Auth::user() );
-                $filtered = $this->filter($needs, $orgId, $status);
+                $filtered = $this->filter($needs, $orgId, $status, $typeOfNeed);
 
                 return view('profile.consumer.blocks.needsContent', ['needs' => $filtered]);
             }
@@ -43,19 +45,22 @@ class SortingController extends Controller
             }
         }
     }
-    protected function filter($needs, $orgId, $status, $typeDonor = null){
-        $filtered = collect([]);
+    protected function filter($needs, $orgId, $status, $typeOfNeed = null, $typeDonor = null){
+        $filtered = collect($needs);
 
         if( isset($orgId) )
-            $filtered = $needs->filter(function($need, $key) use($orgId){
+            $filtered = $filtered->filter(function($need, $key) use($orgId){
                 return $need->id_org == $orgId;
             });
 
         if( isset($status) )
-            $filtered = $needs->filter(function ($need) use ($status){
+            $filtered = $filtered->filter(function ($need) use ($status){
                 return $need->status == $status;
             });
-
+        if( isset($typeOfNeed) )
+            $filtered = $filtered->filter(function ($need) use ($typeOfNeed){
+                return $need->type_need == $typeOfNeed;
+            });
         return $filtered;
     }
 }

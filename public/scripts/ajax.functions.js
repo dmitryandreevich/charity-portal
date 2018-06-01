@@ -30,12 +30,14 @@ $(document).ready(function () {
 
         var selectStatus = $(".sort-select-needs.filter_status").find('.selection').attr('data-value');
         var selectOrg = $(".sort-select-needs.filter_organization").find('.selection').attr('data-value');
+        var selectTypeOfNeed = $('.sort-select-needs.filter_type-need').find('.selection').attr('data-value');
 
+        console.log(selectTypeOfNeed);
         $.ajax({
             url: '/needs/sorting',
             method: 'post',
             dataType: 'html',
-            data:{ status: selectStatus, organizationId: selectOrg },
+            data:{ status: selectStatus, organizationId: selectOrg, typeOfNeed: selectTypeOfNeed },
             headers: {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
