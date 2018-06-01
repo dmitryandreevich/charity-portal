@@ -50,4 +50,19 @@ class User extends Authenticatable
             $this->attributes['fbId'] = $value;
         }
     }
+    public static function getNeedsWithDonateByUser(User $user){
+        $need_ids = HistoryOfDonate::where('id_sender', $user->id)->pluck('id_need')->toArray();
+        $needs = Need::whereIn('id', $need_ids)->get();
+
+        return $needs;
+    }
+    public static function getOrgsWithDonateByUser(User $user){
+        $need_ids = HistoryOfDonate::where('id_sender', $user->id)->pluck('id_need')->toArray();
+        $orgIds = Need::whereIn('id', $need_ids)->pluck('id_org')->toArray();
+
+        $orgs = Organization::whereIn('id', $orgIds)->get();
+
+        return $orgs;
+
+    }
 }

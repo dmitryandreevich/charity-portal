@@ -10,7 +10,7 @@
 
 @section('main-block')
     <div class="main-block donor-setting">
-        @include('profile.donor.topMenu')
+        @include('profile.donor.blocks.topMenu')
         <div class="donor-setting_content">
             <div class="container">
                 <h2 class="title">Настройки</h2>

@@ -49,6 +49,7 @@ Route::get('/organizations/archive/{organization}', 'ArchiveController@index')->
 
 Route::group(['namespace' => 'Need'], function (){
     Route::resource('/needs', 'NeedController');
+    Route::post('/needs/sorting', 'SortingController@show')->name('needs.sorting.show');
     Route::post('cancel-need', 'CancelNeedController@store')->name('needs.cancel.store');
 });
 

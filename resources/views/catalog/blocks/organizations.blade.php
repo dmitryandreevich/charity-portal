@@ -6,7 +6,6 @@
  * Time: 14:29
  */
 ?>
-{{ $organizations }}
 
     <div class="container">
         <div class="slider_content page">

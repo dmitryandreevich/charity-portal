@@ -10,6 +10,7 @@ use App\HistoryOfDonate;
 use App\Http\Controllers\Controller;
 use App\Need;
 use App\Organization;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -27,9 +28,11 @@ class NeedController extends Controller
 
         switch ($user->type){
             case TypeOfUser::DONOR:{
-                $need_ids = HistoryOfDonate::where('id_sender', $user->id)->pluck('id_need')->toArray();
-                $needs = Need::whereIn('id', $need_ids)->get();
-                return view('profile.donor.needs', ['needs' => $needs]);
+
+                $needs = User::getNeedsWithDonateByUser($user);
+                $orgs = User::getOrgsWithDonateByUser($user);
+
+                return view('profile.donor.needs', ['needs' => $needs, 'organizations' => $orgs]);
 
             }
             case TypeOfUser::CONSUMER:{
@@ -48,7 +51,7 @@ class NeedController extends Controller
                     }
                 }
 
-                return view('profile.consumer.needs', ['needs' => $needs]);
+                return view('profile.consumer.needs', ['needs' => $needs, 'organizations' => $orgs]);
             }
             case TypeOfUser::VOLUNTEER:{
 
