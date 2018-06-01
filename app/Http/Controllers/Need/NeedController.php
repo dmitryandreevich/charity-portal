@@ -50,13 +50,13 @@ class NeedController extends Controller
                         }
                     }
                 }
-
                 return view('profile.consumer.needs', ['needs' => $needs, 'organizations' => $orgs]);
             }
             case TypeOfUser::VOLUNTEER:{
+                $orgs = User::getAllOrgsWhereIsVolunteer($user);
+                $needs = User::getAllNeedsWhereIsVolunteer($user);
 
-                $needs = Need::all();
-                return view('profile.volunteer.needs', ['needs' => $needs]);
+                return view('profile.volunteer.needs', ['needs' => $needs, 'organizations' => $orgs]);
             }
         }
         return redirect()->back()->with('error', 'Произошла ошибка!');

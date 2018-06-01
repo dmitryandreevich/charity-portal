@@ -10,7 +10,7 @@
 
 @section('main-block')
     <div class="main-block new-org">
-        @include('profile.consumer.topMenu')
+        @include('profile.consumer.blocks.topMenu')
         <div class="new-org_content">
             <div class="container">
                 <h2 class="title">Новая потребность</h2>

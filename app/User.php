@@ -71,4 +71,16 @@ class User extends Authenticatable
 
         return $needs;
     }
+    public static function getAllNeedsWhereIsVolunteer(User $user){
+        $volHistoriesIds = HistoryOfVolunteering::where('id_vol', $user->id)->pluck('id_need')->toArray();
+        $needs = Need::whereIn('id', $volHistoriesIds)->get();
+
+        return $needs;
+    }
+    public static function getAllOrgsWhereIsVolunteer(User $user){
+        $volHistoriesIds = HistoryOfVolunteering::where('id_vol', $user->id)->pluck('id_org')->toArray();
+        $orgs = Organization::whereIn('id', $volHistoriesIds)->get();
+
+        return $orgs;
+    }
 }

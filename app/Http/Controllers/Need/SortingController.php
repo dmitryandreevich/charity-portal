@@ -26,26 +26,22 @@ class SortingController extends Controller
             case TypeOfUser::DONOR: {
                 $needs = User::getNeedsWithDonateByUser( Auth::user() );
                 $filtered = $this->filter($needs, $orgId, $status);
+
                 return view('profile.donor.blocks.needsContent',['needs' => $filtered]);
-                //return $this->donorNeedsFilter($orgId, $status);
             }
             case TypeOfUser::CONSUMER:{
                 $needs = User::getAllConsumerNeeds( Auth::user() );
-
                 $filtered = $this->filter($needs, $orgId, $status);
 
                 return view('profile.consumer.blocks.needsContent', ['needs' => $filtered]);
             }
+            case TypeOfUser::VOLUNTEER:{
+                $needs = User::getAllNeedsWhereIsVolunteer( Auth::user() );
+                $filtered = $this->filter($needs, $orgId, $status);
 
+                return view('profile.volunteer.blocks.needsContent', ['needs' => $filtered]);
+            }
         }
-    }
-
-
-
-    protected function consumerNeedsFilter($orgId, $status){
-
-
-
     }
     protected function filter($needs, $orgId, $status, $typeDonor = null){
         $filtered = collect([]);
