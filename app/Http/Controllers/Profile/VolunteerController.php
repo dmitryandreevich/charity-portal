@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Classes\StatusOfNeed;
 use App\HistoryOfVolunteering;
 use App\Need;
 use App\User;
@@ -63,6 +64,10 @@ class VolunteerController extends Controller
         if($leftVols > 0 && $countVols <= $leftVols){
 
             $need->collected += $countVols ;
+
+            if($need->collected >= $need->count_vols)
+                $need->status = StatusOfNeed::STATUS_COLLECTED;
+
             $need->save();
 
             HistoryOfVolunteering::create([

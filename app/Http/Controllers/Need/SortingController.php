@@ -57,6 +57,7 @@ class SortingController extends Controller
             $filtered = $filtered->filter(function ($need) use ($status){
                 return $need->status == $status;
             });
+
         if( isset($typeOfNeed) )
             $filtered = $filtered->filter(function ($need) use ($typeOfNeed){
                 return $need->type_need == $typeOfNeed;
