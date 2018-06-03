@@ -123,6 +123,7 @@
                                         </div>
                                     @endif
                                 </div>
+                                <div class="circle {{ \App\Classes\StatusOfNeed::getColorStatus($need->status) }}"></div>
                             </div>
                         @elseif($typeOfNeed == \App\Classes\TypeOfNeed::COLLECT_MONEY)
                             <div class="content__item row">
@@ -151,6 +152,7 @@
                                         </div>
                                     @endif
                                 </div>
+                                <div class="circle {{ \App\Classes\StatusOfNeed::getColorStatus($need->status) }}"></div>
                             </div>
                         @endif
                     @endforeach
