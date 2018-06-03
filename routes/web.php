@@ -56,3 +56,10 @@ Route::group(['namespace' => 'Need'], function (){
 Route::get('/', 'HomeController@index')->name('home.index');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard'], function(){
+    Route::get('/', 'MainController@index')->name('dashboard.index');
+    Route::get('/users', 'UsersController@index')->name('dashboard.users.index');
+    Route::get('/users/{user}', 'UsersController@show')->name('dashboard.users.show');
+
+});

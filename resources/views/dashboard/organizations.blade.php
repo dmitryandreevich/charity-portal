@@ -6,3 +6,9 @@
  * Time: 12:01
  */
 ?>
+@extends('dashboard.layout')
+
+@section('dashboard-block')
+
+
+@endsection

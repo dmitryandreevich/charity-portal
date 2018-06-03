@@ -1657,3 +1657,24 @@ th {
 	src: url("../fonts/ProximaNova-SemiboldIt/ProximaNova-SemiboldIt.eot");
 	src: url("../fonts/ProximaNova-SemiboldIt/ProximaNova-SemiboldIt.woff2") format("woff2"), url("../fonts/ProximaNova-SemiboldIt/ProximaNova-SemiboldIt.woff") format("woff"), url("../fonts/ProximaNova-SemiboldIt/ProximaNova-SemiboldIt.ttf") format("truetype"), url("../fonts/ProximaNova-SemiboldIt/ProximaNova-SemiboldIt.svg#ProximaNova-SemiboldIt") format("svg"), url("../fonts/ProximaNova-SemiboldIt/ProximaNova-SemiboldIt.eot?#iefix") format("embedded-opentype");
 }
+table {
+	font-size: 14px;
+	border-collapse: collapse;
+	text-align: center;
+}
+th, td:first-child {
+	background: #AFCDE7;
+	color: white;
+	padding: 10px 20px;
+}
+th, td {
+	border-style: solid;
+	border-width: 0 1px 1px 0;
+	border-color: white;
+}
+td {
+	background: #D8E6F3;
+}
+th:first-child, td:first-child {
+	text-align: left;
+}

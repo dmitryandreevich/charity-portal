@@ -15,5 +15,7 @@ class TypeOfUser
     const CONSUMER = 1;
     const VOLUNTEER = 2;
     const MODERATOR = 3;
-    const ADMINISTRATOR = 99;
+    const ADMINISTRATOR = 4;
+
+    const NAMES = ['Донор', 'Потребитель', 'Волонтёр','Модератор', 'Администратор'];
 }
