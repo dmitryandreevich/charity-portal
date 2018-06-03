@@ -14,4 +14,6 @@ class StatusOfOrganization
     const DISABLED = 1;
     const DISABLED_BY_MODERATOR = 2;
     const ENABLED = 3;
+
+    const NAMES = ['', 'Отключена', 'Отключена модератором','Включена'];
 }
