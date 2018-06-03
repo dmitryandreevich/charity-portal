@@ -75,6 +75,8 @@
                                     <div class="info">
                                         <h3 class="name">{{ $need->title }}</h3>
                                         <p class="html">{{ $need->description }}</p>
+                                        <a href="#" data-modal="#modalReportNeed" class="link open-modal" receiver="{{ $need->id }}">Пожаловаться</a>
+
                                         <div class="bottom_item row">
                                             <div class="date descr">Дата: <span class="bold">{{ $need->date_time }}</span></div>
                                         </div>
@@ -92,6 +94,7 @@
                                                 <div class="p-small">Нужно волонтёров:<span>{{ $need->count_vols }} человек</span></div>
                                                 <span class="money">Осталось собрать:<span class="blue">{{ $need->count_vols - $need->collected }} человек</span></span>
                                             </div>
+
                                             @php
                                                 $user = \Illuminate\Support\Facades\Auth::user();
                                                 $userData =  \App\User::getData($user);
@@ -133,6 +136,7 @@
                                         <h3 class="name">{{ $need->title }}</h3>
                                         <p class="html">{{ $need->description }}</p>
                                         <a href="{{ $need->link }}" class="link">{{ $need->link }}</a>
+                                        <a href="#" data-modal="#modalReportNeed" class="link open-modal" receiver="{{ $need->id }}">Пожаловаться</a>
                                     </div>
                                     @if( ($need->amount - $need->collected ) <= 0 )
                                         <div class="end">

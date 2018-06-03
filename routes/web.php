@@ -51,6 +51,7 @@ Route::group(['namespace' => 'Need'], function (){
     Route::resource('/needs', 'NeedController');
     Route::post('/needs/sorting', 'SortingController@show')->name('needs.sorting.show');
     Route::post('cancel-need', 'CancelNeedController@store')->name('needs.cancel.store');
+    Route::post('/send-report', 'SendReportController@store')->name('needs.report.store');
 });
 
 Route::get('/', 'HomeController@index')->name('home.index');

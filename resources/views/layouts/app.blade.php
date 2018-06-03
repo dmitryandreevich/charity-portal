@@ -209,6 +209,22 @@
             </div>
         </div>
     </div>
+    <div id="modalReportNeed" class="modal">
+        <div class="content">
+            <h2 class="title">Введите причину жалобы</h2>
+            <div class="right item">
+                <form class="new-org__form" action="{{ route('needs.report.store') }}" method="post">
+                    {{ csrf_field() }}
+                    <div class="list">
+                        <input type="text" name="reportMessage" required>
+                    </div>
+                    <div class="btn-block">
+                        <input type="submit" value="Пожаловаться" class="btn blue">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div id="modal4" class="modal">
         <div class="content"><a href="#" data-id="popup_default" data-animation="scale" class="close-popup">&times;</a>
             <h2 class="title">Выбирете способ помочь</h2>
