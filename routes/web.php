@@ -58,8 +58,11 @@ Route::get('/', 'HomeController@index')->name('home.index');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard'], function(){
-    Route::get('/', 'MainController@index')->name('dashboard.index');
+    Route::get('/', function (){
+        return redirect(route('dashboard.users.index'));
+    });
     Route::get('/organizations', 'OrganizationsController@index')->name('dashboard.organizations.index');
+    Route::get('/needs', 'NeedsController@index')->name('dashboard.needs.index');
     Route::get('/users', 'UsersController@index')->name('dashboard.users.index');
     Route::get('/users/{user}', 'UsersController@show')->name('dashboard.users.show');
 

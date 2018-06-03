@@ -12,7 +12,7 @@
         <div class="top-menu__left">
             <a href="{{ route('dashboard.users.index') }}" class="add">Пользователи</a>
             <a href="{{ route('dashboard.organizations.index') }}" class="add">Страницы потребителей</a>
-            <a href="" class="add">Потребности</a>
+            <a href="{{ route('dashboard.needs.index') }}" class="add">Потребности</a>
             <a href="" class="add">Модерация</a>
         </div><div class="top-menu__right">
             <ul class="list">

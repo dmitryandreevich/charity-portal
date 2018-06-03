@@ -18,6 +18,8 @@ class StatusOfNeed
     const STATUS_BLOCK = 3;
     const STATUS_COLLECTED = 4;
 
+    const NAMES = ["none",'Актуальна', 'В архиве', 'Заблокирована', 'Средства собраны'];
+
     public static function setStatusNeed(Need $need, $statusCode){
         $need->status = $statusCode;
         return $need->save();
