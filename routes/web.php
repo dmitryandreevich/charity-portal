@@ -65,5 +65,6 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard'], function(){
     Route::get('/needs', 'NeedsController@index')->name('dashboard.needs.index');
     Route::get('/users', 'UsersController@index')->name('dashboard.users.index');
     Route::get('/users/{user}', 'UsersController@show')->name('dashboard.users.show');
+    Route::get('/moderation', 'ModerationController@index')->name('dashboard.moderation.index');
 
 });
