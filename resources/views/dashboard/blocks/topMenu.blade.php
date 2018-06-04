@@ -18,7 +18,6 @@
         <div class="top-menu__right">
             <ul class="list">
                 <li class="item">
-                    <form action="" class="new-org__form">
                         @php
                             use Illuminate\Support\Facades\Route;
                             $uri = Route::getFacadeRoot()->current()->uri();
@@ -27,8 +26,7 @@
                         <input type="hidden" name="page" class="page" value="{{ $page }}">
                         <input type="text" class="i-value" name="search-attr">
 
-                        <button class="btn blue dashboard-search">test</button>
-                    </form>
+                        <button class="btn blue dashboard-search">Найти</button>
                 </li>
             </ul>
         </div>

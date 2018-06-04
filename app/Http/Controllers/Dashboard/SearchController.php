@@ -25,7 +25,7 @@ class SearchController extends Controller
                             ->orWhere('city', 'regexp', "\\$searchAttr")->get();
 
 
-                return count($users);
+                return view('dashboard.blocks.tableUsers', ['users' => $users]);
             }
 
             case 'organizations':{
@@ -35,7 +35,8 @@ class SearchController extends Controller
                     ->orWhere('id', '=', $searchAttr)
                     ->orWhere('city', 'regexp', "\\$searchAttr")->get();
 
-                return count($orgs);
+                return view('dashboard.blocks.tableOrganizations', ['orgs' => $orgs]);
+
             }
 
             case 'needs':{
@@ -47,7 +48,7 @@ class SearchController extends Controller
                     ->orWhere('collected', '=', $searchAttr)
                     ->orWhere('id_org', '=', $searchAttr)->get();
 
-                return count($needs);
+                return view('dashboard.blocks.tableNeeds', ['needs' => $needs]);
             }
         }
     }

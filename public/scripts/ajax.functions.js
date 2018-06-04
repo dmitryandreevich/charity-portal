@@ -50,7 +50,8 @@ $(document).ready(function () {
                     $('.content__list').append('<h3>Ничего не найдено!</h3>');
             },
             error: function (message) {
-
+                $('.content__list').text('');
+                $('.content__list').append('<h3>Ошибка! </h3>' + message);
             }
         });
 
@@ -59,7 +60,6 @@ $(document).ready(function () {
         var searchAttr = $(this).parent().find('.i-value').val();
         var page = $(this).parent().find('.page').val();
 
-        console.log(page);
         $.ajax({
             url: '/dashboard/search',
             method: 'post',
@@ -69,10 +69,16 @@ $(document).ready(function () {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
-                console.log(response);
+                $('.content__list').text('');
+
+                if(response !== ""){
+                    $('.content__list').append(response);
+                }else
+                    $('.content__list').append('<h3>Ничего не найдено!</h3>');
             },
             error: function (message) {
-
+                $('.content__list').text('');
+                $('.content__list').append('<h3>Ошибка! </h3>' + message);
             }
         });
 
