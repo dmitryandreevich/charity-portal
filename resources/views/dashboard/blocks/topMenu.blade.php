@@ -14,27 +14,25 @@
             <a href="{{ route('dashboard.organizations.index') }}" class="add">Страницы потребителей</a>
             <a href="{{ route('dashboard.needs.index') }}" class="add">Потребности</a>
             <a href="{{ route('dashboard.moderation.index') }}" class="add">Модерация</a>
-        </div><div class="top-menu__right">
+        </div>
+        <div class="top-menu__right">
             <ul class="list">
                 <li class="item">
                     <form action="" class="new-org__form">
-
+                        @php
+                            use Illuminate\Support\Facades\Route;
+                            $uri = Route::getFacadeRoot()->current()->uri();
+                            $page = str_replace('dashboard/', "", $uri);
+                        @endphp
+                        <input type="hidden" name="page" class="page" value="{{ $page }}">
                         <input type="text" class="i-value" name="search-attr">
 
-                        <input type="submit" class="btn blue">
+                        <button class="btn blue dashboard-search">test</button>
                     </form>
                 </li>
             </ul>
         </div>
 
-
-        <!--<div class="top-menu__right">
-            <ul class="list">
-                <li class="item"><a href="{{ route('organizations.index') }}">Организации</a></li>
-                <li class="item"><a href="{{ route('needs.index') }}">Потребности</a></li>
-                <li class="item"><a href="{{ route('profile.index') }}" class="active">Настройки</a></li>
-            </ul>
-        </div>-->
     </div>
 </div>
 

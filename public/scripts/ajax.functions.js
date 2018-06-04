@@ -55,4 +55,27 @@ $(document).ready(function () {
         });
 
     });
+    $(".dashboard-search").on("click", function () {
+        var searchAttr = $(this).parent().find('.i-value').val();
+        var page = $(this).parent().find('.page').val();
+
+        console.log(page);
+        $.ajax({
+            url: '/dashboard/search',
+            method: 'post',
+            dataType: 'html',
+            data:{ searchAttr: searchAttr, page: page },
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (message) {
+
+            }
+        });
+
+        return false;
+    });
 });

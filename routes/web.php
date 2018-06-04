@@ -74,4 +74,6 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard'], function(){
 
     Route::get('/need-block/{need}', 'ModerationController@needBlock')->name('dashboard.moderation.need.block');
     Route::get('/need-unblock/{need}', 'ModerationController@needUnBlock')->name('dashboard.moderation.need.unblock');
+
+    Route::post('/search', 'SearchController@search')->name('dashboard.search');
 });
