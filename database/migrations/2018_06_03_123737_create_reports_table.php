@@ -17,6 +17,7 @@ class CreateReportsTable extends Migration
             $table->increments('id');
             $table->integer('id_need');
             $table->integer('id_sender');
+            $table->integer('id_org');
             $table->text('message');
             $table->timestamps();
         });

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Need;
 
+use App\Need;
+use App\Organization;
 use App\Report;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,12 +19,13 @@ class SendReportController extends Controller
         ]);
         //if( $v->fails() )
         //    return redirect()->back()->withErrors($v);
+        $need = Need::where('id', $request->get('need_data'))->first();
 
         Report::create([
             'id_need' => $request->get('need_data'),
             'id_sender' => Auth::id(),
             'message' => $request->get('reportMessage'),
-
+            'id_org' => $need->id_org
         ]);
 
         return redirect()->back()->with('success', 'Вы успешно отправили жалобу');

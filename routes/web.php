@@ -68,4 +68,10 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard'], function(){
     Route::get('/users/{user}', 'UsersController@show')->name('dashboard.users.show');
     Route::get('/moderation', 'ModerationController@index')->name('dashboard.moderation.index');
 
+    Route::get('/org-apply/{organization}', 'ModerationController@orgApply')->name('dashboard.moderation.org.apply');
+    Route::get('/org-block/{organization}', 'ModerationController@orgBlock')->name('dashboard.moderation.org.block');
+    Route::get('/org-unblock/{organization}', 'ModerationController@orgUnBlock')->name('dashboard.moderation.org.unblock');
+
+    Route::get('/need-block/{need}', 'ModerationController@needBlock')->name('dashboard.moderation.need.block');
+    Route::get('/need-unblock/{need}', 'ModerationController@needUnBlock')->name('dashboard.moderation.need.unblock');
 });

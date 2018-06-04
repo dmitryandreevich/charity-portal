@@ -17,7 +17,7 @@ class ArchiveController extends Controller
         $photos = Storage::allFiles("/public/organizations/$id/photos/");
         foreach ($photos as $key => $photo)
             $photos[$key] = str_replace('public', 'storage', $photo);
-        $needs = Need::where('id_org', $organization->id)->where('status', StatusOfNeed::STATUS_ARCHIVE)->get();
+        $needs = Need::where('id_org', $organization->id)->where('status', StatusOfNeed::STATUS_ARCHIVE)->orWhere('status', StatusOfNeed::STATUS_COLLECTED)->get();
         // Если организацию просматривает волонтёр
 
         /*if(Auth::user()->type == TypeOfUser::VOLUNTEER){

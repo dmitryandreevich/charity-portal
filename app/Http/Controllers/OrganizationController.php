@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\StatusOfNeed;
 use App\Classes\StatusOfOrganization;
 use App\Classes\TypeOfNeed;
 use App\Classes\TypeOfUser;
@@ -141,7 +142,8 @@ class OrganizationController extends Controller
         $photos = Storage::allFiles("/public/organizations/$id/photos/");
         foreach ($photos as $key => $photo)
             $photos[$key] = str_replace('public', 'storage', $photo);
-        $needsBuilder = Need::where('id_org', $organization->id);
+
+        $needsBuilder = Need::where('id_org', $organization->id)->where('status', StatusOfNeed::STATUS_ACTUAL);
         // Если организацию просматривает волонтёр
         $needs = $needsBuilder->get();
 

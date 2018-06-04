@@ -15,7 +15,6 @@
             <th>Id организации</th>
             <th>Тип потребности</th>
             <th>Статус</th>
-            <th>Переход на организацию</th>
         </tr>
         @foreach($needs as $need)
             <tr>
@@ -23,7 +22,13 @@
                 <td>{{ $need->id_org }}</td>
                 <td>{{ \App\Classes\TypeOfNeed::NAMES[$need->type_need] }}</td>
                 <td>{{ \App\Classes\StatusOfNeed::NAMES[$need->status] }}</td>
-                <td><a href="{{ route('organizations.show', ['organization' => $need->id_org]) }}">Перейти</a></td>
+                @if($need->status == \App\Classes\StatusOfNeed::STATUS_BLOCK)
+                    <td><a href="{{ route('dashboard.moderation.need.unblock', ['need' => $need->id]) }}" style="color: black">Разблокировать</a></td>
+                @else
+                    <td><a href="{{ route('dashboard.moderation.need.block', ['need' => $need->id]) }}" style="color: black">Заблокировать</a></td>
+                @endif
+
+                <td><a href="{{ route('organizations.show', ['organization' => $need->id_org]) }}" style="color: black">Перейти</a></td>
             </tr>
         @endforeach
     </table>

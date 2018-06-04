@@ -135,7 +135,6 @@
                                     <div class="info">
                                         <h3 class="name">{{ $need->title }}</h3>
                                         <p class="html">{{ $need->description }}</p>
-                                        <a href="{{ $need->link }}" class="link">{{ $need->link }}</a>
                                         <a href="#" data-modal="#modalReportNeed" class="link open-modal" receiver="{{ $need->id }}">Пожаловаться</a>
                                     </div>
                                     @if( ($need->amount - $need->collected ) <= 0 )

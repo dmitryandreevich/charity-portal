@@ -17,7 +17,8 @@
             <th>Тип потребителя</th>
             <th>Город</th>
             <th>Имя</th>
-            <th>переход</th>
+            <th colspan="2">Операции</th>
+
         </tr>
         @foreach($orgs as $org)
             <tr>
@@ -27,7 +28,19 @@
                 <td>{{ \App\Classes\TypesOfOrganizations::typesOrganizations[$org->type_consumer] }}</td>
                 <td>{{ $org->city }}</td>
                 <td>{{ $org->name }}</td>
-                <td><a href="{{ route('organizations.show', ['organization' => $org->id]) }}">Перейти</a></td>
+                @if($org->status == \App\Classes\StatusOfOrganization::DISABLED_BY_MODERATOR)
+                    <td>
+                        <a href="{{ route('dashboard.moderation.org.unblock', ['organization' => $org->id]) }}" style="color:black">Разблокировать</a>
+                    </td>
+                @else
+                    <td>
+                        <a href="{{ route('dashboard.moderation.org.block', ['organization' => $org->id]) }}" style="color:black">Заблокировать</a>
+                    </td>
+                @endif
+
+                <td>
+                    <a href="{{ route('organizations.show', ['organization' => $org->id]) }}" style="color:black">Перейти</a>
+                </td>
             </tr>
         @endforeach
     </table>
