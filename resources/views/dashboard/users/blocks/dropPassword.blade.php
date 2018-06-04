@@ -8,7 +8,7 @@
 ?>
 <div class="right item">
     <div class="name">Смена пароля</div>
-    <form class="new-org__form" action="" method="post">
+    <form class="new-org__form" action="{{ route('dashboard.users.reset', ['user' => $user->id]) }}" method="post">
         {{ csrf_field() }}
         <div class="btn-block">
             <input type="submit" value="Сбросить пароль">

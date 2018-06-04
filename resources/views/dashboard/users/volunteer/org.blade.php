@@ -57,7 +57,7 @@
                             -->
                         </form>
                     </div>
-                    @include('profile.blocks.changePassword')
+                    @include('dashboard.users.blocks.dropPassword')
                 </div>
             </div>
         </div>

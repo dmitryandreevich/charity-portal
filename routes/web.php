@@ -66,6 +66,8 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard'], function(){
     Route::get('/needs', 'NeedsController@index')->name('dashboard.needs.index');
     Route::get('/users', 'UsersController@index')->name('dashboard.users.index');
     Route::get('/users/{user}', 'UsersController@show')->name('dashboard.users.show');
+    Route::post('/reset-password/{user}', 'ResetPasswordController@store')->name('dashboard.users.reset');
+
     Route::get('/moderation', 'ModerationController@index')->name('dashboard.moderation.index');
 
     Route::get('/org-apply/{organization}', 'ModerationController@orgApply')->name('dashboard.moderation.org.apply');
