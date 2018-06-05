@@ -56,7 +56,11 @@ class ModerationController extends Controller
         return redirect()->back()->with('success', 'Потребность была заблокирована');
     }
     public function needUnBlock(Need $need){
-        $need->status = StatusOfNeed::STATUS_ACTUAL;
+        if($need->collected >= $need->amount || $need->collected >= $need->count_vols)
+            $need->status = StatusOfNeed::STATUS_COLLECTED;
+        else
+            $need->status = StatusOfNeed::STATUS_ACTUAL;
+
         $need->save();
 
         return redirect()->back()->with('success', 'Потребность была разблокирована');

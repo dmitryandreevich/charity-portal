@@ -21,7 +21,6 @@
             @if( ($need->amount - $need->collected ) <= 0.00 )
                 <div class="end">
                     <span class="money">Вся сумма собрана<span class="green">{{ $need->amount }} ₽</span></span>
-                    <div class="btn-block"><a href="#" data-modal="#modal3" class="btn blue open-modal">Получить</a></div>
                 </div>
             @else
                 <div class="end">

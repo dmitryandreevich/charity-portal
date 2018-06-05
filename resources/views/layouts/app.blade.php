@@ -227,7 +227,7 @@
     </div>
     <div id="modal4" class="modal">
         <div class="content"><a href="#" data-id="popup_default" data-animation="scale" class="close-popup">&times;</a>
-            <h2 class="title">Выбирете способ помочь</h2>
+            <h2 class="title">Введите количество человек</h2>
             <div class="right item">
                 <form action="{{ route('volunteers.add') }}" class="new-org__form" method="post">
                     {{ csrf_field() }}

@@ -33,7 +33,7 @@ class StatusOfNeed
             case \App\Classes\StatusOfNeed::STATUS_BLOCK:
                 return "red";
             case \App\Classes\StatusOfNeed::STATUS_COLLECTED:
-                return "green";
+                return "yellow";
         }
         return 'red';
     }
