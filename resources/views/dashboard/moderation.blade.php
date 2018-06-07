@@ -41,13 +41,14 @@
             <th>Id отправителя</th>
             <th>Id потребности</th>
             <th>Сообщение</th>
-            <th colspan="2">Операции</th>
+            <th colspan="3">Операции</th>
         </tr>
         @foreach($reports as $report)
             <tr>
-                <td>{{ $report->id_sender }}</td>
-                <td>{{ $report->id_need }}</td>
+                <td><a href="{{ route('dashboard.users.show', ['user' => $report->id_sender]) }}">{{ $report->id_sender }}</a></td>
+                <td><a href="{{ route('organizations.show', ['organization' => $report->id_org]) }}" style="color: #000000;">{{ $report->id_need }}</a></td>
                 <td>{{ $report->message }}</td>
+                <td><a href="{{ route('dashboard.moderation.need.report.delete', ['report' => $report->id]) }}" style="color: black">Удалить жалобу</a></td>
                 <td><a href="{{ route('dashboard.moderation.need.block', ['need' => $report->id_need]) }}" style="color: black">Заблокировать</a></td>
                 <td><a href="{{ route('organizations.show', ['organization' => $report->id_org]) }}" style="color:black">Перейти</a></td>
             </tr>

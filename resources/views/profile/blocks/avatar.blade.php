@@ -7,4 +7,10 @@
  */
 ?>
 
-<a href="/"><img src="/../img/content/account/img-ac.png"></a>
+<a  href="#" data-modal="#modalChangeAvatar" class="link open-modal">
+    @if(\Illuminate\Support\Facades\Auth::user()->avatar == "")
+        <img src="{{ asset("img/dummy200.png") }}">
+    @else
+        <img src="{{ asset("storage/"  . \Illuminate\Support\Facades\Auth::user()->avatar) }}">
+    @endif
+</a>

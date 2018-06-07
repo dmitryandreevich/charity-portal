@@ -47,9 +47,10 @@
             <div class="logotype"><a href="/" class="logo"><img src="{{ asset('img/icons/i.header_logo-heart.svg') }}"></a></div>
             <div class="menu row"><a href="{{ route('catalog.index') }}" class="menu_item">Каталог потребителей</a><a href="/" class="menu_item">О проекте</a><a href="/" class="menu_item">Вопросы и ответы</a><a href="/" class="menu_item">Условия</a><a href="/" class="menu_item">Статьи</a><a href="/" class="menu_item">Контакты</a></div>
             @if(\Illuminate\Support\Facades\Auth::check())
-                <a href="{{ route('profile.index') }}" class="main-ava login">
+                <a href="" class="main-ava"><img src="./img/content/account/img-ac.png"></a>
+                <!--<a href="{{ route('profile.index') }}" class="main-ava login">
                     <p class="entrance">Профиль</p>
-                </a>
+                </a>-->
                 <a href="{{ route('logout') }}" class="main-ava login">
                     <p class="entrance">Выйти</p>
                 </a>
@@ -255,6 +256,27 @@
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
+    <div id="modalChangeAvatar" class="modal">
+        <div class="content">
+            <a href="#" data-id="popup_default" data-animation="scale" class="close-popup">&times;</a>
+            <h2 class="title">Смена главной фотграфии</h2>
+            <form class="new-org__form" method="POST" action="{{ route('profile.changeAvatar.store') }}" enctype="multipart/form-data">
+                {{ csrf_field() }}
+
+                <div class="right item">
+
+                    <div class="list">
+                        <input type="file" name="image">
+                    </div>
+                    <div class="btn-block">
+                        <input type="submit" value="Установить">
+                    </div>
+                </div>
+            </form>
+
+
         </div>
     </div>
     <div id="modal4" class="modal">

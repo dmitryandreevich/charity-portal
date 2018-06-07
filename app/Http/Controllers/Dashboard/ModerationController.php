@@ -72,4 +72,14 @@ class ModerationController extends Controller
         return redirect()->back()->with('success', 'Потребность была разблокирована');
     }
 
+    public function reportDelete(Report $report){
+        try {
+            $report->delete();
+        } catch (\Exception $e) {
+
+        }
+
+        return redirect()->back()->with('success', 'Жалоба была удалена.');
+    }
+
 }

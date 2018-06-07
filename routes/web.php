@@ -30,7 +30,7 @@ Route::group(['namespace' => 'Profile', 'prefix' => 'pr', 'middleware' => 'auth'
    Route::get('/fb-attach', 'SocialController@fbAttach')->name('profile.fbAttach');
    Route::post('/change-password','ChangePasswordController@update')->name('profile.changePassword');
    Route::post('/toggleStatus', 'MainController@toggle')->name('profile.toggleStatus');
-   //Route::get('/{user}', 'ShowController@show')->name('profile.show');
+   Route::post('/change-avatar', 'AvatarController@store')->name('profile.changeAvatar.store');
 });
 // Обработка пожертвования донорами
 Route::post('/donation', 'Profile\DonorController@donation')->name('donation.store');
@@ -73,7 +73,7 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard'], function(){
     Route::get('/org-apply/{organization}', 'ModerationController@orgApply')->name('dashboard.moderation.org.apply');
     Route::post('/org-block', 'ModerationController@orgBlock')->name('dashboard.moderation.org.block');
     Route::get('/org-unblock/{organization}', 'ModerationController@orgUnBlock')->name('dashboard.moderation.org.unblock');
-
+    Route::get('/need-report-delete/{report}', 'ModerationController@reportDelete')->name('dashboard.moderation.need.report.delete');
     Route::post('/need-block', 'ModerationController@needBlock')->name('dashboard.moderation.need.block');
     Route::get('/need-unblock/{need}', 'ModerationController@needUnBlock')->name('dashboard.moderation.need.unblock');
 
