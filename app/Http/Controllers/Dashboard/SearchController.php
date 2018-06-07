@@ -22,7 +22,8 @@ class SearchController extends Controller
                 $users = User::where('email', 'regexp', "\\$searchAttr")
                             ->orWhere('phone', 'regexp', "\\$searchAttr")
                             ->orWhere('id', '=', $searchAttr)
-                            ->orWhere('city', 'regexp', "\\$searchAttr")->get();
+                            ->orWhere('city', 'regexp', "\\$searchAttr")
+                            ->orWhere('data', 'regexp', "\\$searchAttr")->get();
 
 
                 return view('dashboard.blocks.tableUsers', ['users' => $users]);

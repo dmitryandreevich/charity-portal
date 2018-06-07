@@ -32,6 +32,7 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css">
     <link href="{{ asset('styles/defaults.css') }}" rel="stylesheet">
     <link href="{{ asset('styles/pages.css') }}" rel="stylesheet">
+    <link href="{{ asset('styles/edits.css') }}" rel="stylesheet">
     <link href="{{ asset('styles/vendors.css') }}" rel="stylesheet"><!-- HTML5 supporting -->
 
     <!--[if lt IE 9]>
@@ -47,10 +48,13 @@
             <div class="logotype"><a href="/" class="logo"><img src="{{ asset('img/icons/i.header_logo-heart.svg') }}"></a></div>
             <div class="menu row"><a href="{{ route('catalog.index') }}" class="menu_item">Каталог потребителей</a><a href="/" class="menu_item">О проекте</a><a href="/" class="menu_item">Вопросы и ответы</a><a href="/" class="menu_item">Условия</a><a href="/" class="menu_item">Статьи</a><a href="/" class="menu_item">Контакты</a></div>
             @if(\Illuminate\Support\Facades\Auth::check())
-                <a href="" class="main-ava"><img src="./img/content/account/img-ac.png"></a>
-                <!--<a href="{{ route('profile.index') }}" class="main-ava login">
-                    <p class="entrance">Профиль</p>
-                </a>-->
+                <a href="{{ route('profile.index') }}" class="main-ava">
+                    @if(\Illuminate\Support\Facades\Auth::user()->avatar == "")
+                        <img src="{{ asset("img/dummy200.png") }}">
+                    @else
+                        <img src="{{ asset("storage/"  . \Illuminate\Support\Facades\Auth::user()->avatar) }}">
+                    @endif
+                </a>
                 <a href="{{ route('logout') }}" class="main-ava login">
                     <p class="entrance">Выйти</p>
                 </a>
