@@ -56,6 +56,36 @@ $(document).ready(function () {
         });
 
     });
+
+    $(".sort-select-org").on("click", function() {
+
+        var selectTypeOfNeed = $('.sort-select-org.filter_type-need').find('.selection').attr('data-value');
+        var orgId = $('.select').find('.orgId').val();
+
+        $.ajax({
+            url: '/organizations/filter',
+            method: 'post',
+            dataType: 'html',
+            data:{ typeOfNeed: selectTypeOfNeed, orgId: orgId },
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                $('.content__list').text('');
+
+                if(response !== ""){
+                    $('.content__list').append(response);
+                }else
+                    $('.content__list').append('<h3>Ничего не найдено!</h3>');
+            },
+            error: function (message) {
+                $('.content__list').text('');
+                $('.content__list').append('<h3>Ошибка! </h3>' + message);
+            }
+        });
+
+    });
+
     $(".dashboard-search").on("click", function () {
         var searchAttr = $(this).parent().find('.i-value').val();
         var page = $(this).parent().find('.page').val();

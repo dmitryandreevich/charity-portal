@@ -22,7 +22,7 @@
             @if($need->status == \App\Classes\StatusOfNeed::STATUS_BLOCK)
                 <td><a href="{{ route('dashboard.moderation.need.unblock', ['need' => $need->id]) }}" style="color: black">Разблокировать</a></td>
             @else
-                <td><a href="{{ route('dashboard.moderation.need.block', ['need' => $need->id]) }}" style="color: black">Заблокировать</a></td>
+                <td><a  href="#" data-modal="#modalBanNeed" class="link open-modal" receiver="{{ $need->id }}" style="color:black">Заблокировать</a></td>
             @endif
 
             <td><a href="{{ route('organizations.show', ['organization' => $need->id_org]) }}" style="color: black">Перейти</a></td>

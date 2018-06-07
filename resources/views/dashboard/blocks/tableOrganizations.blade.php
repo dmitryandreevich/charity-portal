@@ -20,8 +20,8 @@
     </tr>
     @foreach($orgs as $org)
         <tr>
-            <td>{{ $org->id }}</td>
-            <td>{{ $org->creator }}</td>
+            <td><a href="{{ route('organizations.show', ['organization' => $org->id]) }}">{{ $org->id }}</a></td>
+            <td><a href="{{ route('dashboard.users.show', ['user' => $org->creator]) }}" style="color: black">{{ $org->creator }}</a></td>
             <td>{{ \App\Classes\StatusOfOrganization::NAMES[$org->status] }}</td>
             <td>{{ \App\Classes\TypesOfOrganizations::typesOrganizations[$org->type_consumer] }}</td>
             <td>{{ $org->city }}</td>
@@ -32,7 +32,7 @@
                 </td>
             @else
                 <td>
-                    <a href="{{ route('dashboard.moderation.org.block', ['organization' => $org->id]) }}" style="color:black">Заблокировать</a>
+                    <a  href="#" data-modal="#modalBanOrg" class="link open-modal" receiver="{{ $org->id }}" style="color:black">Заблокировать</a>
                 </td>
             @endif
 

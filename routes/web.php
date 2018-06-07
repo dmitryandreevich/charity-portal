@@ -46,7 +46,7 @@ Route::group(['prefix' => 'catalog'], function (){
 Route::resource('/organizations', 'OrganizationController', ['except' => 'show']);
 Route::get('/organizations/{organization}', 'OrganizationController@show')->name('organizations.show');
 Route::get('/organizations/archive/{organization}', 'ArchiveController@index')->name('organizations.archive.index');
-
+Route::post('/organizations/filter', 'OrganizationController@filter')->name('organizations.show.filter');
 Route::group(['namespace' => 'Need'], function (){
     Route::resource('/needs', 'NeedController');
     Route::post('/needs/sorting', 'SortingController@show')->name('needs.sorting.show');
@@ -71,10 +71,10 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard'], function(){
     Route::get('/moderation', 'ModerationController@index')->name('dashboard.moderation.index');
 
     Route::get('/org-apply/{organization}', 'ModerationController@orgApply')->name('dashboard.moderation.org.apply');
-    Route::get('/org-block/{organization}', 'ModerationController@orgBlock')->name('dashboard.moderation.org.block');
+    Route::post('/org-block', 'ModerationController@orgBlock')->name('dashboard.moderation.org.block');
     Route::get('/org-unblock/{organization}', 'ModerationController@orgUnBlock')->name('dashboard.moderation.org.unblock');
 
-    Route::get('/need-block/{need}', 'ModerationController@needBlock')->name('dashboard.moderation.need.block');
+    Route::post('/need-block', 'ModerationController@needBlock')->name('dashboard.moderation.need.block');
     Route::get('/need-unblock/{need}', 'ModerationController@needUnBlock')->name('dashboard.moderation.need.unblock');
 
     Route::post('/search', 'SearchController@search')->name('dashboard.search');

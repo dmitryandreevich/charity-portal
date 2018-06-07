@@ -225,6 +225,38 @@
             </div>
         </div>
     </div>
+    <div id="modalBanNeed" class="modal">
+        <div class="content">
+            <h2 class="title">Введите причину блокировки потребности</h2>
+            <div class="right item">
+                <form class="new-org__form" action="{{ route('dashboard.moderation.need.block') }}" method="post">
+                    {{ csrf_field() }}
+                    <div class="list">
+                        <input type="text" name="message" required>
+                    </div>
+                    <div class="btn-block">
+                        <input type="submit" value="Заблокировать" class="btn blue">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="modalBanOrg" class="modal">
+        <div class="content">
+            <h2 class="title">Введите причину блокировки организации</h2>
+            <div class="right item">
+                <form class="new-org__form" action="{{ route('dashboard.moderation.org.block') }}" method="post">
+                    {{ csrf_field() }}
+                    <div class="list">
+                        <input type="text" name="message" required>
+                    </div>
+                    <div class="btn-block">
+                        <input type="submit" value="Заблокировать" class="btn blue">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div id="modal4" class="modal">
         <div class="content"><a href="#" data-id="popup_default" data-animation="scale" class="close-popup">&times;</a>
             <h2 class="title">Введите количество человек</h2>

@@ -33,7 +33,10 @@ class ModerationController extends Controller
 
         return redirect()->back()->with('success', 'Организация была опубликована');
     }
-    public function orgBlock(Organization $organization){
+    public function orgBlock(Request $request){
+        $this->validate($request,['need_data' => 'required|integer', 'message' => 'required']);
+
+        $organization = Organization::find( $request->get('need_data') );
         $organization->status = StatusOfOrganization::DISABLED_BY_MODERATOR;
         $organization->save();
 
@@ -45,7 +48,10 @@ class ModerationController extends Controller
 
         return redirect()->back()->with('success', 'Организация была разблокирована.');
     }
-    public function needBlock(Need $need){
+    public function needBlock(Request $request){
+        $this->validate($request,['need_data' => 'required|integer', 'message' => 'required']);
+
+        $need = Need::find( $request->get('need_data') );
         $need->status = StatusOfNeed::STATUS_BLOCK;
         $need->save();
 

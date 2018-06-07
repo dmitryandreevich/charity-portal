@@ -13,6 +13,7 @@ use App\Organization;
 use Faker\Provider\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -264,5 +265,13 @@ class OrganizationController extends Controller
             $total += $history->amount;
 
         return $total;
+    }
+
+    public function filter(Request $request){
+        $needs = Need::where('id_org',$request->get('orgId'))
+            ->where('type_need', $request->get('typeOfNeed'))
+            ->where('status', StatusOfNeed::STATUS_ACTUAL)->get();
+
+        return view('organization.blocks.orgContent', ['needs' => $needs]);
     }
 }
