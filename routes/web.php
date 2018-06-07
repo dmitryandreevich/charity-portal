@@ -40,7 +40,7 @@ Route::post('/add-volunteers', 'Profile\VolunteerController@addVolunteers')->nam
 // Catalog
 Route::group(['prefix' => 'catalog'], function (){
    Route::get('/', 'CatalogController@index')->name('catalog.index');
-   Route::put('/sort', 'CatalogController@sort')->name('catalog.sort');
+   Route::put('/filter', 'CatalogController@sort')->name('catalog.sort');
 
 });
 Route::resource('/organizations', 'OrganizationController', ['except' => 'show']);

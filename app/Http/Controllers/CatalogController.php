@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\StatusOfNeed;
 use App\Need;
 use App\Organization;
 use Illuminate\Http\Request;
@@ -18,30 +19,46 @@ class CatalogController extends Controller
         $typeOrg = $request->get('typeOrg');
         $typeNeed = $request->get('typeNeed');
         $city = $request->get('city');
-        $rules = [];
-        if(isset($typeOrg))
-            $rules['type_consumer'] = $typeOrg;
-        if(isset($city))
-            $rules['city'] = $city;
+        $sortBy = $request->get('sortBy');
 
-        $orgsBuilder = Organization::where($rules);
+        $organizations = Organization::all();
+        $formated = $this->format($organizations, $city, $typeNeed, $typeOrg, $sortBy);
 
-        // if 0 then any type need
-        if(isset($typeNeed) && $typeNeed != 0){
-            // get organizations ids by filter
-            $org_ids = $orgsBuilder->pluck('id')->toArray();
-            // get needs by organizations
-            $orgIdsWithNeedType = Need::whereIn('id_org', $org_ids)->where('type_need', $typeNeed)
-                                                                    ->pluck('id_org')->toArray();
-            // delete duplicate ids
-            $org_ids = array_unique($orgIdsWithNeedType);
-            // get organizations with type need
-            $organizations = Organization::whereIn('id', $org_ids)->get();
-            //ддополнить массив ключами типо : things->true, false для сортировки
-            return count($organizations);
+        return view('catalog.blocks.organizations', ['organizations' => $formated]);
+    }
+    protected function format($orgs, $city, $typeOfNeed, $typeOfOrg, $sortBy = null){
+        $filtered = collect($orgs);
+
+        if( isset($city) )
+            $filtered = $filtered->filter(function($org) use($city){
+                return $org->city == $city;
+            });
+
+        if( isset($typeOfOrg) )
+            $filtered = $filtered->filter(function ($org) use ($typeOfOrg){
+                return $org->type_consumer == $typeOfOrg;
+            });
+
+        if( isset($typeOfNeed) ){
+            $needs = Need::all();
+
+            $filtered = $filtered->filter(function($item, $key) use ($needs, $typeOfNeed){
+                return ($needs->where('id_org', $item->id)->where('type_need', $typeOfNeed)->first()) != null;
+            });
         }
 
-        $organizations = $orgsBuilder->get();
-        return count($organizations);
+        if( isset($sortBy) ) {
+
+            if($sortBy == 'date'){
+               $filtered = $filtered->sortByDesc('created_at');
+            }elseif ('actual_needs'){
+                $needs = Need::all();
+                $filtered = $filtered->sortByDesc(function($item) use($needs){
+                    return count($needs->where('id_org', $item->id)->where('status', StatusOfNeed::STATUS_ACTUAL)->toArray());
+                });
+            }
+        }
+
+        return $filtered;
     }
 }

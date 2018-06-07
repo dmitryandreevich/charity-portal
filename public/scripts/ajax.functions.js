@@ -1,31 +1,38 @@
 $(document).ready(function () {
-    /*
-     var selectCity = $(".sort-select.filter_city");
-     var selectTypeOrg = $(".sort-select.filter-type_org");
-     var selectTypeNeed = $(".sort-select.filter-type_need");
 
-     var city = selectCity.find('.selection').attr('data-value');
-     var typeOrg = selectTypeOrg.find('.selection').attr('data-value');
-     var typeNeed = selectTypeNeed.find('.selection').attr('data-value');
-     var sortBy = $(".sort-select.sort-type_catalog_all").attr('data-value');
+     $(".filter-select-catalog").on("click", function () {
+         var selectCity = $(".filter-select-catalog.filter_city");
+         var selectTypeOrg = $(".filter-select-catalog.filter-type_org");
+         var selectTypeNeed = $(".filter-select-catalog.filter-type_need");
 
-     //console.log(city + " " + typeOrg + " " + typeNeed);
+         var city = selectCity.find('.selection').attr('data-value');
+         var typeOrg = selectTypeOrg.find('.selection').attr('data-value');
+         var typeNeed = selectTypeNeed.find('.selection').attr('data-value');
+         var sortBy = $(".filter-select-catalog.sort-type_catalog_all").find('.selection').attr('data-value');
+
+         console.log(sortBy);
 
 
-     $.ajax({
-         url: '/catalog/sort',
-         method: 'put',
-         data:{ city: city, typeOrg: typeOrg, typeNeed: typeNeed, sortBy: sortBy },
-         headers: {
-             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-         },
-         success: function (response) {
-             console.log(response);
-         },
-         error: function (message) {
+         $.ajax({
+             url: '/catalog/filter',
+             method: 'put',
+             data:{ city: city, typeOrg: typeOrg, typeNeed: typeNeed, sortBy: sortBy },
+             headers: {
+                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+             },
+             success: function (response) {
+                 $('.block-needs--help.catalog_flex').text('');
 
-         }
-     });*/
+                 if(response !== ""){
+                     $('.block-needs--help.catalog_flex').append(response);
+                 }else
+                     $('.block-needs--help.catalog_flex').append('<h3>Ничего не найдено!</h3>');
+             },
+             error: function (message) {
+
+             }
+         });
+     });
     $(".sort-select-needs").on("click", function() {
 
         var selectStatus = $(".sort-select-needs.filter_status").find('.selection').attr('data-value');
