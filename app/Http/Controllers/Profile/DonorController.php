@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Profile;
 use App\Classes\StatusOfNeed;
 use App\Classes\Utils;
 use App\HistoryOfDonate;
+use App\HistoryOfMaterialDonate;
 use App\Http\Controllers\Controller;
 use App\Need;
 use App\User;
@@ -41,50 +42,74 @@ class DonorController extends Controller
      */
     public function donation(Request $request){
 
-        dd($request);
-        $validator = Validator::make($request->all(),
-            ['need_data' => 'required|integer',
-                'amount' => 'required|integer']);
-        if($validator->fails())
-            return redirect()->back()->withErrors($validator);
+        if ($request->get('financeSend')){
+            $validator = Validator::make($request->all(),
+                ['need_data' => 'required|integer',
+                    'amount' => 'required|integer']);
+            if($validator->fails())
+                return redirect()->back()->withErrors($validator);
 
-        $needId = $request->get('need_data');
-        $amount = $request->get('amount');
+            $needId = $request->get('need_data');
+            $amount = $request->get('amount');
 
-        $user = Auth::user();
+            $user = Auth::user();
 
-        $need = Need::where('id', $needId)->first();
+            $need = Need::where('id', $needId)->first();
 
-        if( count($need) !== 0 ){
-            $balance = $user->balance;
-            if($balance >= $amount){
-                // высчитываем сколько можно ещё пожертвовать
-                $leftToDonate = $need->amount - $need->collected;
+            if( count($need) !== 0 ){
+                $balance = $user->balance;
+                if($balance >= $amount){
+                    // высчитываем сколько можно ещё пожертвовать
+                    $leftToDonate = $need->amount - $need->collected;
 
-                // если эта сумма не больше требуемой, продолжаем
-                if($amount > $leftToDonate)
-                    return redirect()->back()->with('error', 'Введённая сумма больше нужной!');
+                    // если эта сумма не больше требуемой, продолжаем
+                    if($amount > $leftToDonate)
+                        return redirect()->back()->with('error', 'Введённая сумма больше нужной!');
 
-                $user->balance -= $amount;
-                $need->collected += $amount;
+                    $user->balance -= $amount;
+                    $need->collected += $amount;
 
-                if($need->collected >= $need->amount)
-                    $need->status = StatusOfNeed::STATUS_COLLECTED;
-                //save donate to history
-                HistoryOfDonate::create([
-                    'id_sender' => $user->id,
-                    'id_need' => $need->id,
-                    'amount' => $amount,
-                    'id_org' => $need->id_org
-                ]);
+                    if($need->collected >= $need->amount)
+                        $need->status = StatusOfNeed::STATUS_COLLECTED;
+                    //save donate to history
+                    HistoryOfDonate::create([
+                        'id_sender' => $user->id,
+                        'id_need' => $need->id,
+                        'amount' => $amount,
+                        'id_org' => $need->id_org
+                    ]);
 
-                $user->save();
-                $need->save();
+                    $user->save();
+                    $need->save();
 
-                return redirect()->back()->with('success', 'Вы успешно пожертвовали деньг!');
+                    return redirect()->back()->with('success', 'Вы успешно пожертвовали деньг!');
+                }
+                return redirect()->back()->with('error', 'У вас недостаточно средств!');
             }
-            return redirect()->back()->with('error', 'У вас недостаточно средств!');
+        }elseif ( $request->get('materialSend') ){
+            $validator = Validator::make($request->all(),
+                ['need_data' => 'required|integer',
+                    'info' => 'required']);
+            if($validator->fails())
+                return redirect()->back()->withErrors($validator);
+
+            $info = $request->get('info');
+
+            $need = Need::find( $request->get('need_data') );
+
+            $creatorEmail = $need->getCreatorEmail();
+
+            mail($creatorEmail, "Заявка на материальное пожертвование.", "Здравствуйте! Вам пришла новая заявка на материальное пожертвование. Текст\n" . $info);
+
+            HistoryOfMaterialDonate::create([
+                'id_sender' => Auth::id(),
+                'id_need' => $need->id,
+                'id_org' => $need->id_org,
+                'info' => $info
+            ]);
+            return redirect()->back()->with('success', 'Вы успешно отправили заявку!');
         }
+
         return redirect()->back()->with('error', 'Произошла ошибка, попробуйте ещё раз!');
     }
 }

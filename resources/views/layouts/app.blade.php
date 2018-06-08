@@ -195,7 +195,7 @@
                             <input type="number" class="i-value" name="amount"><span class="value">₽</span>
                         </div>
                         <div class="btn-block">
-                            <input type="submit" value="Пожертвовать">
+                            <input type="submit" value="Пожертвовать" name="financeSend">
                         </div>
                     </div>
                     <div class="material" style="display: none">
@@ -205,7 +205,7 @@
                             <textarea placeholder="Введите предметы и любую информацию о том как с вами связаться." name="info"></textarea>
                         </div>
                         <div class="btn-block">
-                            <input type="submit" value="Отправить">
+                            <input type="submit" value="Отправить" name="materialSend">
                         </div>
                     </div>
                 </div>
