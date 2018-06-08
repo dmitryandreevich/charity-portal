@@ -124,7 +124,18 @@ class OrganizationController extends Controller
             ]);
             return redirect( route('organizations.index') )->with('success', 'Организация была успешно создана!');
         }elseif( $request->has('preview') ){
-            return view('organization.preview',['request' => $request]);
+
+            $photosFiles = $request->file('photos');
+            $cover = base64_encode( file_get_contents( $request->file('cover') ) );
+            $photos = [];
+
+            for($i = 0; $i < count( $photosFiles ); $i++)
+                $photos[$i] = base64_encode( file_get_contents( $photosFiles[$i] ) );
+
+            return view('organization.preview',
+                ['data' => $request->all(),
+                'cover' => $cover,
+                'photos' => $photos]);
         }
         return redirect()->back()->with('error', 'Произошла ошибка при создании организации. Попробуйте снова!');
     }
