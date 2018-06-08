@@ -7,6 +7,7 @@ use App\Classes\StatusOfOrganization;
 use App\Need;
 use App\Organization;
 use App\Report;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -40,6 +41,10 @@ class ModerationController extends Controller
         $organization->status = StatusOfOrganization::DISABLED_BY_MODERATOR;
         $organization->save();
 
+        $userEmail = User::where('id', $organization->creator)->pluck('email')->first();
+        if( $userEmail )
+            mail($userEmail, "Администрация портала", "Ваша организация '$organization->name' была заблокирована по причине\n" . $request->get('message'));
+
         return redirect()->back()->with('success', 'Организация была отклонена');
     }
     public function orgUnBlock(Organization $organization){
@@ -58,6 +63,13 @@ class ModerationController extends Controller
         $reports = Report::where('id_need', $need->id)->get();
         foreach ($reports as $report)
             $report->delete();
+
+        $creatorId = Organization::where('id', $need->id_org)->pluck('creator')->first();
+        if( $creatorId ){
+            $userEmail = User::where('id', $creatorId)->pluck('email')->first();
+            if( $userEmail )
+                mail($userEmail, "Администрация портала", "Ваша потребность '$need->title' была заблокирована по причине\n " . $request->get('message'));
+        }
 
         return redirect()->back()->with('success', 'Потребность была заблокирована');
     }
