@@ -22,9 +22,9 @@
                     <a href="{{ route('organizations.show',['organization' => $organization->id]) }}"><h3 class="name">{{ $organization->name }}</h3></a>
                     <div class="location">{{ $organization->address }}</div>
                 </div>
-                <a href="{{ asset("storage/$organization->doc_path") }}" class="link">Скачать документ организации</a>
+                <div class="btn-block"><a href="{{ asset("storage/$organization->doc_path") }}" class="btn blue" name="apply">Документ</a></div>
 
-                <div class="btn-block"><a href="{{ route('dashboard.moderation.org.block', ['organization' => $organization->id]) }}" class="btn blue" name="block">Заблокировать</a></div>
+                <div class="btn-block"><a href="#" data-modal="#modalBanOrg" receiver="{{ $organization->id }}" class="btn blue open-modal">Заблокировать</a></div>
                 <div class="btn-block"><a href="{{ route('dashboard.moderation.org.apply', ['organization' => $organization->id]) }}" class="btn blue" name="apply">Принять</a></div>
 
             </div>
