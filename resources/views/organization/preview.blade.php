@@ -28,18 +28,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="block-needs--help">
-                    <div class="container">
-                        <div class="slider_content">
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item1.png"></div>
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item2.png"></div>
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item3.png"></div>
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item1.png"></div>
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item2.png"></div>
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item3.png"></div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="catalog_organization-content">

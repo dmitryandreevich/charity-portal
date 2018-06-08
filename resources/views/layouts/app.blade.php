@@ -183,18 +183,30 @@
             <form class="new-org__form" action="{{ route('donation.store') }}" method="post">
                 {{ csrf_field() }}
 
-                <select placeholder="Помочь финансово" name="donate_type" class="headroom_city sources custom-select">
-                    <option>Помочь финансово</option>
-                    <option>Помочь материально</option>
+                <select placeholder="Помочь финансово" name="donate_type" class="headroom_city sources custom-select select-donate_type">
+                    <option tab-name="finance" value="finance">Помочь финансово</option>
+                    <option tab-name="material" value="material">Помочь материально</option>
                 </select>
 
                 <div class="right item">
-                    <div class="name">Введите желаемую сумму:</div>
-                    <div class="list">
-                        <input type="number" class="i-value" name="amount"><span class="value">₽</span>
+                    <div class="finance">
+                        <div class="name">Введите желаемую сумму:</div>
+                        <div class="list">
+                            <input type="number" class="i-value" name="amount"><span class="value">₽</span>
+                        </div>
+                        <div class="btn-block">
+                            <input type="submit" value="Пожертвовать">
+                        </div>
                     </div>
-                    <div class="btn-block">
-                        <input type="submit" value="Пожертвовать">
+                    <div class="material" style="display: none">
+                        <div class="name">Введите предметы и любую информацию о вас:</div>
+
+                        <div class="list">
+                            <textarea placeholder="Введите предметы и любую информацию о том как с вами связаться." name="info"></textarea>
+                        </div>
+                        <div class="btn-block">
+                            <input type="submit" value="Отправить">
+                        </div>
                     </div>
                 </div>
 

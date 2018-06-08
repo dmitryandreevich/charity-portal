@@ -118,7 +118,7 @@ $(document).ready(function () {
         $(this).parents(".custom-select").find(".custom-select-trigger").text($(this).text());
     });
 
-    $(".select-need_type .custom-option").on("click", function() {
+    $(".select-donate_type .custom-option").on("click", function() {
         var tabName = $(this).attr('tab-name');
         if(tabName === "tab-new_money"){
             $(".tab-new_money").css('display', 'block');
@@ -126,6 +126,14 @@ $(document).ready(function () {
         }else if(tabName === "tab-new_vols"){
             $('.tab-new_vols').css('display', 'block');
             $('.tab-new_money').css('display', 'none');
+        }
+        console.log(tabName);
+        if(tabName === "finance"){
+            $(".finance").css('display', 'block');
+            $('.material').css('display', 'none');
+        }else if(tabName === "material"){
+            $(".finance").css('display', 'none');
+            $('.material').css('display', 'block');
         }
     });
 

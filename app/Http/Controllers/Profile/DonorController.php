@@ -40,6 +40,8 @@ class DonorController extends Controller
      * @return $this|\Illuminate\Http\RedirectResponse
      */
     public function donation(Request $request){
+
+        dd($request);
         $validator = Validator::make($request->all(),
             ['need_data' => 'required|integer',
                 'amount' => 'required|integer']);
