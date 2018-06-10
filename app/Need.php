@@ -20,4 +20,10 @@ class Need extends Model
         }
         return false;
     }
+
+    public function getParentOrganization(){
+        $idOrg = $this->id_org;
+
+        return Organization::find($idOrg);
+    }
 }

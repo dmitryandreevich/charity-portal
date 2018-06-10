@@ -7,7 +7,10 @@
                 <div class="main-banner__info">
                     <h1 class="title">Портал благотворительной помощи нуждающимся</h1>
                     <h2 class="subtitle">Помогайте нуждающимся без просредников и бумажной волокиты. Занимайтесь благотворительностью и волонтёрством, или получите помощь сами!</h2>
-                    <div class="btn-block"><a href="" class="btn orange">Получить помощь</a><a href="" class="btn green">Оказать помощь</a></div>
+                    <div class="btn-block">
+                        <a href="#" data-modal="#modal1" class="btn orange open-modal">Получить помощь</a>
+                        <a href="#" data-modal="#modal1" class="btn green open-modal">Оказать помощь</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -56,63 +59,22 @@
         <div class="main-slider">
             <div class="container">
                 <div class="main-slider_header row">
-                    <h2 class="title">Организации, нуждающиеся в помощи</h2><a href="" class="show-all">Смотреть все</a>
+                    <h2 class="title">Организации, нуждающиеся в помощи</h2><a href="{{ route('catalog.index') }}" class="show-all">Смотреть все</a>
                 </div>
                 <div class="main-slider_content">
-                    <div class="main-slider_item"><img src="./img/content/main-slider/item1.png">
-                        <div class="content">
-                            <div class="name">Детский дом-интернат #7</div>
-                            <div class="bottom">
-                                <div class="location">Уфа</div>
-                                <div class="help"><img src="./img/icons/i.slider-help_services.svg"><img src="./img/icons/i.slider_help_people.svg"><img src="./img/icons/i.slider_help_things.svg"></div>
+                    @foreach($organizations as $organization)
+                        <div class="main-slider_item">
+                           <!-- <img src="{{ asset('storage/' . $organization->cover_path) }}"> -->
+                            <img src="./img/content/main-slider/item1.png">
+                            <div class="content">
+                                <a href="{{ route('organizations.show', ['organization' => $organization->id]) }}"><div class="name">{{ $organization->name }}</div></a>
+                                <div class="bottom">
+                                    <div class="location">{{ $organization->city }}</div>
+                                    <div class="help"><img src="./img/icons/i.slider-help_services.svg"><img src="./img/icons/i.slider_help_people.svg"><img src="./img/icons/i.slider_help_things.svg"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="main-slider_item"><img src="./img/content/main-slider/item2.png">
-                        <div class="content">
-                            <div class="name">Социально-реабилитационный центр</div>
-                            <div class="bottom">
-                                <div class="location">Норильск</div>
-                                <div class="help"><img src="./img/icons/i.slider-help_services.svg"><img src="./img/icons/i.slider_help_people.svg"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="main-slider_item"><img src="./img/content/main-slider/item3.png">
-                        <div class="content">
-                            <div class="name">Архангельский дом престарелых</div>
-                            <div class="bottom">
-                                <div class="location">Сертолов</div>
-                                <div class="help"><img src="./img/icons/i.slider_help_things.svg"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="main-slider_item"><img src="./img/content/main-slider/item1.png">
-                        <div class="content">
-                            <div class="name">Детский дом-интернат #7</div>
-                            <div class="bottom">
-                                <div class="location">Уфа</div>
-                                <div class="help"><img src="./img/icons/i.slider-help_services.svg"><img src="./img/icons/i.slider_help_people.svg"><img src="./img/icons/i.slider_help_things.svg"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="main-slider_item"><img src="./img/content/main-slider/item2.png">
-                        <div class="content">
-                            <div class="name">Социально-реабилитационный центр</div>
-                            <div class="bottom">
-                                <div class="location">Норильск</div>
-                                <div class="help"><img src="./img/icons/i.slider-help_services.svg"><img src="./img/icons/i.slider_help_people.svg"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="main-slider_item"><img src="./img/content/main-slider/item3.png">
-                        <div class="content">
-                            <div class="name">Архангельский дом престарелых</div>
-                            <div class="bottom">
-                                <div class="location">Сертолов</div>
-                                <div class="help"><img src="./img/icons/i.slider_help_things.svg"></div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -149,7 +111,8 @@
                             </div>
                         </div>
                     </div>
-                </div><a href="" class="show-all">Смотреть все</a>
+
+                </div><a href="{{ route('catalog.index') }}" class="show-all">Смотреть все</a>
             </div>
         </div>
         <div class="completed-slider">
@@ -157,67 +120,26 @@
                 <div class="main-slider_header">
                     <h2 class="title">Реализованные потребности</h2>
                 </div>
+
                 <div class="completed-slider_content">
-                    <div class="completed-slider_item">
-                        <div class="left-photo"><img src="./img/content/completed-slider/item1.png">
-                            <div class="checkbox"><img src="./img/icons/i.completed-slider-checkbox.svg"></div>
-                        </div>
-                        <div class="right-info">
-                            <div class="title">Покупка калош</div>
-                            <div class="bottom">
-                                <div class="name">Детский дом №23</div>
-                                <div class="location">Волгоград</div>
+                    @foreach($realizedNeeds as $need)
+                        <div class="completed-slider_item">
+                            <div class="left-photo">
+                                <!--<img src="{{ asset('storage/' . $need->cover_path ) }}">-->
+
+                                <img src="./img/content/completed-slider/item1.png">
+
+                                <div class="checkbox"><img src="./img/icons/i.completed-slider-checkbox.svg"></div>
+                            </div>
+                            <div class="right-info">
+                                <div class="title">{{ \App\Classes\TypeOfNeed::NAMES[$need->type_need] }}</div>
+                                <div class="bottom">
+                                    <div class="name">{{ $need->title }}</div>
+                                    <div class="location">{{ $need->orgCity }}</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="completed-slider_item">
-                        <div class="left-photo"><img src="./img/content/completed-slider/item1.png">
-                            <div class="checkbox"><img src="./img/icons/i.completed-slider-checkbox.svg"></div>
-                        </div>
-                        <div class="right-info">
-                            <div class="title">Покупка калош</div>
-                            <div class="bottom">
-                                <div class="name">Детский дом №23</div>
-                                <div class="location">Волгоград</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="completed-slider_item">
-                        <div class="left-photo"><img src="./img/content/completed-slider/item1.png">
-                            <div class="checkbox"><img src="./img/icons/i.completed-slider-checkbox.svg"></div>
-                        </div>
-                        <div class="right-info">
-                            <div class="title">Покупка калош</div>
-                            <div class="bottom">
-                                <div class="name">Детский дом №23</div>
-                                <div class="location">Волгоград</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="completed-slider_item">
-                        <div class="left-photo"><img src="./img/content/completed-slider/item1.png">
-                            <div class="checkbox"><img src="./img/icons/i.completed-slider-checkbox.svg"></div>
-                        </div>
-                        <div class="right-info">
-                            <div class="title">Покупка калош</div>
-                            <div class="bottom">
-                                <div class="name">Детский дом №23</div>
-                                <div class="location">Волгоград</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="completed-slider_item">
-                        <div class="left-photo"><img src="./img/content/completed-slider/item1.png">
-                            <div class="checkbox"><img src="./img/icons/i.completed-slider-checkbox.svg"></div>
-                        </div>
-                        <div class="right-info">
-                            <div class="title">Покупка калош</div>
-                            <div class="bottom">
-                                <div class="name">Детский дом №23</div>
-                                <div class="location">Волгоград</div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -229,7 +151,10 @@
         </div>
         <div class="blue-block">
             <div class="container">
-                <div class="btn-block"><a href="" class="btn orange">Получить помощь</a><a href="" class="btn blue">Оказать помощь</a></div>
+                <div class="btn-block">
+                    <a href="#" data-modal="#modal1" class="btn orange open-modal">Получить помощь</a>
+                    <a href="#" data-modal="#modal1" class="btn blue open-modal">Оказать помощь</a>
+                </div>
             </div>
         </div>
     </div>
