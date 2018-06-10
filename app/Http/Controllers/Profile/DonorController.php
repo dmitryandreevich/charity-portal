@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Profile;
 
 
 use App\Classes\StatusOfNeed;
+use App\Classes\TypeOfDonate;
 use App\Classes\Utils;
 use App\HistoryOfDonate;
 use App\HistoryOfMaterialDonate;
@@ -76,7 +77,8 @@ class DonorController extends Controller
                         'id_sender' => $user->id,
                         'id_need' => $need->id,
                         'amount' => $amount,
-                        'id_org' => $need->id_org
+                        'id_org' => $need->id_org,
+                        'type' => TypeOfDonate::FINANCE
                     ]);
 
                     $user->save();
@@ -101,11 +103,12 @@ class DonorController extends Controller
 
             mail($creatorEmail, "Заявка на материальное пожертвование.", "Здравствуйте! Вам пришла новая заявка на материальное пожертвование. Текст\n" . $info);
 
-            HistoryOfMaterialDonate::create([
+            HistoryOfDonate::create([
                 'id_sender' => Auth::id(),
                 'id_need' => $need->id,
                 'id_org' => $need->id_org,
-                'info' => $info
+                'materialDonateInfo' => $info,
+                'type' => TypeOfDonate::MATERIAL
             ]);
             return redirect()->back()->with('success', 'Вы успешно отправили заявку!');
         }

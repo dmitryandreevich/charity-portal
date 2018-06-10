@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Need;
 
+use App\Classes\TypeOfDonate;
 use App\Classes\TypeOfUser;
+use App\HistoryOfDonate;
 use App\Need;
 use App\User;
 use Illuminate\Http\Request;
@@ -16,18 +18,22 @@ class SortingController extends Controller
         $v = Validator::make($request->all(),
             ['status' => 'integer',
                 'organizationId' => 'integer',
-                'typeOfNeed' => 'integer']);
+                'typeOfNeed' => 'integer',
+                'typeOfDonate' => 'integer'
+            ]);
+
         if($v->fails())
             return 'errors';
 
         $orgId = $request->get('organizationId');
         $status = $request->get('status');
         $typeOfNeed = $request->get('typeOfNeed');
-
         switch (Auth::user()->type){
             case TypeOfUser::DONOR: {
+                $typeOfDonate = $request->get('typeOfDonate');
+
                 $needs = User::getNeedsWithDonateByUser( Auth::user() );
-                $filtered = $this->filter($needs, $orgId, $status);
+                $filtered = $this->filter($needs, $orgId, $status, null, $typeOfDonate);
 
                 return view('profile.donor.blocks.needsContent',['needs' => $filtered]);
             }
@@ -45,7 +51,7 @@ class SortingController extends Controller
             }
         }
     }
-    protected function filter($needs, $orgId, $status, $typeOfNeed = null, $typeDonor = null){
+    protected function filter($needs, $orgId, $status, $typeOfNeed = null, $typeOfDonate = null){
         $filtered = collect($needs);
 
         if( isset($orgId) )
@@ -62,6 +68,14 @@ class SortingController extends Controller
             $filtered = $filtered->filter(function ($need) use ($typeOfNeed){
                 return $need->type_need == $typeOfNeed;
             });
+
+        if( isset($typeOfDonate) ){
+            $needIds = HistoryOfDonate::where('id_sender', Auth::id() )->where('type', intval($typeOfDonate) )->pluck('id_need')->toArray();
+
+            $filtered = $filtered->whereIn('id', $needIds);
+        }
+
+
         return $filtered;
     }
 }

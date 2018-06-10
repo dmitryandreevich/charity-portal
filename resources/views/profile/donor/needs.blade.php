@@ -14,7 +14,7 @@
         <div class="catalog_organization-content">
             <div class="container">
                 <div class="top">
-                    <h2 class="title">Потребности с вашим участием</h2>
+                    <h2 class="title">Потребности</h2>
                     <div class="select">
                         @include('profile.blocks.filters')
 
