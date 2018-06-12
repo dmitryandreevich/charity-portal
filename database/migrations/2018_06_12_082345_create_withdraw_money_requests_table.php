@@ -18,6 +18,8 @@ class CreateWithdrawMoneyRequestsTable extends Migration
             $table->integer('id_org');
             $table->integer('id_need');
             $table->integer('id_sender');
+            $table->integer('amount');
+
             $table->boolean('is_paid')->default(false);
             $table->timestamps();
         });

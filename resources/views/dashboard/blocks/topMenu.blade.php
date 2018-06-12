@@ -14,6 +14,9 @@
             <a href="{{ route('dashboard.organizations.index') }}" class="add">Страницы потребителей</a>
             <a href="{{ route('dashboard.needs.index') }}" class="add">Потребности</a>
             <a href="{{ route('dashboard.moderation.index') }}" class="add">Модерация</a>
+            <a href="{{ route('dashboard.payments.index') }}" class="add">Заявки на вывод средств</a>
+
+
         </div>
         <div class="top-menu__right">
             <ul class="list">

@@ -52,7 +52,7 @@ Route::group(['namespace' => 'Need'], function (){
     Route::post('/needs/sorting', 'SortingController@show')->name('needs.sorting.show');
     Route::post('cancel-need', 'CancelNeedController@store')->name('needs.cancel.store');
     Route::post('/send-report', 'SendReportController@store')->name('needs.report.store');
-    Route::post('/get-money/{need}', 'WithdrawMoneyController@store')->name('needs.getMoney.store');
+    Route::post('/request-withdraw/{need}', 'WithdrawMoneyController@store')->name('needs.withdraw.store');
 });
 
 Route::get('/', 'HomeController@index')->name('home.index');
@@ -67,6 +67,7 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard'], function(){
     Route::get('/needs', 'NeedsController@index')->name('dashboard.needs.index');
     Route::get('/users', 'UsersController@index')->name('dashboard.users.index');
     Route::get('/users/{user}', 'UsersController@show')->name('dashboard.users.show');
+    Route::get('/payments', 'PaymentsController@index')->name('dashboard.payments.index');
     Route::post('/reset-password/{user}', 'ResetPasswordController@store')->name('dashboard.users.reset');
 
     Route::get('/moderation', 'ModerationController@index')->name('dashboard.moderation.index');
@@ -80,3 +81,5 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard'], function(){
 
     Route::post('/search', 'SearchController@search')->name('dashboard.search');
 });
+Route::get('/mark-withdraw/{id}', 'Need\WithdrawMoneyController@markWithdraw')->name('dashboard.withdraw.mark');
+
