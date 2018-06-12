@@ -21,7 +21,7 @@ class OrganizationController extends Controller
 {
     function __construct()
     {
-        $this->middleware('consumer')->except(['index', 'show']);
+        $this->middleware(['auth','consumer'])->except(['index', 'show']);
     }
 
     /**

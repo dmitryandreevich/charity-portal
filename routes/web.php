@@ -33,10 +33,10 @@ Route::group(['namespace' => 'Profile', 'prefix' => 'pr', 'middleware' => 'auth'
    Route::post('/change-avatar', 'AvatarController@store')->name('profile.changeAvatar.store');
 });
 // Обработка пожертвования донорами
-Route::post('/donation', 'Profile\DonorController@donation')->name('donation.store')->middleware('donor');
+Route::post('/donation', 'Profile\DonorController@donation')->name('donation.store')->middleware(['auth','donor']);
 // Добавить волонтёра к потребности
-Route::get('/add-volunteer/{need}', 'Profile\VolunteerController@addVolunteer')->name('volunteer.add')->middleware('volunteer');
-Route::post('/add-volunteers', 'Profile\VolunteerController@addVolunteers')->name('volunteers.add')->middleware('volunteer');;
+Route::get('/add-volunteer/{need}', 'Profile\VolunteerController@addVolunteer')->name('volunteer.add')->middleware(['auth','volunteer']);
+Route::post('/add-volunteers', 'Profile\VolunteerController@addVolunteers')->name('volunteers.add')->middleware(['auth','volunteer']);;
 // Catalog
 Route::group(['prefix' => 'catalog'], function (){
    Route::get('/', 'CatalogController@index')->name('catalog.index');
@@ -50,36 +50,38 @@ Route::post('/organizations/filter', 'OrganizationController@filter')->name('org
 Route::group(['namespace' => 'Need'], function (){
     Route::resource('/needs', 'NeedController');
     Route::post('/needs/sorting', 'SortingController@show')->name('needs.sorting.show');
-    Route::post('cancel-need', 'CancelNeedController@store')->name('needs.cancel.store')->middleware('consumer');
+    Route::post('cancel-need', 'CancelNeedController@store')->name('needs.cancel.store')->middleware(['auth','consumer']);
     Route::post('/send-report', 'SendReportController@store')->name('needs.report.store')->middleware('auth');
-    Route::post('/request-withdraw/{need}', 'WithdrawMoneyController@store')->name('needs.withdraw.store')->middleware('consumer');
+    Route::post('/request-withdraw/{need}', 'WithdrawMoneyController@store')->name('needs.withdraw.store')->middleware(['auth','consumer']);
 });
 
 Route::get('/', 'HomeController@index')->name('home.index');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard'], function(){
+Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard', 'middleware' => 'auth'], function(){
     Route::get('/', function (){
         return redirect(route('dashboard.users.index'));
     });
-    Route::get('/organizations', 'OrganizationsController@index')->name('dashboard.organizations.index');
-    Route::get('/needs', 'NeedsController@index')->name('dashboard.needs.index');
-    Route::get('/users', 'UsersController@index')->name('dashboard.users.index');
-    Route::get('/users/{user}', 'UsersController@show')->name('dashboard.users.show');
-    Route::get('/payments', 'PaymentsController@index')->name('dashboard.payments.index');
-    Route::post('/reset-password/{user}', 'ResetPasswordController@store')->name('dashboard.users.reset');
+    Route::get('/organizations', 'OrganizationsController@index')->name('dashboard.organizations.index')->middleware('checkAdminRules:admin');
+    Route::get('/needs', 'NeedsController@index')->name('dashboard.needs.index')->middleware('checkAdminRules:admin,moderator');
+    Route::get('/users', 'UsersController@index')->name('dashboard.users.index')->middleware('checkAdminRules:admin');
+    Route::get('/users/{user}', 'UsersController@show')->name('dashboard.users.show')->middleware('checkAdminRules:admin,moderator');
+    Route::get('/payments', 'PaymentsController@index')->name('dashboard.payments.index')->middleware('checkAdminRules:admin');
+    Route::get('/moderation', 'ModerationController@index')->name('dashboard.moderation.index')->middleware('checkAdminRules:admin,moderator');
 
-    Route::get('/moderation', 'ModerationController@index')->name('dashboard.moderation.index');
+    Route::post('/reset-password/{user}', 'ResetPasswordController@store')->name('dashboard.users.reset')->middleware('checkAdminRules:admin');
 
-    Route::get('/org-apply/{organization}', 'ModerationController@orgApply')->name('dashboard.moderation.org.apply');
-    Route::post('/org-block', 'ModerationController@orgBlock')->name('dashboard.moderation.org.block');
-    Route::get('/org-unblock/{organization}', 'ModerationController@orgUnBlock')->name('dashboard.moderation.org.unblock');
-    Route::get('/need-report-delete/{report}', 'ModerationController@reportDelete')->name('dashboard.moderation.need.report.delete');
-    Route::post('/need-block', 'ModerationController@needBlock')->name('dashboard.moderation.need.block');
-    Route::get('/need-unblock/{need}', 'ModerationController@needUnBlock')->name('dashboard.moderation.need.unblock');
-
-    Route::post('/search', 'SearchController@search')->name('dashboard.search');
+    // org apply/block/unblock
+    Route::get('/org-apply/{organization}', 'ModerationController@orgApply')->name('dashboard.moderation.org.apply')->middleware('checkAdminRules:admin');
+    Route::post('/org-block', 'ModerationController@orgBlock')->name('dashboard.moderation.org.block')->middleware('checkAdminRules:admin');
+    Route::get('/org-unblock/{organization}', 'ModerationController@orgUnBlock')->name('dashboard.moderation.org.unblock')->middleware('checkAdminRules:admin');
+    // need block/unblock reports delete
+    Route::get('/need-report-delete/{report}', 'ModerationController@reportDelete')->name('dashboard.moderation.need.report.delete')->middleware('checkAdminRules:admin,moderator');
+    Route::post('/need-block', 'ModerationController@needBlock')->name('dashboard.moderation.need.block')->middleware('checkAdminRules:admin,moderator');
+    Route::get('/need-unblock/{need}', 'ModerationController@needUnBlock')->name('dashboard.moderation.need.unblock')->middleware('checkAdminRules:admin,moderator');
+    //
+    Route::post('/search', 'SearchController@search')->name('dashboard.search')->middleware('checkAdminRules:admin,moderator');
 });
-Route::get('/mark-withdraw/{id}', 'Need\WithdrawMoneyController@markWithdraw')->name('dashboard.withdraw.mark');
+Route::get('/mark-withdraw/{id}', 'Need\WithdrawMoneyController@markWithdraw')->name('dashboard.withdraw.mark')->middleware('checkAdminRules:admin');
 

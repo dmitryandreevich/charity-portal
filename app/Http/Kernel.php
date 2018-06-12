@@ -2,8 +2,10 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckAdminRules;
 use App\Http\Middleware\Consumer;
 use App\Http\Middleware\Donor;
+use App\Http\Middleware\Moderator;
 use App\Http\Middleware\Volunteer;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -62,6 +64,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'consumer' => Consumer::class,
         'donor' => Donor::class,
-        'volunteer' => Volunteer::class
+        'volunteer' => Volunteer::class,
+        'checkAdminRules' => CheckAdminRules::class
     ];
 }

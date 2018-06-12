@@ -21,7 +21,7 @@ class NeedController extends Controller
 {
     function __construct()
     {
-        $this->middleware('consumer')->except('index');
+        $this->middleware(['auth','consumer'])->except('index');
     }
 
     /**
