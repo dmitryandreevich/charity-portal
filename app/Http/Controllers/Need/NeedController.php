@@ -19,6 +19,11 @@ use Illuminate\Support\Facades\Validator;
 
 class NeedController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('consumer')->except('index');
+    }
+
     /**
      * Display a listing of the resource.
      *

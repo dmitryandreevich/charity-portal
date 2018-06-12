@@ -2,7 +2,9 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\ConsumerCheckRules;
+use App\Http\Middleware\Consumer;
+use App\Http\Middleware\Donor;
+use App\Http\Middleware\Volunteer;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -58,6 +60,8 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'consumer' =>ConsumerCheckRules::class
+        'consumer' => Consumer::class,
+        'donor' => Donor::class,
+        'volunteer' => Volunteer::class
     ];
 }

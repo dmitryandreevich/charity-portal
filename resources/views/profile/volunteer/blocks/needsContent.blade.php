@@ -19,6 +19,7 @@
                 <div class="bottom_item row">
                     <div class="date descr">Дата создания: <span class="bold">{{ $need->created_at }}</span></div>
                     <div class="author descr">Координатор: <span class="bold">Иван Викторов</span></div>
+                    <div class="author descr">Телефон: <span class="bold">+7 (747) 346-92-79</span></div>
                 </div>
             </div>
             <div class="end">

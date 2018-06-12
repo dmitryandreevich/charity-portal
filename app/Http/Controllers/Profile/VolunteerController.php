@@ -39,7 +39,8 @@ class VolunteerController extends Controller
 
             HistoryOfVolunteering::create([
                 'id_vol' => Auth::id(),
-                'id_need' => $need->id
+                'id_need' => $need->id,
+                'id_org' => $need->id_org
             ]);
 
             return redirect()->back()->with('success','Вы успешно стали волонтёром.');

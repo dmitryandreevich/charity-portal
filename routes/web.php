@@ -33,16 +33,16 @@ Route::group(['namespace' => 'Profile', 'prefix' => 'pr', 'middleware' => 'auth'
    Route::post('/change-avatar', 'AvatarController@store')->name('profile.changeAvatar.store');
 });
 // Обработка пожертвования донорами
-Route::post('/donation', 'Profile\DonorController@donation')->name('donation.store');
+Route::post('/donation', 'Profile\DonorController@donation')->name('donation.store')->middleware('donor');
 // Добавить волонтёра к потребности
-Route::get('/add-volunteer/{need}', 'Profile\VolunteerController@addVolunteer')->name('volunteer.add');
-Route::post('/add-volunteers', 'Profile\VolunteerController@addVolunteers')->name('volunteers.add');
+Route::get('/add-volunteer/{need}', 'Profile\VolunteerController@addVolunteer')->name('volunteer.add')->middleware('volunteer');
+Route::post('/add-volunteers', 'Profile\VolunteerController@addVolunteers')->name('volunteers.add')->middleware('volunteer');;
 // Catalog
 Route::group(['prefix' => 'catalog'], function (){
    Route::get('/', 'CatalogController@index')->name('catalog.index');
    Route::put('/filter', 'CatalogController@sort')->name('catalog.sort');
-
 });
+
 Route::resource('/organizations', 'OrganizationController', ['except' => 'show']);
 Route::get('/organizations/{organization}', 'OrganizationController@show')->name('organizations.show');
 Route::get('/organizations/archive/{organization}', 'ArchiveController@index')->name('organizations.archive.index');
@@ -50,9 +50,9 @@ Route::post('/organizations/filter', 'OrganizationController@filter')->name('org
 Route::group(['namespace' => 'Need'], function (){
     Route::resource('/needs', 'NeedController');
     Route::post('/needs/sorting', 'SortingController@show')->name('needs.sorting.show');
-    Route::post('cancel-need', 'CancelNeedController@store')->name('needs.cancel.store');
-    Route::post('/send-report', 'SendReportController@store')->name('needs.report.store');
-    Route::post('/request-withdraw/{need}', 'WithdrawMoneyController@store')->name('needs.withdraw.store');
+    Route::post('cancel-need', 'CancelNeedController@store')->name('needs.cancel.store')->middleware('consumer');
+    Route::post('/send-report', 'SendReportController@store')->name('needs.report.store')->middleware('auth');
+    Route::post('/request-withdraw/{need}', 'WithdrawMoneyController@store')->name('needs.withdraw.store')->middleware('consumer');
 });
 
 Route::get('/', 'HomeController@index')->name('home.index');

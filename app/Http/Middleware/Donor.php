@@ -2,9 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Classes\TypeOfUser;
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
-class ConsumerCheckRules
+class Donor
 {
     /**
      * Handle an incoming request.
@@ -15,6 +17,9 @@ class ConsumerCheckRules
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if( Auth::user()->type == TypeOfUser::DONOR )
+            return $next($request);
+
+        return redirect( route('home.index') )->with('error', 'Вы не являетесь донором!');
     }
 }
