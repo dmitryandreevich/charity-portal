@@ -49,7 +49,12 @@
                 @if( ($need->amount - $need->collected ) <= 0.00 )
                     <div class="end">
                         <span class="money">Вся сумма собрана<span class="green">{{ $need->amount }} ₽</span></span>
-                        <div class="btn-block"><a href="#" data-modal="#modal3" class="btn blue open-modal">Получить</a></div>
+                        <form action="{{ route('needs.getMoney.store', ['need' => $need->id]) }}" method="post" class="new-org__form">
+                            {{ csrf_field() }}
+                            <div class="btn-block">
+                                <input type="submit" class="btn blue" value="Запросить">
+                            </div>
+                        </form>
                     </div>
                 @else
                     <div class="end">

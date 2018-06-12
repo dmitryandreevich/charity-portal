@@ -20,7 +20,13 @@ class Need extends Model
         }
         return false;
     }
+    public function getCreator(){
+        $creatorId = Organization::where('id', $this->id_org)->pluck('creator')->first();
+        if( $creatorId )
+            return $creatorId;
 
+        return false;
+    }
     public function getParentOrganization(){
         $idOrg = $this->id_org;
 
