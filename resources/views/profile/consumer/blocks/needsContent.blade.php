@@ -5,9 +5,9 @@
  * Date: 01.06.2018
  * Time: 16:52
  */?>
+
 @foreach($needs as $need)
     @php $user = \Illuminate\Support\Facades\Auth::user(); $typeOfNeed = $need->type_need; @endphp
-
     @if($typeOfNeed == \App\Classes\TypeOfNeed::VOLUNTEERS)
         <div class="content__item row">
             <div class="left"><img src="{{ asset("storage/$need->cover_path") }}"></div>
@@ -51,9 +51,21 @@
                         <span class="money">Вся сумма собрана<span class="green">{{ $need->amount }} ₽</span></span>
                         <form action="{{ route('needs.withdraw.store', ['need' => $need->id]) }}" method="post" class="new-org__form">
                             {{ csrf_field() }}
-                            <div class="btn-block">
-                                <input type="submit" class="btn blue" value="Запросить">
-                            </div>
+
+                            @if( !isset($need->is_paid) )
+                                <div class="btn-block">
+                                    <input type="submit" class="btn blue" value="Запросить">
+                                </div>
+                            @elseif($need->is_paid)
+                                <div class="info">
+                                    <div class="p-small"><span>Выплачено</span></div>
+                                </div>
+                            @else
+                                <div class="info">
+                                    <div class="p-small"><span>Заявка отправлена. Ожидайте.</span></div>
+                                </div>
+                            @endif
+
                         </form>
                     </div>
                 @else

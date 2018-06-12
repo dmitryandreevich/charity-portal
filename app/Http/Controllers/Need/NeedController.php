@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Need;
 use App\Organization;
 use App\User;
+use App\WithdrawMoneyRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -41,6 +42,17 @@ class NeedController extends Controller
 
                 $needs = Need::whereIn('id_org', $orgIds)->get();
                 $orgs = $orgBuilder->get();
+
+                $withdrawRequests = WithdrawMoneyRequest::whereIn('id_need', $needs->pluck('id')->toArray() )->get();
+
+                for($i = 0; $i < count($needs); $i++){
+                    for($j = 0; $j < count($withdrawRequests); $j++){
+                        if($needs[$i]->id == $withdrawRequests[$j]->id_need){
+                            $needs[$i]->is_paid = $withdrawRequests[$j]->is_paid;
+                            continue;
+                        }
+                    }
+                }
 
                 for($i = 0; $i < count($orgs); $i++){
                     for($j = 0; $j < count($needs); $j++){
