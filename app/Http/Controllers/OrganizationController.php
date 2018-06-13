@@ -6,11 +6,13 @@ use App\Classes\StatusOfNeed;
 use App\Classes\StatusOfOrganization;
 use App\Classes\TypeOfNeed;
 use App\Classes\TypeOfUser;
+use App\Classes\Utils;
 use App\HistoryOfDonate;
 use App\HistoryOfVolunteering;
 use App\Need;
 use App\Organization;
 use Faker\Provider\Image;
+use Hamcrest\Util;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +23,7 @@ class OrganizationController extends Controller
 {
     function __construct()
     {
-        $this->middleware(['auth','consumer'])->except(['index', 'show','filter']);
+        $this->middleware(['auth','consumer'])->except(['show','filter']);
     }
 
     /**
@@ -97,7 +99,7 @@ class OrganizationController extends Controller
             $orgPath = "public/organizations/$nextOrgId/";
             foreach ($photos as $photo) {
                 $fileContent = file_get_contents( $photo->getRealPath() );
-                $fileName =  $photo->getClientOriginalName();
+                $fileName =  implode( '_', gettimeofday() ) .'.' .$photo->getClientOriginalExtension();
 
                 Storage::put("$orgPath/photos/$fileName", $fileContent);
             }
@@ -173,8 +175,6 @@ class OrganizationController extends Controller
                 }
             }
         }
-
-
 
         return view('organization.show',
             [
@@ -302,7 +302,6 @@ class OrganizationController extends Controller
                 }
             }
         }
-
 
         return view('organization.blocks.orgContent', ['needs' => $needs]);
     }
