@@ -7,7 +7,7 @@
  */
 ?>
 @extends('layouts.app')
-
+@section('page-title', 'Профиль пользователя')
 @section('main-block')
     <div class="main-block donor-setting">
         @include('profile.donor.blocks.topMenu')

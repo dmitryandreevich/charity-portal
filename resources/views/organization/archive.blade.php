@@ -49,13 +49,14 @@
                         <a href="{{ route('organizations.show', ['organization' => $organization->id]) }}">Актуальные потребности</a>
                         <a href="{{ route('organizations.archive.index', ['organization' => $organization->id]) }}"><h2 class="title">Архив</h2></a>
                     </div>
+                    <!--
                     <div class="select">
                         <select placeholder="Тип потребности" name="city" class="headroom_city sources custom-select">
                             <option>Омск</option>
                             <option>Москва</option>
                             <option>Питер</option>
                         </select>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="content__list">
                     @foreach($needs as $need)

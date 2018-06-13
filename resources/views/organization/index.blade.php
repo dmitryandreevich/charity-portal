@@ -7,7 +7,7 @@
  */
 ?>
 @extends('layouts.app')
-
+@section('page-title', 'Организации пользователя')
 @section('main-block')
     <div class="main-block catalog_organization">
         @include('profile.consumer.blocks.topMenu')

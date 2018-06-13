@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('page-title', 'Создание новой организации')
 @section('main-block')
 
     <div class="main-block new-org">

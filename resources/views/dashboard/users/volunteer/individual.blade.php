@@ -7,6 +7,7 @@
  */
 ?>
 @extends('layouts.app')
+@section('page-title', 'Просмотр профиля пользователя')
 
 @section('main-block')
     <div class="main-block donor-setting">

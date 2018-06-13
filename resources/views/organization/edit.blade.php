@@ -7,7 +7,7 @@
  */
 ?>
 @extends('layouts.app')
-
+@section('page-title', 'Редактирование организации - '. $organization->name )
 @section('main-block')
 
     <div class="main-block new-org">

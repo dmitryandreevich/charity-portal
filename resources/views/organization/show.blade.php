@@ -7,7 +7,7 @@
  */
 ?>
 @extends('layouts.app')
-
+@section('page-title', "Страница организации - $organization->name")
 @section('main-block')
     <div class="main-block sp needs">
         <div class="main-banner" style="background:url({{ asset("storage/$organization->cover_path") }}) no-repeat"></div>

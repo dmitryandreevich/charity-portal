@@ -8,6 +8,7 @@
 ?>
 
 @extends('dashboard.layout')
+@section('page-title', 'Админ-панель - Модерация')
 
 @section('dashboard-block')
 

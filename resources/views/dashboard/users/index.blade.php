@@ -7,6 +7,7 @@
  */
 ?>
 @extends('dashboard.layout')
+@section('page-title', 'Админ-панель - Все пользователи')
 
 @section('dashboard-block')
      @include('dashboard.blocks.tableUsers')

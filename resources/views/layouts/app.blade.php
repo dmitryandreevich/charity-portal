@@ -37,7 +37,7 @@
 
     <!--[if lt IE 9]>
     <![endif]-->
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('page-title')</title>
 </head>
 
 <body>

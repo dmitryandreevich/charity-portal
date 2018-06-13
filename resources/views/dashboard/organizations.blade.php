@@ -7,7 +7,7 @@
  */
 ?>
 @extends('dashboard.layout')
-
+@section('page-title', 'Админ-панель - Все организации на портале')
 @section('dashboard-block')
   @include('dashboard.blocks.tableOrganizations')
 

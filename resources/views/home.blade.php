@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('page-title', 'Главная страница')
+
 @section('main-block')
     <div class="main-block">
         <div class="main-banner">

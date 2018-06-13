@@ -7,7 +7,7 @@
  */
 ?>
 @extends('layouts.app')
-
+@section('page-title', 'Каталог организаций')
 @section('main-block')
     <div class="main-block catalog">
         <div class="headroom">

@@ -7,7 +7,7 @@
  */
 ?>
 @extends('layouts.app')
-
+@section('page-title', 'Предварительный просмотр')
 @section('main-block')
     <div class="main-block sp needs">
         <div class="main-banner"></div>

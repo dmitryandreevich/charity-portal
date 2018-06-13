@@ -8,7 +8,7 @@
 ?>
 
 @extends('dashboard.layout')
-
+@section('page-title', 'Админ-панель - Заявки на вывод средств')
 @section('dashboard-block')
 
     <div class="top">
