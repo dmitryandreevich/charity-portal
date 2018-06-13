@@ -21,7 +21,7 @@ class OrganizationController extends Controller
 {
     function __construct()
     {
-        $this->middleware(['auth','consumer'])->except(['index', 'show']);
+        $this->middleware(['auth','consumer'])->except(['index', 'show','filter']);
     }
 
     /**
@@ -158,20 +158,22 @@ class OrganizationController extends Controller
         $needsBuilder = Need::where('id_org', $organization->id)->where('status', StatusOfNeed::STATUS_ACTUAL);
         // Если организацию просматривает волонтёр
         $needs = $needsBuilder->get();
+        if(Auth::check()){
+            if(Auth::user()->type == TypeOfUser::VOLUNTEER){
+                $needIds = $needsBuilder->where('type_need', TypeOfNeed::VOLUNTEERS)->pluck('id')->toArray();
 
-        if(Auth::user()->type == TypeOfUser::VOLUNTEER){
-            $needIds = $needsBuilder->where('type_need', TypeOfNeed::VOLUNTEERS)->pluck('id')->toArray();
+                $volHistory = HistoryOfVolunteering::where('id_vol', Auth::id())
+                    ->whereIn('id_need', $needIds)->get();
 
-            $volHistory = HistoryOfVolunteering::where('id_vol', Auth::id())
-                                                ->whereIn('id_need', $needIds)->get();
-
-            foreach ($needs as $i => $need) {
-                foreach($volHistory as $j => $history){
-                    if($need->id == $history->id_need)
-                        $needs[$i]->isVolunteer = true;
+                foreach ($needs as $i => $need) {
+                    foreach($volHistory as $j => $history){
+                        if($need->id == $history->id_need)
+                            $needs[$i]->isVolunteer = true;
+                    }
                 }
             }
         }
+
 
 
         return view('organization.show',
@@ -279,6 +281,7 @@ class OrganizationController extends Controller
     }
 
     public function filter(Request $request){
+
         $needs = Need::where('id_org',$request->get('orgId'))
             ->where('type_need', $request->get('typeOfNeed'))
             ->where('status', StatusOfNeed::STATUS_ACTUAL)->get();

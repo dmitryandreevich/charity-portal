@@ -74,6 +74,9 @@ $(document).ready(function () {
         var selectTypeOfNeed = $('.sort-select-org.filter_type-need').find('.selection').attr('data-value');
         var orgId = $('.select').find('.orgId').val();
 
+        console.log(selectTypeOfNeed);
+        console.log(orgId);
+
         $.ajax({
             url: '/organizations/filter',
             method: 'post',

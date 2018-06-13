@@ -64,11 +64,13 @@ class LoginController extends Controller
             // проверить если нет доступа к мылу
             $at = $vkApiHelper->getAccessData( $request->input('code'),route('login.vk') );
             $user = User::where('vkId', $at['user_id'])->first();
+
             if($user !== null){
                 Auth::login($user);
 
                 return redirect($this->redirectTo);
             }
+
             return redirect($this->redirectTo);
         }catch (\Exception $exception){
             return $exception->getMessage();
@@ -80,11 +82,13 @@ class LoginController extends Controller
             $at = $fbApiHelper->getAccessData( $request->input('code'),route('login.fb') );
             $data = $fbApiHelper->getInfoUser($at['access_token']);
             $user = User::where('fbId', $data['id'])->first();
+
             if($user !== null){
                 Auth::login($user);
 
                 return redirect($this->redirectTo);
             }
+
             return redirect($this->redirectTo);
         }catch (\Exception $exception){
             echo $exception->getMessage();
