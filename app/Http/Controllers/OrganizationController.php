@@ -239,7 +239,7 @@ class OrganizationController extends Controller
 
             $organization->doc_path = "organizations/$organization->id/$docName";
         }
-        $rules = ['id' => 1,'creator' => 1];
+
         $organization->update([
            'city' => $request->get('city'),
            'address' => $request->get('address'),
@@ -285,6 +285,24 @@ class OrganizationController extends Controller
         $needs = Need::where('id_org',$request->get('orgId'))
             ->where('type_need', $request->get('typeOfNeed'))
             ->where('status', StatusOfNeed::STATUS_ACTUAL)->get();
+
+
+        if(Auth::check()){
+            if(Auth::user()->type == TypeOfUser::VOLUNTEER){
+                $needIds = $needs->pluck('id')->toArray();
+
+                $volHistory = HistoryOfVolunteering::where('id_vol', Auth::id())
+                    ->whereIn('id_need', $needIds)->get();
+
+                foreach ($needs as $i => $need) {
+                    foreach($volHistory as $j => $history){
+                        if($need->id == $history->id_need)
+                            $needs[$i]->isVolunteer = true;
+                    }
+                }
+            }
+        }
+
 
         return view('organization.blocks.orgContent', ['needs' => $needs]);
     }
