@@ -97,9 +97,9 @@ class OrganizationController extends Controller
             $latestOrg = Organization::all()->last();
             $nextOrgId = (isset($latestOrg) ? $latestOrg->id + 1 : 1);
             $orgPath = "public/organizations/$nextOrgId/";
-            foreach ($photos as $photo) {
+            foreach ($photos as $i => $photo) {
                 $fileContent = file_get_contents( $photo->getRealPath() );
-                $fileName =  implode( '_', gettimeofday() ) .'.' .$photo->getClientOriginalExtension();
+                $fileName =  $i .'_photo.' .$photo->getClientOriginalExtension();
 
                 Storage::put("$orgPath/photos/$fileName", $fileContent);
             }
