@@ -24,6 +24,7 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'social', 'middleware' => 'gues
 });
 
 Route::post('/ajax-login', 'Auth\LoginController@ajaxLogin')->name('login.ajax');
+Route::post('/ajax-register', 'Auth\RegisterController@ajaxRegister')->name('register.ajax');
 
 // Profile group
 Route::group(['namespace' => 'Profile', 'prefix' => 'pr', 'middleware' => 'auth'],function (){

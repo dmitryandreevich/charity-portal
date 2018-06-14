@@ -74,5 +74,21 @@ class ValidateMessages
     const REPORT_SEND = [
         'reportMessage.required' => 'Введите причину жалобы.'
     ];
+    const REGISTER = [
+        'email.email' => 'Email должен быть формата email.',
+        'email.string' => 'Email должен быть строкой.',
+        'email.max' => 'Длина email адреса не должна превышать :max символов.',
+        'email.unique' => 'Email :input уже зарегистрирован на портале.',
+        'password.required' => 'Пароль должен быть введён.',
+        'password.string' => 'Пароль должен быть строкой.',
+        'password.min' => 'Длина пароля должна быть минимум :min.',
+        'password.confirmed' => 'Пароль и подтверждение пароля не совпадают.'
+    ];
 }
 
+/*
+ *
+ * 'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+            'typeOfUser' => 'required|max:2',
+ * */

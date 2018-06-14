@@ -166,8 +166,6 @@ $(document).ready(function () {
 
         var email = $(this).find('input[name="email"]').val();
         var password = $(this).find('input[name="password"]').val();
-        var url = $('#login-form').attr('action');
-        console.log(url);
 
         $.ajax({
             url: '/ajax-login',
@@ -184,12 +182,46 @@ $(document).ready(function () {
                 if(json.status === 200)
                     window.location.reload();
                 else if(json.status === 400){
-
-                    $('#login-form').find('#login-form-error').html(json.message);
+                    $('#login-form-error').html(json.message);
                 }
-            },
-            error: function (message) {
             }
         });
     });
+
+    $('#modal2').find('#register-form').submit(function (e) {
+       e.preventDefault();
+
+        var email = $(this).find('input[name="email"]').val();
+        var password = $(this).find('input[name="password"]').val();
+        var passwordConfirmation = $(this).find('input[name="password_confirmation"]').val();
+        var typeOfUser = $('.select-type_user').find('.selection').attr('data-value');
+
+
+        // если ничего не выбрано, то дефолт благотваритель
+        if(typeOfUser === undefined)
+            typeOfUser = 0;
+
+        console.log(typeOfUser);
+        $.ajax({
+            url: '/ajax-register',
+            method: 'post',
+            dataType: 'html',
+            data:{ email: email, password: password, password_confirmation: passwordConfirmation, typeOfUser: typeOfUser},
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                var json = JSON.parse(response);
+
+                if(json.status === 200)
+                    window.location.reload();
+                else if(json.status === 400){
+                    var errors = JSON.parse(json.messages);
+                    for(var i in errors)
+                        $('#register-form-error').append(errors[i] + "<br><br>");
+                }
+            }
+        });
+    });
+
 });

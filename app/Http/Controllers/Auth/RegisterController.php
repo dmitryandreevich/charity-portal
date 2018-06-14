@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Classes\FbApiHelper;
 use App\Classes\Utils;
+use App\Classes\ValidateMessages;
 use App\Classes\VkApiHelper;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -57,7 +59,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
             'typeOfUser' => 'required|max:2',
-        ]);
+        ], ValidateMessages::REGISTER);
     }
 
     /**
@@ -77,17 +79,27 @@ class RegisterController extends Controller
             'data' => json_encode($dataTemplate)
         ]);
     }
-    // Узнаём какая кнопка была нажата, какой тип пользователя был выбран
-    public function getSocialAccess(Request $request){
-        $request->session()->put('typeOfUser', $request->input('typeOfUser'));
-        if($request->has('vkAuth')){
-            // ложим в сессию тип выбранного пользователя
-            return redirect( VkApiHelper::getLinkAuthCode( route('register.vk') ) );
-        } elseif ($request->has('fbAuth')){
-            return redirect( FbApiHelper::getLinkAuthCode( route('register.fb') ) );
-        }
-    }
 
+    public function ajaxRegister(Request $request){
+        $credentials = $request->only(['email', 'password', 'password_confirmation', 'typeOfUser']);
+
+        $v = $this->validator($credentials);
+
+        if($v->fails()) {
+            $error = $v->messages()->toJson();
+            return json_encode(['status' => 400, 'messages' => $error]);
+        }
+        $dataTemplate = Utils::getUserDataJsonTemplate();
+        $dataTemplate['individual']['active'] = true;
+
+        $credentials['data'] = json_encode($dataTemplate);
+        $credentials['password'] = Hash::make($credentials['password']);
+        $user = User::create($credentials);
+
+        Auth::login($user);
+
+        return json_encode(['status' => 200, $request->all()]);
+    }
     /**
      * Registration by user in VK
      *
@@ -163,5 +175,15 @@ class RegisterController extends Controller
             return redirect('/')->with('error', 'Произошла ошибка. Данный Email или Facebook уже привязаны!');
         }
 
+    }
+    // Узнаём какая кнопка была нажата, какой тип пользователя был выбран
+    public function getSocialAccess(Request $request){
+        $request->session()->put('typeOfUser', $request->input('typeOfUser'));
+        if($request->has('vkAuth')){
+            // ложим в сессию тип выбранного пользователя
+            return redirect( VkApiHelper::getLinkAuthCode( route('register.vk') ) );
+        } elseif ($request->has('fbAuth')){
+            return redirect( FbApiHelper::getLinkAuthCode( route('register.fb') ) );
+        }
     }
 }

@@ -5,7 +5,8 @@ header .main-ava > img{
     border-radius: 50%;
 
 }
-#login-form-error{
+#login-form-error,
+#register-form-error{
     color: #f44336;
     font-size: 1.3em;
     font-weight: bold;

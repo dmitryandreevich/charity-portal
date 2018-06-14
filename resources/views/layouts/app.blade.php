@@ -118,9 +118,9 @@
         <div class="content">
             <a href="#" data-id="popup_default" data-animation="scale" class="close-popup">&times;</a>
             <h2 class="title">Регистрация через почту</h2>
-            <form class="new-org__form" method="POST" action="{{ route('register') }}">
+            <form class="new-org__form" method="POST" action="{{ route('register') }}" id="register-form">
                 {{ csrf_field() }}
-                <select placeholder="Благотворитель" name="typeOfUser" class="headroom_city sources custom-select">
+                <select placeholder="Благотворитель" name="typeOfUser" class="headroom_city sources custom-select select-type_user">
                     <option value="{{ TypeOfUser::DONOR }}">Благотворитель</option>
                     <option value="{{ TypeOfUser::CONSUMER }}">Потребитель</option>
                     <option value="{{ TypeOfUser::VOLUNTEER }}">Волонтёр</option>
@@ -133,19 +133,22 @@
                 </div>
 
                 <div class="right item">
+                    <div class="list" id="register-form-error">
 
-                    <div class="list">
-                        <input type="email" placeholder="E-mail адрес" name="email">
                     </div>
                     <div class="list">
-                        <input type="password" placeholder="Пароль" name="password">
+                        <input type="email" placeholder="E-mail адрес" name="email" required>
                     </div>
                     <div class="list">
-                        <input type="password" placeholder="Повторите пароль" name="password_confirmation">
+                        <input type="password" placeholder="Пароль" name="password" required>
+                    </div>
+                    <div class="list">
+                        <input type="password" placeholder="Повторите пароль" name="password_confirmation" required>
                     </div>
                     <div class="btn-block">
                         <input type="submit" value="Регистрация">
                     </div>
+
                 </div>
             </form>
 
