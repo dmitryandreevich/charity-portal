@@ -105,3 +105,21 @@ th:first-child, td:first-child {
     border: 1px solid #dfecf8;
     outline: none;
 }
+
+body .main-block .top-menu__left .add.plclear {
+    padding: 30px 25px;
+
+}
+body .main-block .top-menu__left .add:before {
+    position: absolute;
+    left: 0;
+    width: 0;
+    height: 0;
+    content: "";
+    background: none;
+}
+
+body .main-block .top-menu__left .add:last-child {
+    margin-top: 0;
+    margin-left: 0;
+}

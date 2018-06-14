@@ -7,7 +7,7 @@
  */
 ?>
 @extends('layouts.app')
-
+@section('page-title', 'Архив организации - ' . $organization->name)
 @section('main-block')
     <div class="main-block sp needs">
         <div class="main-banner" style="background:url({{ asset("storage/$organization->cover_path") }}) no-repeat"></div>
@@ -89,6 +89,7 @@
                                         </div>
                                     @endif
                                 </div>
+                                <div class="circle {{ \App\Classes\StatusOfNeed::getColorStatus($need->status) }}"></div>
                             </div>
                         @elseif($typeOfNeed == \App\Classes\TypeOfNeed::COLLECT_MONEY)
                             <div class="content__item row">
@@ -112,6 +113,7 @@
                                         </div>
                                     @endif
                                 </div>
+                                <div class="circle {{ \App\Classes\StatusOfNeed::getColorStatus($need->status) }}"></div>
                             </div>
                         @endif
                     @endforeach

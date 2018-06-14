@@ -74,7 +74,7 @@ class FbApiHelper
             $data = $this->getDataByResponse($response);
             return $data;
         }catch (\Exception $exception){
-            return throwException($exception);
+            return $exception;
         }
     }
     /**

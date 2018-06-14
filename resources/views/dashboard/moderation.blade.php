@@ -48,7 +48,7 @@
                 <td><a href="{{ route('organizations.show', ['organization' => $report->id_org]) }}" style="color: #000000;">{{ $report->id_need }}</a></td>
                 <td>{{ $report->message }}</td>
                 <td><a href="{{ route('dashboard.moderation.need.report.delete', ['report' => $report->id]) }}" style="color: black">Удалить жалобу</a></td>
-                <td><a href="{{ route('dashboard.moderation.need.block', ['need' => $report->id_need]) }}" style="color: black">Заблокировать</a></td>
+                <td><a  href="#" data-modal="#modalBanNeed" class="link open-modal" receiver="{{ $report->id_need }}" style="color:black">Заблокировать</a></td>
                 <td><a href="{{ route('organizations.show', ['organization' => $report->id_org]) }}" style="color:black">Перейти</a></td>
             </tr>
         @endforeach

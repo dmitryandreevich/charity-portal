@@ -10,11 +10,11 @@
     <div class="container row">
 
         <div class="top-menu__left">
-            <a href="{{ route('dashboard.users.index') }}" class="add">Пользователи</a>
-            <a href="{{ route('dashboard.organizations.index') }}" class="add">Страницы потребителей</a>
-            <a href="{{ route('dashboard.needs.index') }}" class="add">Потребности</a>
-            <a href="{{ route('dashboard.moderation.index') }}" class="add">Модерация</a>
-            <a href="{{ route('dashboard.payments.index') }}" class="add">Заявки на вывод средств</a>
+            <a href="{{ route('dashboard.users.index') }}" class="add plclear">Пользователи</a>
+            <a href="{{ route('dashboard.organizations.index') }}" class="add plclear">Страницы потребителей</a>
+            <a href="{{ route('dashboard.needs.index') }}" class="add plclear">Потребности</a>
+            <a href="{{ route('dashboard.moderation.index') }}" class="add plclear">Модерация</a>
+            <a href="{{ route('dashboard.payments.index') }}" class="add plclear">Заявки на вывод средств</a>
 
 
         </div>
