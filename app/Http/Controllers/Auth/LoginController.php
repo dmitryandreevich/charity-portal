@@ -41,6 +41,10 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
 
     /**
      * Logout of account
@@ -108,5 +112,8 @@ class LoginController extends Controller
         }catch (\Exception $exception){
             echo $exception->getMessage();
         }
+    }
+    public function guestPage(){
+        return 'true;';
     }
 }

@@ -62,7 +62,7 @@
                 <a href="#" data-modal="#modal1" class="main-ava open-modal login">
                     <p class="entrance">Регистрация</p>
                 </a>
-                <a href="#" data-modal="#modal6" class="main-ava open-modal login">
+                <a href="#" data-modal="#modal6" class="main-ava open-modal login" id="login-btn">
                     <p class="entrance">Вход</p>
                 </a>
             @endif
@@ -362,4 +362,5 @@
     <script src="//cdn.jsdelivr.net/jquery.magnific-popup/1.0.0/jquery.magnific-popup.min.js"></script><script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT3OjHXWTK-51yNe1jWDa67cF73QEGwHc&amp;amp;amp;sensor=false"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.min.js"></script>
     <script type="text/javascript" src="{{ asset('scripts/ajax.functions.js') }}"></script>
+    @yield('custom-script')
 </html>

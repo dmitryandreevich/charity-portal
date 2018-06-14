@@ -196,7 +196,6 @@ $(document).ready(function () {
         var passwordConfirmation = $(this).find('input[name="password_confirmation"]').val();
         var typeOfUser = $('.select-type_user').find('.selection').attr('data-value');
 
-
         // если ничего не выбрано, то дефолт благотваритель
         if(typeOfUser === undefined)
             typeOfUser = 0;
@@ -216,6 +215,7 @@ $(document).ready(function () {
                 if(json.status === 200)
                     window.location.reload();
                 else if(json.status === 400){
+                    $('#register-form-error').html("");
                     var errors = JSON.parse(json.messages);
                     for(var i in errors)
                         $('#register-form-error').append(errors[i] + "<br><br>");

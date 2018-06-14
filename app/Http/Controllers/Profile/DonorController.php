@@ -86,7 +86,7 @@ class DonorController extends Controller
                     $user->save();
                     $need->save();
 
-                    return redirect()->back()->with('success', 'Вы успешно пожертвовали деньг!');
+                    return redirect()->back()->with('success', 'Вы успешно пожертвовали сумму!');
                 }
                 return redirect()->back()->with('error', 'У вас недостаточно средств!');
             }

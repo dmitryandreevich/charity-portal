@@ -85,10 +85,3 @@ class ValidateMessages
         'password.confirmed' => 'Пароль и подтверждение пароля не совпадают.'
     ];
 }
-
-/*
- *
- * 'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
-            'typeOfUser' => 'required|max:2',
- * */
