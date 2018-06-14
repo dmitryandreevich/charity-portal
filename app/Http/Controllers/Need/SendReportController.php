@@ -14,11 +14,11 @@ class SendReportController extends Controller
 {
     public function store(Request $request){
         $v = Validator::make($request->all(), [
-            ['need_data' => 'required|integer',
-                'reportMessage' => 'required']
+                'need_data' => 'required|integer',
+                'reportMessage' => 'required'
         ]);
-        //if( $v->fails() )
-        //    return redirect()->back()->withErrors($v);
+        if( $v->fails() )
+            return redirect()->back()->withErrors($v);
         $need = Need::where('id', $request->get('need_data'))->first();
 
         Report::create([
@@ -28,6 +28,6 @@ class SendReportController extends Controller
             'id_org' => $need->id_org
         ]);
 
-        return redirect()->back()->with('success', 'Вы успешно отправили жалобу');
+        return redirect()->back()->with('success', 'Вы успешно отправили жалобу.');
     }
 }

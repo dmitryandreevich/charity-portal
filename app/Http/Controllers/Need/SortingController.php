@@ -23,7 +23,7 @@ class SortingController extends Controller
             ]);
 
         if($v->fails())
-            return 'errors';
+            return redirect()->back()->with('error', 'При сортировке произошла ошибка. Попробуйте ещё раз!');
 
         $orgId = $request->get('organizationId');
         $status = $request->get('status');
