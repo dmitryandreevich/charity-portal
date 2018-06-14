@@ -117,17 +117,31 @@ $(document).ready(function () {
         $(this).parents(".custom-select").removeClass("opened");
         $(this).parents(".custom-select").find(".custom-select-trigger").text($(this).text());
     });
+    // edits
+    $('.tab-new_vols').css('display', 'none');
+    $('.tab-new_vols').find('*').attr('disabled', 'disabled');
 
-    $(".select-donate_type .custom-option").on("click", function() {
+    $('.select-need_type .custom-option').on('click', function () {
         var tabName = $(this).attr('tab-name');
         if(tabName === "tab-new_money"){
             $(".tab-new_money").css('display', 'block');
+            $('.tab-new_money').find('*').removeAttr('disabled');
+
             $('.tab-new_vols').css('display', 'none');
+            $('.tab-new_vols').find('*').attr('disabled', 'disabled');
+
         }else if(tabName === "tab-new_vols"){
             $('.tab-new_vols').css('display', 'block');
+            $('.tab-new_vols').find('*').removeAttr('disabled');
+
             $('.tab-new_money').css('display', 'none');
+            $('.tab-new_money').find('*').attr('disabled', 'disabled');
+
         }
-        console.log(tabName);
+    });
+    $(".select-donate_type .custom-option").on("click", function() {
+        var tabName = $(this).attr('tab-name');
+
         if(tabName === "finance"){
             $(".finance").css('display', 'block');
             $('.material').css('display', 'none');
@@ -136,7 +150,7 @@ $(document).ready(function () {
             $('.material').css('display', 'block');
         }
     });
-
+    //
     /*Popup*/
     $(".modal").each( function(){
         $(this).wrap('<div class="overlay"></div>')

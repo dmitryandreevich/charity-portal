@@ -55,9 +55,7 @@
                             <input type="submit" value="Разместить">
                         </div>
                     </div>
-
-                </form>
-                    <div class="tab-new_vols" style="display: none">
+                    <div class="tab-new_vols">
                         <div class="list">
                             <input type="text" placeholder="Заголовок" name="title">
                         </div>
@@ -86,6 +84,8 @@
                             <input type="submit" value="Разместить">
                         </div>
                     </div>
+                </form>
+
 
             </div>
         </div>

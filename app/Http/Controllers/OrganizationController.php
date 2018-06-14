@@ -7,6 +7,7 @@ use App\Classes\StatusOfOrganization;
 use App\Classes\TypeOfNeed;
 use App\Classes\TypeOfUser;
 use App\Classes\Utils;
+use App\Classes\ValidateMessages;
 use App\HistoryOfDonate;
 use App\HistoryOfVolunteering;
 use App\Need;
@@ -66,8 +67,8 @@ class OrganizationController extends Controller
             'photos' => 'required',
             'address' => 'required',
             'name' => 'required|max:50',
-            'description' => 'required|min:30|max:1500'
-        ]);
+            'description' => 'required|between:30,1500'
+        ], ValidateMessages::ORGANIZATION_STORE);
         if($validator->fails())
             return redirect()->back()->withErrors($validator);
         $address = $request->get('address');
@@ -219,7 +220,7 @@ class OrganizationController extends Controller
             'address' => 'required',
             'name' => 'required|max:50',
             'description' => 'required|min:30|max:1500'
-        ]);
+        ], ValidateMessages::ORGANIZATION_STORE);
         if($validator->fails())
             return redirect()->back()->withErrors($validator);
         $orgPath = "/public/organizations/$organization->id";

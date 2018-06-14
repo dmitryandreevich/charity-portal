@@ -6,6 +6,7 @@ use App\Classes\StatusOfNeed;
 use App\Classes\StatusOfOrganization;
 use App\Classes\TypeOfNeed;
 use App\Classes\TypeOfUser;
+use App\Classes\ValidateMessages;
 use App\HistoryOfDonate;
 use App\Http\Controllers\Controller;
 use App\Need;
@@ -102,28 +103,28 @@ class NeedController extends Controller
         $typeNeed = $request->get('type_need');
         if($typeNeed == TypeOfNeed::VOLUNTEERS){
             $validator = Validator::make($request->all(), [
-                'title' => 'required|min:5|max:100',
+                'title' => 'required|between:10,100',
                 'organization' => 'required|integer',
                 'date_time' => 'required|string|max:180',
                 'count_vols' => 'required|integer',
-                'description' => 'required|min:20|max:500',
+                'description' => 'required|between:30,1500',
                 'cover' => 'required|image|max:5120',
                 'doc' => 'required|file|max:5120',
-            ]);
+            ], ValidateMessages::NEED_STORE);
             if($validator->fails())
                 return redirect()->back()->withErrors($validator);
 
         }elseif ($typeNeed == TypeOfNeed::COLLECT_MONEY){
 
             $validator = Validator::make($request->all(), [
-               'title' => 'required|min:5|max:100',
+               'title' => 'required|between:10,100',
                 'organization' => 'required|integer',
                 'amount' => 'required|integer',
-                'description' => 'required|min:20|max:500',
+                'description' => 'required|between:20,1500',
                 'cover' => 'required|image|max:5120',
                 'doc' => 'required|file|max:5120',
                 'link' => 'required|string|max:189'
-            ]);
+            ],ValidateMessages::NEED_STORE);
             if($validator->fails())
                 return redirect()->back()->withErrors($validator);
         }
@@ -151,12 +152,13 @@ class NeedController extends Controller
             'id_org' => $request->get('organization'),
             'type_need' => $typeNeed,
             'description' => $request->get('description'),
-            'link' => $request->get('link'),
             'cover_path' => "needs/$nextNeedId/$coverName",
             'doc_path' => "needs/$nextNeedId/$docName"
         ];
-        if($typeNeed == TypeOfNeed::COLLECT_MONEY)
+        if($typeNeed == TypeOfNeed::COLLECT_MONEY) {
             $fieldsToCreate['amount'] = $request->get('amount');
+            $fieldsToCreate['link'] = $request->get('link');
+        }
         elseif ($typeNeed == TypeOfNeed::VOLUNTEERS){
             $fieldsToCreate['count_vols'] = $request->get('count_vols');
             $fieldsToCreate['date_time'] = $request->get('date_time');

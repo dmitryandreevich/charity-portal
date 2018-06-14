@@ -70,6 +70,9 @@
 
 
         </div>
+        <div class="log">
+            @include('layouts.messages')
+        </div>
     </header><!-- Navigation -->
     <button type="button" class="js-menu menu-hamburger"><span class="bar"></span></button>
     <nav id="slide-menu">
@@ -81,10 +84,9 @@
             <a href="/" class="menu_item">Статьи</a>
             <a href="/" class="menu_item">Контакты</a>
         </ul>
+
     </nav>
-    <div class="log" style="border: 1px solid black; background-color: #1f648b">
-        @include('layouts.messages')
-    </div>
+
 
     @yield('main-block')
 </body>
