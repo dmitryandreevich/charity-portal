@@ -2013,32 +2013,27 @@
 
 	width: 100%;
 	max-width: 700px;
-	height: 177px; 
+	height: 177px;
 	padding: 20px;
 
 	color: #303030;
 	border: 1px solid #dfecf8;
 	outline: none;
 }
-.main-block .new-org_content .new-org__form .list textarea::-webkit-input-placeholder,
-.modal .new-org__form .list textarea::-webkit-input-placeholder {
+.main-block .new-org_content .new-org__form .list textarea::-webkit-input-placeholder{
 	color: #303030;
 }
-.main-block .new-org_content .new-org__form .list textarea::-moz-placeholder,
-.modal .new-org__form .list textarea::-moz-placeholder {
+.main-block .new-org_content .new-org__form .list textarea::-moz-placeholder{
 	color: #303030;
 }
-.main-block .new-org_content .new-org__form .list textarea:-ms-input-placeholder,
-.modal .new-org__form .list textarea:-ms-input-placeholder {
+.main-block .new-org_content .new-org__form .list textarea:-ms-input-placeholder{
 	color: #303030;
 }
-.main-block .new-org_content .new-org__form .list textarea::placeholder,
-.modal .new-org__form .list textarea::placeholder {
+.main-block .new-org_content .new-org__form .list textarea::placeholder{
 	color: #303030;
 }
-.main-block .new-org_content .new-org__form .list textarea:focus,
-.modal .new-org__form .list textarea:focus {
-	border: 1px solid #dfecf8; 
+.main-block .new-org_content .new-org__form .list textarea:focus{
+	border: 1px solid #dfecf8;
 	outline: none;
 }
 .main-block .new-org_content .new-org__form .btn-block .btn {

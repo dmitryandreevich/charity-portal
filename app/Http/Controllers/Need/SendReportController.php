@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Need;
 
+use App\Classes\ValidateMessages;
 use App\Need;
 use App\Organization;
 use App\Report;
@@ -16,7 +17,7 @@ class SendReportController extends Controller
         $v = Validator::make($request->all(), [
                 'need_data' => 'required|integer',
                 'reportMessage' => 'required'
-        ]);
+        ], ValidateMessages::REPORT_SEND);
         if( $v->fails() )
             return redirect()->back()->withErrors($v);
         $need = Need::where('id', $request->get('need_data'))->first();

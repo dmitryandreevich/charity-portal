@@ -194,7 +194,7 @@
                     <div class="finance">
                         <div class="name">Введите желаемую сумму:</div>
                         <div class="list">
-                            <input type="number" class="i-value" name="amount" required><span class="value">₽</span>
+                            <input type="number" class="i-value" name="amount"><span class="value">₽</span>
                         </div>
                         <div class="btn-block">
                             <input type="submit" value="Пожертвовать" name="financeSend">

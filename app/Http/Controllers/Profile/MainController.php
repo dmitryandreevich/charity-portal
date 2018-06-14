@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Profile;
 
 use App\Classes\TypeOfUser;
 use App\Classes\Utils;
+use App\Classes\ValidateMessages;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -54,7 +55,7 @@ class MainController extends Controller
         if(Auth::user()->email !== $request->get('email')){
             $validator = Validator::make($request->all(), [
                 'email' => 'unique:users',
-            ]);
+            ], ValidateMessages::PROFILE_UPDATE);
             if($validator->fails())
                 return redirect()->back()->withErrors($validator);
         }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Classes\ValidateMessages;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +18,8 @@ class ChangePasswordController extends Controller
      */
     public function update(Request $request){
         $validator = Validator::make($request->input(), [
-            'newPassword' => 'min:6|confirmed'
-        ]);
+            'newPassword' => 'between:6,36|confirmed'
+        ], ValidateMessages::PROFILE_CHANGE_PASSWORD);
         if($validator->fails())
             return redirect()->back()->withErrors($validator);
 

@@ -55,5 +55,24 @@ class ValidateMessages
         'description.between' => 'Размер описания должен быть :min - :max символов.',
 
     ];
+
+    const PROFILE_UPDATE = [
+      'email.unique' => ':input уже используется другим пользователем. Введите другой email.'
+    ];
+
+    const DONOR_DONATION_FINANCE = [
+        'amount.required' => 'Вы не ввели сумму пожертвования.',
+        'amount.integer' => 'Сумма пожертвования должна быть числом.',
+    ];
+    const DONOR_DONATION_MATERIAL = [
+        'info.required' => 'Вы не ввели информацию о пожертвовании.',
+    ];
+    const PROFILE_CHANGE_PASSWORD = [
+        'newPassword.confirmed' => 'Вы не подтвердили введённый пароль.',
+        'newPassword.between' => 'Размер пароля должен быть от :min до :max символов.'
+    ];
+    const REPORT_SEND = [
+        'reportMessage.required' => 'Введите причину жалобы.'
+    ];
 }
 

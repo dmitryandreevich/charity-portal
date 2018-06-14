@@ -69,3 +69,34 @@ th:first-child, td:first-child {
     font-size: 1.4em;
     display: block;
 }
+
+.main-block .new-org_content .new-org__form .list textarea,
+.modal .new-org__form .list textarea{
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+
+    width: 100%;
+    max-width: 700px;
+    height: 177px;
+    padding: 20px;
+
+    color: #303030;
+    border: 1px solid #dfecf8;
+    outline: none;
+}
+.modal .new-org__form .list textarea::-webkit-input-placeholder {
+    color: #303030;
+}
+.modal .new-org__form .list textarea::-moz-placeholder {
+    color: #303030;
+}
+.modal .new-org__form .list textarea:-ms-input-placeholder {
+    color: #303030;
+}
+.modal .new-org__form .list textarea::placeholder {
+    color: #303030;
+}
+.modal .new-org__form .list textarea:focus {
+    border: 1px solid #dfecf8;
+    outline: none;
+}

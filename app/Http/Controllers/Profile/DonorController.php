@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Profile;
 use App\Classes\StatusOfNeed;
 use App\Classes\TypeOfDonate;
 use App\Classes\Utils;
+use App\Classes\ValidateMessages;
 use App\HistoryOfDonate;
 use App\HistoryOfMaterialDonate;
 use App\Http\Controllers\Controller;
@@ -46,7 +47,8 @@ class DonorController extends Controller
         if ($request->get('financeSend')){
             $validator = Validator::make($request->all(),
                 ['need_data' => 'required|integer',
-                    'amount' => 'required|integer']);
+                    'amount' => 'required|integer'
+                ], ValidateMessages::DONOR_DONATION_FINANCE);
             if($validator->fails())
                 return redirect()->back()->withErrors($validator);
 
@@ -91,7 +93,8 @@ class DonorController extends Controller
         }elseif ( $request->get('materialSend') ){
             $validator = Validator::make($request->all(),
                 ['need_data' => 'required|integer',
-                    'info' => 'required']);
+                    'info' => 'required'
+                ], ValidateMessages::DONOR_DONATION_MATERIAL);
             if($validator->fails())
                 return redirect()->back()->withErrors($validator);
 

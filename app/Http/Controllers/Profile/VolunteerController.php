@@ -57,7 +57,7 @@ class VolunteerController extends Controller
             ['count' => 'required|integer|max:999', 'need_data' => 'required|integer']
         ]);
         if($v->fails()){
-            return redirect()->back()->withErrors();
+            return redirect()->back()->withErrors($v);
         }
         $need = Need::find( $request->get('need_data') );
         $leftVols = $need->count_vols - $need->collected;

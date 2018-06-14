@@ -1,4 +1,38 @@
 $(document).ready(function () {
+    // edits
+    $('.tab-new_vols').css('display', 'none');
+    $('.tab-new_vols').find('*').attr('disabled', 'disabled');
+
+    $('.select-need_type .custom-option').on('click', function () {
+        var tabName = $(this).attr('tab-name');
+        if(tabName === "tab-new_money"){
+            $(".tab-new_money").css('display', 'block');
+            $('.tab-new_money').find('*').removeAttr('disabled');
+
+            $('.tab-new_vols').css('display', 'none');
+            $('.tab-new_vols').find('*').attr('disabled', 'disabled');
+
+        }else if(tabName === "tab-new_vols"){
+            $('.tab-new_vols').css('display', 'block');
+            $('.tab-new_vols').find('*').removeAttr('disabled');
+
+            $('.tab-new_money').css('display', 'none');
+            $('.tab-new_money').find('*').attr('disabled', 'disabled');
+
+        }
+    });
+    $(".select-donate_type .custom-option").on("click", function() {
+        var tabName = $(this).attr('tab-name');
+
+        if(tabName === "finance"){
+            $(".finance").css('display', 'block');
+            $('.material').css('display', 'none');
+        }else if(tabName === "material"){
+            $(".finance").css('display', 'none');
+            $('.material').css('display', 'block');
+        }
+    });
+
 
      $(".filter-select-catalog").on("click", function () {
          var selectCity = $(".filter-select-catalog.filter_city");
@@ -9,9 +43,6 @@ $(document).ready(function () {
          var typeOrg = selectTypeOrg.find('.selection').attr('data-value');
          var typeNeed = selectTypeNeed.find('.selection').attr('data-value');
          var sortBy = $(".filter-select-catalog.sort-type_catalog_all").find('.selection').attr('data-value');
-
-         console.log(sortBy);
-
 
          $.ajax({
              url: '/catalog/filter',
