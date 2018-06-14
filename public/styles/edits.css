@@ -5,7 +5,11 @@ header .main-ava > img{
     border-radius: 50%;
 
 }
-
+#login-form-error{
+    color: #f44336;
+    font-size: 1.3em;
+    font-weight: bold;
+}
 .alert-error {
     padding: 20px;
     background-color: #f44336; /* Red */

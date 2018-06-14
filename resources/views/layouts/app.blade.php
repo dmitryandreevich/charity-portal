@@ -156,9 +156,12 @@
         <div class="content">
             <a href="#" data-id="popup_default" data-animation="scale" class="close-popup">&times;</a>
             <h2 class="title">Авторизуйтесь в системе</h2>
-            <form class="new-org__form" method="POST" action="{{ route('login') }}">
+            <form class="new-org__form" method="POST" action="{{ route('login.ajax') }}" id="login-form">
                 {{ csrf_field() }}
                 <div class="right item">
+                    <div class="list" id="login-form-error">
+
+                    </div>
                     <div class="list">
                         <input type="email" placeholder="E-mail адрес" name="email" required>
                     </div>

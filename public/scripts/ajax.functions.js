@@ -160,4 +160,36 @@ $(document).ready(function () {
 
         return false;
     });
+
+    $('#modal6').find('#login-form').submit(function (e) {
+        e.preventDefault();
+
+        var email = $(this).find('input[name="email"]').val();
+        var password = $(this).find('input[name="password"]').val();
+        var url = $('#login-form').attr('action');
+        console.log(url);
+
+        $.ajax({
+            url: '/ajax-login',
+            method: 'post',
+            dataType: 'html',
+            data:{ email: email, password: password },
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                console.log(response);
+                var json = JSON.parse(response);
+                console.log(json);
+                if(json.status === 200)
+                    window.location.reload();
+                else if(json.status === 400){
+
+                    $('#login-form').find('#login-form-error').html(json.message);
+                }
+            },
+            error: function (message) {
+            }
+        });
+    });
 });

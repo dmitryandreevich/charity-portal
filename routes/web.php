@@ -22,6 +22,9 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'social', 'middleware' => 'gues
     Route::get('/vk/login', 'LoginController@loginByVk')->name('login.vk');
     Route::get('/fb/login', 'LoginController@loginByFb')->name('login.fb');
 });
+
+Route::post('/ajax-login', 'Auth\LoginController@ajaxLogin')->name('login.ajax');
+
 // Profile group
 Route::group(['namespace' => 'Profile', 'prefix' => 'pr', 'middleware' => 'auth'],function (){
    Route::get('/', 'MainController@index')->name('profile.index');

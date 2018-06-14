@@ -54,6 +54,21 @@ class LoginController extends Controller
     }
 
     /**
+     * Login with ajax
+     * @param Request $request
+     * @return string
+     */
+    public function ajaxLogin(Request $request){
+
+        $credentials = $request->only(['email', 'password']);
+
+        if(Auth::attempt($credentials))
+            return json_encode(['status' => 200, 'message' => ''] );
+        else
+            return json_encode(['status' => 400, 'message' => 'Введённый email или пароль неверны!'] );
+    }
+
+    /**
      * Login into account with VK
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|string
