@@ -22,7 +22,10 @@ class CatalogController extends Controller
         $sortBy = $request->get('sortBy');
 
         $organizations = Organization::all();
+
         $formated = $this->format($organizations, $city, $typeNeed, $typeOrg, $sortBy);
+
+
 
         return view('catalog.blocks.organizations', ['organizations' => $formated]);
     }

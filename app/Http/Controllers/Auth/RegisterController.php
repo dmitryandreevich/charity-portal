@@ -58,7 +58,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
-            'typeOfUser' => 'required|max:2',
+            'type' => 'required|max:2',
         ], ValidateMessages::REGISTER);
     }
 
@@ -81,7 +81,7 @@ class RegisterController extends Controller
     }
 
     public function ajaxRegister(Request $request){
-        $credentials = $request->only(['email', 'password', 'password_confirmation', 'typeOfUser']);
+        $credentials = $request->only(['email', 'password', 'password_confirmation', 'type']);
 
         $v = $this->validator($credentials);
 
@@ -94,6 +94,7 @@ class RegisterController extends Controller
 
         $credentials['data'] = json_encode($dataTemplate);
         $credentials['password'] = Hash::make($credentials['password']);
+
         $user = User::create($credentials);
 
         Auth::login($user);

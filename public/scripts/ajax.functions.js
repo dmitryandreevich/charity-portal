@@ -170,15 +170,15 @@ $(document).ready(function () {
         $.ajax({
             url: '/ajax-login',
             method: 'post',
-            dataType: 'html',
+            dataType: 'json',
             data:{ email: email, password: password },
             headers: {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
-                console.log(response);
-                var json = JSON.parse(response);
-                console.log(json);
+
+                var json = response;
+
                 if(json.status === 200)
                     window.location.reload();
                 else if(json.status === 400){
@@ -194,23 +194,22 @@ $(document).ready(function () {
         var email = $(this).find('input[name="email"]').val();
         var password = $(this).find('input[name="password"]').val();
         var passwordConfirmation = $(this).find('input[name="password_confirmation"]').val();
-        var typeOfUser = $('.select-type_user').find('.selection').attr('data-value');
+        var typeOfUser = $('#modal2').find('.select-type_user').find('.selection').attr('data-value');
 
         // если ничего не выбрано, то дефолт благотваритель
         if(typeOfUser === undefined)
             typeOfUser = 0;
 
-        console.log(typeOfUser);
         $.ajax({
             url: '/ajax-register',
             method: 'post',
-            dataType: 'html',
-            data:{ email: email, password: password, password_confirmation: passwordConfirmation, typeOfUser: typeOfUser},
+            dataType: 'json',
+            data:{ email: email, password: password, password_confirmation: passwordConfirmation, type: typeOfUser},
             headers: {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
-                var json = JSON.parse(response);
+                var json = response;
 
                 if(json.status === 200)
                     window.location.reload();
@@ -234,13 +233,13 @@ $(document).ready(function () {
         $.ajax({
             url: '/donation',
             method: 'post',
-            dataType: 'html',
+            dataType: 'json',
             data:{ need_data: needData, amount: amount, info: info, type: $(this).attr('name') },
             headers: {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
-                var json = JSON.parse(response);
+                var json = response;
                 if(json.status === 200)
                     window.location.reload();
                 else if(json.status === 400){
