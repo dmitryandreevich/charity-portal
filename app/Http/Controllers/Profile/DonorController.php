@@ -47,7 +47,7 @@ class DonorController extends Controller
         if ($request->get('financeSend')){
             $validator = Validator::make($request->all(),
                 ['need_data' => 'required|integer',
-                    'amount' => 'required|integer'
+                    'amount' => 'required|integer|between:1,100000'
                 ], ValidateMessages::DONOR_DONATION_FINANCE);
             if($validator->fails())
                 return redirect()->back()->withErrors($validator);

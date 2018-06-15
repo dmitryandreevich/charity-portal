@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Classes\StatusOfNeed;
 use App\Classes\StatusOfOrganization;
+use App\Classes\TypeOfNeed;
 use App\Need;
 use App\Organization;
 use App\Report;
@@ -74,7 +75,9 @@ class ModerationController extends Controller
         return redirect()->back()->with('success', 'Потребность была заблокирована');
     }
     public function needUnBlock(Need $need){
-        if($need->collected >= $need->amount || $need->collected >= $need->count_vols)
+        if( ($need->collected >= $need->amount) &&
+            ($need->collected >= $need->count_vols)
+          )
             $need->status = StatusOfNeed::STATUS_COLLECTED;
         else
             $need->status = StatusOfNeed::STATUS_ACTUAL;
@@ -88,7 +91,7 @@ class ModerationController extends Controller
         try {
             $report->delete();
         } catch (\Exception $e) {
-
+            return redirect()->back()->with('error', 'Произошла ошибка.');
         }
 
         return redirect()->back()->with('success', 'Жалоба была удалена.');

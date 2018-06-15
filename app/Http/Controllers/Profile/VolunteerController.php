@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Classes\StatusOfNeed;
+use App\Classes\ValidateMessages;
 use App\HistoryOfVolunteering;
 use App\Need;
 use App\User;
@@ -54,8 +55,8 @@ class VolunteerController extends Controller
      */
     public function addVolunteers(Request $request){
         $v = Validator::make($request->all(), [
-            ['count' => 'required|integer|max:999', 'need_data' => 'required|integer']
-        ]);
+            ['count' => 'required|integer|between:1,10000', 'need_data' => 'required|integer']
+        ], ValidateMessages::VOLUNTEERS_ADD);
         if($v->fails()){
             return redirect()->back()->withErrors($v);
         }

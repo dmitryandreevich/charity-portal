@@ -63,9 +63,10 @@ class ValidateMessages
     const DONOR_DONATION_FINANCE = [
         'amount.required' => 'Вы не ввели сумму пожертвования.',
         'amount.integer' => 'Сумма пожертвования должна быть числом.',
+        'amount.between' => 'Сумма пожертвования должна быть не меньше :min и не больше :max.'
     ];
     const DONOR_DONATION_MATERIAL = [
-        'info.required' => 'Вы не ввели информацию о пожертвовании.',
+        'info.required' => 'Вы не ввели информацию о пожертвовании.'
     ];
     const PROFILE_CHANGE_PASSWORD = [
         'newPassword.confirmed' => 'Вы не подтвердили введённый пароль.',
@@ -83,5 +84,13 @@ class ValidateMessages
         'password.string' => 'Пароль должен быть строкой.',
         'password.min' => 'Длина пароля должна быть минимум :min.',
         'password.confirmed' => 'Пароль и подтверждение пароля не совпадают.'
+    ];
+
+    const VOLUNTEERS_ADD = [
+        'count' => [
+            'required' => 'Введите количество волонтёров.',
+            'integer' => 'Количество волонтёров должно быть цифрой.',
+            'between' => 'Количество волонтёров должно быть от :min до :max человек.'
+        ]
     ];
 }
