@@ -64,7 +64,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard', 'middleware' => 'auth'], function(){
     Route::get('/', function (){
-        return redirect(route('dashboard.users.index'));
+        if(\Illuminate\Support\Facades\Auth::user()->admin_type == \App\Classes\TypeOfAdmin::MODERATOR)
+            return redirect( route('dashboard.moderation.index') );
+        else
+            return redirect( route('dashboard.users.index') );
     });
     Route::get('/organizations', 'OrganizationsController@index')->name('dashboard.organizations.index')->middleware('checkAdminRules:admin');
     Route::get('/needs', 'NeedsController@index')->name('dashboard.needs.index')->middleware('checkAdminRules:admin,moderator');

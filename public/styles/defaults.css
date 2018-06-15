@@ -19,33 +19,19 @@ html {
 
 	position: relative;
 
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display:         flex;
-	        flex-direction: column;
-
 	width: 100%;
 	min-width: 320px;
-	height: 100%; 
+	min-height: 100%; 
 	margin: 0;
 
 	letter-spacing: .1px;
 
 	background: #f1f4f7;
-
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	    -ms-flex-direction: column;
-	-webkit-box-pack: justify;
-	-webkit-justify-content: space-between;
-	-ms-flex-pack: justify;
-	        justify-content: space-between;
 }
 
 html {
-	overflow: auto; 
+	overflow: auto;
+	overflow-x: hidden; 
 
 	height: 100%;
 }
@@ -316,6 +302,10 @@ section {
 	padding: 55px 0;
 }
 
+.menu-open {
+	overflow: hidden;
+}
+
 /* Fixed */
 .fixed {
 	position: fixed;
@@ -565,6 +555,11 @@ section {
 }
 
 .footer {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
 	height: 66px;
 
 	background: #fff;

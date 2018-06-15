@@ -70,10 +70,11 @@
 
 
         </div>
-        <div class="log">
-            @include('layouts.messages')
-        </div>
+
     </header><!-- Navigation -->
+    <div class="log">
+        @include('layouts.messages')
+    </div>
     <button type="button" class="js-menu menu-hamburger"><span class="bar"></span></button>
     <nav id="slide-menu">
         <ul>

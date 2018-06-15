@@ -67,10 +67,10 @@ $(document).ready(function () {
     $('.js-menu').on('click', function() {
         if (isActive) {
             $(this).removeClass('active');
-            $('body').removeClass('menu-open');
+            $('html').removeClass('menu-open');
         } else {
             $(this).addClass('active');
-            $('body').addClass('menu-open');
+            $('html').addClass('menu-open');
         }
 
         isActive = !isActive;
@@ -81,7 +81,7 @@ $(document).ready(function () {
     });
 
 
-    /* Costoms catalog_select */
+
     $(".custom-select").each(function() {
         var classes = $(this).attr("class"),
             id      = $(this).attr("id"),
@@ -98,17 +98,9 @@ $(document).ready(function () {
         $(this).hide();
         $(this).after(template);
     });
-    $(".custom-option:first-of-type").hover(function() {
-        $(this).parents(".custom-options").addClass("option-hover");
-    }, function() {
-        $(this).parents(".custom-options").removeClass("option-hover");
-    });
+
     $(".custom-select-trigger").on("click", function() {
-        $('html').one('click',function() {
-            $(".custom-select").removeClass("opened");
-        });
         $(this).parents(".custom-select").toggleClass("opened");
-        event.stopPropagation();
     });
     $(".custom-option").on("click", function() {
         $(this).parents(".custom-select-wrapper").find("select").val($(this).data("value"));
@@ -118,7 +110,6 @@ $(document).ready(function () {
         $(this).parents(".custom-select").find(".custom-select-trigger").text($(this).text());
     });
 
-    //
     /*Popup*/
     $(".modal").each( function(){
         $(this).wrap('<div class="overlay"></div>')
@@ -130,12 +121,14 @@ $(document).ready(function () {
 
         var $this = $(this),
             modal = $($this).data("modal");
+
         $(modal).parents(".overlay").addClass("open");
         setTimeout( function(){
             $(modal).addClass("open");
         }, 350);
+
         var needData = $this.attr('receiver');
-        $(modal).find('.new-org__form').append("<input type='hidden' name='need_data' value='" + needData +"'>")
+        $(modal).find('.new-org__form').append("<input type='hidden' name='need_data' value='" + needData +"'>");
 
         $(document).on('click', function(e){
             var target = $(e.target);

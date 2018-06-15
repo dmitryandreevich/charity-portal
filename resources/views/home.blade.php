@@ -66,8 +66,8 @@
                 <div class="main-slider_content">
                     @foreach($organizations as $organization)
                         <div class="main-slider_item">
-                           <!-- <img src="{{ asset('storage/' . $organization->cover_path) }}"> -->
-                            <img src="./img/content/main-slider/item1.png">
+                           <img src="{{ asset('storage/' . $organization->cover_path) }}">
+                           <!-- <img src="./img/content/main-slider/item1.png"> -->
                             <div class="content">
                                 <a href="{{ route('organizations.show', ['organization' => $organization->id]) }}"><div class="name">{{ $organization->name }}</div></a>
                                 <div class="bottom">
@@ -127,9 +127,9 @@
                     @foreach($realizedNeeds as $need)
                         <div class="completed-slider_item">
                             <div class="left-photo">
-                                <!--<img src="{{ asset('storage/' . $need->cover_path ) }}">-->
+                                <img src="{{ asset('storage/' . $need->cover_path ) }}">
 
-                                <img src="./img/content/completed-slider/item1.png">
+                                <!-- <img src="./img/content/completed-slider/item1.png"> -->
 
                                 <div class="checkbox"><img src="./img/icons/i.completed-slider-checkbox.svg"></div>
                             </div>

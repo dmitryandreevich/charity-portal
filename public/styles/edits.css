@@ -18,13 +18,13 @@ header .main-ava > img{
     color: white;
     margin-bottom: 15px;
 }
-.alert-success {
+.alert-true {
     padding: 20px;
     background-color: #4CAF50; /* Red */
     color: white;
     margin-bottom: 15px;
 }
-.alert-primary {
+.alert-pr {
     padding: 20px;
     background-color: #2196F3; /* Red */
     color: white;
@@ -108,7 +108,7 @@ th:first-child, td:first-child {
 }
 
 body .main-block .top-menu__left .add.plclear {
-    padding: 30px 25px;
+    padding: 0 10px;
 
 }
 body .main-block .top-menu__left .add.plclear:before {
