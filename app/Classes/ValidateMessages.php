@@ -63,7 +63,7 @@ class ValidateMessages
     const DONOR_DONATION_FINANCE = [
         'amount.required' => 'Вы не ввели сумму пожертвования.',
         'amount.integer' => 'Сумма пожертвования должна быть числом.',
-        'amount.between' => 'Сумма пожертвования должна быть не меньше :min и не больше :max.'
+        'amount.between' => 'Сумма пожертвования должна быть не меньше :min и не больше :max рублей.'
     ];
     const DONOR_DONATION_MATERIAL = [
         'info.required' => 'Вы не ввели информацию о пожертвовании.'
@@ -87,10 +87,9 @@ class ValidateMessages
     ];
 
     const VOLUNTEERS_ADD = [
-        'count' => [
-            'required' => 'Введите количество волонтёров.',
-            'integer' => 'Количество волонтёров должно быть цифрой.',
-            'between' => 'Количество волонтёров должно быть от :min до :max человек.'
-        ]
+
+        'count.required' => 'Введите количество волонтёров.',
+        'count.integer' => 'Количество волонтёров должно быть цифрой.',
+        'count.between' => 'Количество волонтёров должно быть от :min до :max человек.',
     ];
 }

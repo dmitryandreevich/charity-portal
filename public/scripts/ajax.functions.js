@@ -223,5 +223,33 @@ $(document).ready(function () {
             }
         });
     });
+    $('#modal3').find('#donation-form').find('input[type="submit"]').click(function (e) {
+        e.preventDefault();
 
+        var needData = $('#donation-form').find('input[name="need_data"]').val();
+        var amount = $('#donation-form').find('input[name="amount"]').val();
+
+        var info = $('#donation-form').find('textarea[name="info"]').val();
+
+        $.ajax({
+            url: '/donation',
+            method: 'post',
+            dataType: 'html',
+            data:{ need_data: needData, amount: amount, info: info, type: $(this).attr('name') },
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                var json = JSON.parse(response);
+                if(json.status === 200)
+                    window.location.reload();
+                else if(json.status === 400){
+                    $('#donation-form-error').html("");
+                    var errors = JSON.parse(json.messages);
+                    for(var i in errors)
+                        $('#donation-form-error').append(errors[i] + "<br><br>");
+                }
+            }
+        });
+    });
 });

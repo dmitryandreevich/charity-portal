@@ -55,14 +55,18 @@ class VolunteerController extends Controller
      */
     public function addVolunteers(Request $request){
         $v = Validator::make($request->all(), [
-            ['count' => 'required|integer|between:1,10000', 'need_data' => 'required|integer']
+            'count' => 'required|integer|between:1,10000',
+            'need_data' => 'required|integer'
         ], ValidateMessages::VOLUNTEERS_ADD);
+
         if($v->fails()){
             return redirect()->back()->withErrors($v);
         }
+
         $need = Need::find( $request->get('need_data') );
         $leftVols = $need->count_vols - $need->collected;
         $countVols = $request->get('count');
+
         if($leftVols > 0 && $countVols <= $leftVols){
 
             $need->collected += $countVols ;

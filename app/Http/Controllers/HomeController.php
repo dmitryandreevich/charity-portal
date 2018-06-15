@@ -29,8 +29,10 @@ class HomeController extends Controller
         $realizedNeeds = Need::where('status', StatusOfNeed::STATUS_COLLECTED)->limit(8)->get();
         $orgs = Organization::where('status', StatusOfOrganization::ENABLED)->limit(8)->get();
 
-        for ($i = 0; $i < count($realizedNeeds); $i++)
-            $realizedNeeds[$i]->orgCity = $realizedNeeds[$i]->getParentOrganization()->city;
+        for ($i = 0; $i < count($realizedNeeds); $i++) {
+            $parentOrg = $realizedNeeds[$i]->getParentOrganization();
+            $realizedNeeds[$i]->orgCity = $parentOrg ? $realizedNeeds[$i]->getParentOrganization()->city : 'Неизвестно';
+        }
 
         return view('home', [
             'realizedNeeds' => $realizedNeeds,

@@ -6,7 +6,8 @@ header .main-ava > img{
 
 }
 #login-form-error,
-#register-form-error{
+#register-form-error,
+#donation-form-error{
     color: #f44336;
     font-size: 1.3em;
     font-weight: bold;
@@ -110,7 +111,7 @@ body .main-block .top-menu__left .add.plclear {
     padding: 30px 25px;
 
 }
-body .main-block .top-menu__left .add:before {
+body .main-block .top-menu__left .add.plclear:before {
     position: absolute;
     left: 0;
     width: 0;
@@ -119,7 +120,7 @@ body .main-block .top-menu__left .add:before {
     background: none;
 }
 
-body .main-block .top-menu__left .add:last-child {
+body .main-block .top-menu__left .add.plclear:last-child {
     margin-top: 0;
     margin-left: 0;
 }

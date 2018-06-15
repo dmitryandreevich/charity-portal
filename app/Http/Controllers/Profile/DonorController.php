@@ -44,6 +44,97 @@ class DonorController extends Controller
      */
     public function donation(Request $request){
 
+        if ($request->get('type') == 'financeSend'){
+            $validator = Validator::make($request->all(),
+                [
+                    'need_data' => 'required|integer',
+                    'amount' => 'required|integer|between:1,100000'
+                ], ValidateMessages::DONOR_DONATION_FINANCE);
+
+            if($validator->fails()) {
+                $error = $validator->messages()->toJson();
+                return json_encode(['status' => 400, 'messages' => $error]);
+            }
+
+            $needId = $request->get('need_data');
+            $amount = $request->get('amount');
+
+            $user = Auth::user();
+
+            $need = Need::where('id', $needId)->first();
+
+            if( count($need) !== 0 ){
+                $balance = $user->balance;
+                if($balance >= $amount){
+                    // высчитываем сколько можно ещё пожертвовать
+                    $leftToDonate = $need->amount - $need->collected;
+
+                    // если эта сумма не больше требуемой, продолжаем
+                    if($amount > $leftToDonate)
+                        return json_encode(['status' => 400, 'messages' => json_encode(['Введённая сумма больше нужной!']) ]);
+
+                    $user->balance -= $amount;
+                    $need->collected += $amount;
+
+                    if($need->collected >= $need->amount)
+                        $need->status = StatusOfNeed::STATUS_COLLECTED;
+                    //save donate to history
+                    HistoryOfDonate::create([
+                        'id_sender' => $user->id,
+                        'id_need' => $need->id,
+                        'amount' => $amount,
+                        'id_org' => $need->id_org,
+                        'type' => TypeOfDonate::FINANCE
+                    ]);
+
+                    $user->save();
+                    $need->save();
+
+                    //session('success', 'Вы успешно пожертвовали сумму денег!');
+                    return json_encode(['status' => 200]);
+                }
+                return json_encode(['status' => 400, 'messages' => json_encode(['У вас недостаточно средств!']) ]);
+            }
+        }elseif ( $request->get('type') == 'materialSend' ){
+            $validator = Validator::make($request->all(),
+                ['need_data' => 'required|integer',
+                    'info' => 'required'
+                ], ValidateMessages::DONOR_DONATION_MATERIAL);
+
+            if($validator->fails()) {
+                $error = $validator->messages()->toJson();
+                return json_encode(['status' => 400, 'messages' => $error]);
+                //return redirect()->back()->withErrors($validator);
+            }
+            $info = $request->get('info');
+
+            $need = Need::find( $request->get('need_data') );
+
+            $creatorEmail = $need->getCreatorEmail();
+
+            mail($creatorEmail, "Заявка на материальное пожертвование.", "Здравствуйте! Вам пришла новая заявка на материальное пожертвование. Текст\n" . $info);
+
+            HistoryOfDonate::create([
+                'id_sender' => Auth::id(),
+                'id_need' => $need->id,
+                'id_org' => $need->id_org,
+                'materialDonateInfo' => $info,
+                'type' => TypeOfDonate::MATERIAL
+            ]);
+           // session('success', 'Вы успешно отправили заявку!');
+
+            return json_encode(['status' => 200]);
+
+        }
+
+        return json_encode(['status' => 400, 'messages' => json_encode(['Произошла ошибка, попробуйте ещё раз!']) ]);
+    }
+}
+
+/*
+ *
+ *  public function donation(Request $request){
+
         if ($request->get('financeSend')){
             $validator = Validator::make($request->all(),
                 ['need_data' => 'required|integer',
@@ -115,7 +206,5 @@ class DonorController extends Controller
             ]);
             return redirect()->back()->with('success', 'Вы успешно отправили заявку!');
         }
-
-        return redirect()->back()->with('error', 'Произошла ошибка, попробуйте ещё раз!');
-    }
-}
+ *
+ */

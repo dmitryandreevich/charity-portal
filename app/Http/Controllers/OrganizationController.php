@@ -69,8 +69,10 @@ class OrganizationController extends Controller
             'name' => 'required|max:50',
             'description' => 'required|between:30,1500'
         ], ValidateMessages::ORGANIZATION_STORE);
+
         if($validator->fails())
             return redirect()->back()->withErrors($validator);
+
         $address = $request->get('address');
         $name = $request->get('name');
         $description = $request->get('description');
@@ -114,6 +116,7 @@ class OrganizationController extends Controller
             Storage::put("$orgPath/$docName", $docsContent);
 
             $creator = Auth::id();
+
             Organization::create([
                 'creator' => $creator,
                 'name' => $name,
@@ -125,7 +128,9 @@ class OrganizationController extends Controller
                 'doc_path' => "organizations/$nextOrgId/$docName",
                 'status' => StatusOfOrganization::DISABLED
             ]);
+
             return redirect( route('organizations.index') )->with('success', 'Организация была успешно создана!');
+
         }elseif( $request->has('preview') ){
 
             $photosFiles = $request->file('photos');
@@ -221,9 +226,12 @@ class OrganizationController extends Controller
             'name' => 'required|max:50',
             'description' => 'required|min:30|max:1500'
         ], ValidateMessages::ORGANIZATION_STORE);
+
         if($validator->fails())
             return redirect()->back()->withErrors($validator);
+
         $orgPath = "/public/organizations/$organization->id";
+
         if($request->hasFile('cover')){
             $cover = $request->file('cover');
             $coverName = 'cover.' . $cover->getClientOriginalExtension();
@@ -232,6 +240,7 @@ class OrganizationController extends Controller
 
             $organization->cover_path = "organizations/$organization->id/$coverName";
         }
+
         if($request->hasFile('docs')) {
             $docs = $request->file('docs');
             $docName = 'document.' . $docs->getClientOriginalExtension();
@@ -248,6 +257,7 @@ class OrganizationController extends Controller
            'description' => $request->get('description'),
             'type_consumer' => $request->get('type_consumer')
         ]);
+
         return redirect( route('organizations.index') )->with('success', 'Организация была успешно обновлена!');
     }
 
