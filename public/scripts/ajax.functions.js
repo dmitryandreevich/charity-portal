@@ -34,7 +34,7 @@ $(document).ready(function () {
     });
 
 
-     $(".filter-select-catalog").on("click", function () {
+     $(".filter-select-catalog .custom-option").on("click", function () {
          var selectCity = $(".filter-select-catalog.filter_city");
          var selectTypeOrg = $(".filter-select-catalog.filter-type_org");
          var selectTypeNeed = $(".filter-select-catalog.filter-type_need");
@@ -64,7 +64,7 @@ $(document).ready(function () {
              }
          });
      });
-    $(".sort-select-needs").on("click", function() {
+    $(".sort-select-needs .custom-option").on("click", function() {
 
         var selectStatus = $(".sort-select-needs.filter_status").find('.selection').attr('data-value');
         var selectOrg = $(".sort-select-needs.filter_organization").find('.selection').attr('data-value');
@@ -100,7 +100,7 @@ $(document).ready(function () {
 
     });
 
-    $(".sort-select-org").on("click", function() {
+    $(".sort-select-org .custom-option").on("click", function() {
 
         var selectTypeOfNeed = $('.sort-select-org.filter_type-need').find('.selection').attr('data-value');
         var orgId = $('.select').find('.orgId').val();
@@ -132,7 +132,7 @@ $(document).ready(function () {
 
     });
 
-    $(".dashboard-search").on("click", function () {
+    $("#dashboard-search-btn").on("click", function () {
         var searchAttr = $(this).parent().find('.i-value').val();
         var page = $(this).parent().find('.page').val();
 

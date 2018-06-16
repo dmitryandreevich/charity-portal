@@ -18,7 +18,8 @@
                 <div class="row">
                     <div class="left item">
                         <div class="name">Аккаунт пользователя</div>
-                        @include('profile.blocks.avatar')
+                        @include('dashboard.users.blocks.avatar')
+
                     </div>
                     <div class="middle item">
                         <div class="name">Информация</div>

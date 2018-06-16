@@ -30,7 +30,6 @@
                     </li>
                     <li class="headroom_item big">
                         <select placeholder="Вид потребностей" name="view" class="view sources custom-select big filter-select-catalog filter-type_need">
-                            <option value="0">Любая</option>
                             <option value="{{ \App\Classes\TypeOfNeed::COLLECT_MONEY }}">Сбор денег</option>
                             <option value="{{ \App\Classes\TypeOfNeed::VOLUNTEERS }}">Помощь волонтёров</option>
                         </select>

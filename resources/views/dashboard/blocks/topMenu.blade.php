@@ -16,23 +16,22 @@
             <a href="{{ route('dashboard.moderation.index') }}" class="add plclear">Модерация</a>
             <a href="{{ route('dashboard.payments.index') }}" class="add plclear">Заявки на вывод средств</a>
 
-
-        </div>
-        <div class="top-menu__right">
-            <ul class="list">
-                <li class="item">
+            <div class="dashboard-search">
+                    <div class="item">
                         @php
                             use Illuminate\Support\Facades\Route;
                             $uri = Route::getFacadeRoot()->current()->uri();
                             $page = str_replace('dashboard/', "", $uri);
                         @endphp
                         <input type="hidden" name="page" class="page" value="{{ $page }}">
-                        <input type="text" class="i-value" name="search-attr">
+                        <input type="text" class="i-value" name="search-attr" placeholder="Имя, фамилия, телефон, название организации и т.д">
+                        <input type="button" value="Найти" id="dashboard-search-btn">
 
-                        <button class="btn blue dashboard-search">Найти</button>
-                </li>
-            </ul>
+
+                    </div>
+            </div>
         </div>
+
 
     </div>
 </div>
