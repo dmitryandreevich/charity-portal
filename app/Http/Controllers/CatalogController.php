@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Classes\StatusOfNeed;
+use App\Classes\StatusOfOrganization;
 use App\Need;
 use App\Organization;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ class CatalogController extends Controller
 {
     //
     public function index(){
-        $organizations = Organization::all();
+        $organizations = Organization::where('status', StatusOfOrganization::ENABLED)->get(); // ?????????????????????????????
         return view('catalog.index', ['organizations' => $organizations]);
     }
     public function sort(Request $request){

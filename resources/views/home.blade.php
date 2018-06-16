@@ -86,33 +86,21 @@
                     <h2 class="title">Организации, нуждающиеся в помощи</h2>
                 </div>
                 <div class="slider_content">
-                    <div class="main-slider_item"><img src="./img/content/main-slider/item1.png">
-                        <div class="content">
-                            <div class="name">Детский дом-интернат #7</div>
-                            <div class="bottom">
-                                <div class="location">Уфа</div>
-                                <div class="help"><img src="./img/icons/i.slider-help_services.svg"><img src="./img/icons/i.slider_help_people.svg"><img src="./img/icons/i.slider_help_things.svg"></div>
+
+                    @foreach($organizations as $organization)
+                        <div class="main-slider_item">
+                            <img src="{{ asset('storage/' . $organization->cover_path) }}">
+                            <!-- <img src="./img/content/main-slider/item1.png"> -->
+                            <div class="content">
+                                <a href="{{ route('organizations.show', ['organization' => $organization->id]) }}"><div class="name">{{ $organization->name }}</div></a>
+                                <div class="bottom">
+                                    <div class="location">{{ $organization->city }}</div>
+                                    <div class="help"><img src="./img/icons/i.slider-help_services.svg"><img src="./img/icons/i.slider_help_people.svg"><img src="./img/icons/i.slider_help_things.svg"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="main-slider_item"><img src="./img/content/main-slider/item2.png">
-                        <div class="content">
-                            <div class="name">Социально-реабилитационный центр</div>
-                            <div class="bottom">
-                                <div class="location">Норильск</div>
-                                <div class="help"><img src="./img/icons/i.slider-help_services.svg"><img src="./img/icons/i.slider_help_people.svg"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="main-slider_item"><img src="./img/content/main-slider/item3.png">
-                        <div class="content">
-                            <div class="name">Архангельский дом престарелых</div>
-                            <div class="bottom">
-                                <div class="location">Сертолов</div>
-                                <div class="help"><img src="./img/icons/i.slider_help_things.svg"></div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
+
 
                 </div><a href="{{ route('catalog.index') }}" class="show-all">Смотреть все</a>
             </div>
@@ -128,8 +116,6 @@
                         <div class="completed-slider_item">
                             <div class="left-photo">
                                 <img src="{{ asset('storage/' . $need->cover_path ) }}">
-
-                                <!-- <img src="./img/content/completed-slider/item1.png"> -->
 
                                 <div class="checkbox"><img src="./img/icons/i.completed-slider-checkbox.svg"></div>
                             </div>

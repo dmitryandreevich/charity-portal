@@ -10,7 +10,7 @@
 @section('page-title', "Страница организации - $organization->name")
 @section('main-block')
     <div class="main-block sp needs">
-        <div class="main-banner" style="background:url({{ asset("storage/$organization->cover_path") }}) no-repeat"></div>
+        <div class="main-banner" style="background:url({{ asset("storage/$organization->cover_path") }}) no-repeat; background-position: center; background-size:cover;"></div>
         <div class="main-content">
             <div class="container">
                 <div class="top">
@@ -38,12 +38,9 @@
                 <div class="block-needs--help">
                     <div class="container">
                         <div class="slider_content">
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item1.png"></div>
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item2.png"></div>
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item3.png"></div>
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item1.png"></div>
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item2.png"></div>
-                            <div class="main-slider_item"><img src="./img/content/sp/img_item3.png"></div>
+                            @foreach($photos as $photo)
+                                <div class="main-slider_item"><img src="{{ asset($photo) }}"></div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

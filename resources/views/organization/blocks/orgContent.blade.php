@@ -71,7 +71,6 @@
                                 <div class="p-small">
                                     <div class="btn-block">
                                         <a href="#" data-modal="#modal6" class="btn blue open-modal">Войти</a>
-
                                     </div>
                                 </div>
                             </div>
@@ -99,9 +98,19 @@
                         <div class="info">
                             <div class="p-small">Необходимая сумма:<span>{{ $need->amount }} ₽</span></div><span class="money">Осталось собрать:<span class="blue">{{ $need->amount - $need->collected }} ₽</span></span>
                         </div>
-                        @if(\Illuminate\Support\Facades\Auth::user()->type == \App\Classes\TypeOfUser::DONOR && $need->status == \App\Classes\StatusOfNeed::STATUS_ACTUAL)
-                            <div class="btn-block">
-                                <a href="#" data-modal="#modal3" class="btn blue open-modal" receiver="{{ $need->id }}" >Помочь</a>
+                        @if(\Illuminate\Support\Facades\Auth::check())
+                            @if(\Illuminate\Support\Facades\Auth::user()->type == \App\Classes\TypeOfUser::DONOR && $need->status == \App\Classes\StatusOfNeed::STATUS_ACTUAL)
+                                <div class="btn-block">
+                                    <a href="#" data-modal="#modal3" class="btn blue open-modal" receiver="{{ $need->id }}" >Помочь</a>
+                                </div>
+                            @endif
+                        @else
+                            <div class="info">
+                                <div class="p-small">
+                                    <div class="btn-block">
+                                        <a href="#" data-modal="#modal6" class="btn blue open-modal">Войти</a>
+                                    </div>
+                                </div>
                             </div>
                         @endif
                     </div>

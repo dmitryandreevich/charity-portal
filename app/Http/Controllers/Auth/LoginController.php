@@ -90,9 +90,9 @@ class LoginController extends Controller
                 return redirect($this->redirectTo);
             }
 
-            return redirect($this->redirectTo);
+            return redirect()->back()->with('error', 'Данный аккаунт не зарегистрирован!');
         }catch (\Exception $exception){
-            return $exception->getMessage();
+            return redirect()->back()->with('error', $exception->getMessage() );
         }
     }
     public function loginByFb(Request $request){
