@@ -12,6 +12,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -115,22 +116,45 @@ class RegisterController extends Controller
         }catch (\Exception $exception){
             return redirect('/')->with('error', 'Произошла ошибка при получении данных VK API!');
         }
-        $data = $vkApiHelper->getInfoUser($at['access_token']);
-
+        // get data by vk
+        $data = $vkApiHelper->getInfoUser($at['access_token'])['response'][0];
+        try {
+            $name = $data->first_name;
+            $last_name = $data->last_name;
+        }catch (\Exception $exception){
+            $name = "";
+            $last_name = "";
+        }
         // шаблон json объекта, для хранения всех второстепенных данных пользователя
         $dataTemplate = Utils::getUserDataJsonTemplate();
         $dataTemplate['individual']['active'] = true;
+        $dataTemplate['individual']['data']['name'] = $name;
+        $dataTemplate['individual']['data']['sec_name'] = $last_name;
+
+
         try {
             $user = User::create([
                 'email' => isset($at['email']) ? $at['email'] : "",
                 'vkId' => $at['user_id'],
                 'type' => $typeOfUser,
-                'data' => json_encode($dataTemplate)
+                'data' => json_encode($dataTemplate),
             ]);
 
             $request->session()->remove('typeOfUser');
 
             Auth::login($user);
+
+            try{
+                $aName = "avatar.jpg";
+                $fileContent = file_get_contents($data->photo_200_orig);
+
+                Storage::put("public/avatars/$user->id/$aName", $fileContent);
+
+                $user->avatar = "avatars/$user->id/$aName";
+                $user->save();
+            }catch (\Exception $e){
+
+            }
 
             return redirect('/')->with('success', ' Вы успешно зарегистрировались!');
         } catch (QueryException $exception) {

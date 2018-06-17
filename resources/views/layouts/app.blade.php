@@ -50,18 +50,16 @@
             @if(\Illuminate\Support\Facades\Auth::check())
                 <a href="{{ route('profile.index') }}" class="main-ava">
                     @if(\Illuminate\Support\Facades\Auth::user()->avatar == "")
-                        <img src="{{ asset("img/dummy200.png") }}">
+                        <img src="{{ asset("img/icons/i.header_login-white.svg") }}">
                     @else
                         <img src="{{ asset("storage/"  . \Illuminate\Support\Facades\Auth::user()->avatar) }}">
                     @endif
                 </a>
                 <a href="{{ route('logout') }}" class="main-ava login">
-                    <p class="entrance">Выйти</p>
+                    <p class="entrance logout">Выйти</p>
                 </a>
             @else
-                <a href="#" data-modal="#modal1" class="main-ava open-modal login">
-                    <p class="entrance">Регистрация</p>
-                </a>
+
                 <a href="#" data-modal="#modal6" class="main-ava open-modal login" id="login-btn">
                     <p class="entrance">Вход</p>
                 </a>
@@ -112,7 +110,11 @@
                 </div>
 
             </form>
-
+            <div class="right item">
+                <div class="register-account">
+                    Уже зарегистрированы?<a href="#" data-modal="#modal6" class="mail btn open-modal" onclick="closeModal('#modal1')"> Авторизуйтесь.</a>
+                </div>
+            </div>
         </div>
     </div>
     <div id="modal2" class="modal">
@@ -176,12 +178,18 @@
                         <input type="submit" value="Авторизация">
                     </div>
                 </div>
+
             </form>
             <!-- I`m not a robot -->
             <div class="right item">
                 <div class="bind-account-small">
                     <a href="{{ \App\Classes\VkApiHelper::getLinkAuthCode( route('login.vk') ) }}" class="btn vk"></a>
                     <a href="{{ \App\Classes\FbApiHelper::getLinkAuthCode( route('login.fb') ) }}" class="btn fb"></a>
+                </div>
+            </div>
+            <div class="right item">
+                <div class="register-account">
+                    Ещё нет аккаунта? <a href="#" data-modal="#modal1" class="mail btn open-modal" onclick="closeModal('#modal6')">Пройдите регистрацию.</a>
                 </div>
             </div>
         </div>

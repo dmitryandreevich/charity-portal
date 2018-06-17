@@ -252,3 +252,10 @@ $(document).ready(function () {
         });
     });
 });
+
+function closeModal(modal) {
+    $(modal).removeClass("open");
+    setTimeout( function(){
+        $(modal).parents(".overlay").removeClass("open");
+    }, 350);
+}

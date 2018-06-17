@@ -73,7 +73,7 @@ class VkApiHelper
         $urlGetUser = 'https://api.vk.com/method/users.get';
 
         $params = [
-            'fields' => 'city, photo_50, phone, email',
+            'fields' => 'city, photo_200_orig, phone, email',
             'access_token' => $access_token,
             'v' => '5.76'
         ];
@@ -85,7 +85,7 @@ class VkApiHelper
             $data = $this->getDataByResponse($response);
             return $data;
         }catch (\Exception $exception){
-            return throwException($exception);
+            return $exception;
         }
     }
     /**

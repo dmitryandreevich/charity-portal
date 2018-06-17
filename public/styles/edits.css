@@ -186,3 +186,15 @@ body .main-block .top-menu__left .add.plclear:last-child {
     border: 1px solid #008cc8;
     background: #fff;
 }
+#modal6 .register-account,
+#modal1 .register-account{
+    font-size: 1.4em;
+}
+#modal6 .register-account a,
+#modal1 .register-account a{
+    color: #008cc8;
+}
+
+.header .logout .entrance:after {
+    background: none;
+}

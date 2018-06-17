@@ -160,6 +160,7 @@ $(document).ready(function () {
 
     });
 
+
     var locations = [
         ["marker1",  55.4507,37.3656, "./img/icons/i.marker.svg"],
         ["marker2", 50.427342,30.469137, "./img/icons/i.marker.svg"],
